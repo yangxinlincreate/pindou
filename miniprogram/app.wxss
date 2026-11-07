@@ -1,0 +1,135 @@
+page {
+  --brand: #FF7A45;
+  --brand-soft: #FFEDE5;
+  --brand-deep: #C9501F;
+  --ink: #2C2C2A;
+  --sub: #6B6760;
+  --muted: #9C978E;
+  --line: #E7E1D7;
+  --line2: #F2EDE4;
+  --bg: #FAF7F2;
+  --card: #FFFFFF;
+  --ok: #1D9E75;
+  --ok-soft: #E1F5EE;
+  --warn: #BA7517;
+  --warn-soft: #FAEEDA;
+
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+  font-size: 28rpx;
+  -webkit-font-smoothing: antialiased;
+}
+
+view, text, button, input, scroll-view {
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 24rpx 30rpx 40rpx;
+}
+
+.section {
+  margin-bottom: 30rpx;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  font-size: 22rpx;
+  color: var(--muted);
+  margin-bottom: 14rpx;
+}
+.label .val {
+  margin-left: auto;
+  color: var(--ink);
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.card {
+  background: var(--card);
+  border: 1rpx solid var(--line);
+  border-radius: 22rpx;
+  padding: 26rpx 28rpx;
+}
+
+.sub {
+  font-size: 21rpx;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-top: 10rpx;
+}
+
+.btn-primary {
+  width: 100%;
+  height: 94rpx;
+  line-height: 94rpx;
+  border-radius: 22rpx;
+  background: var(--brand);
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: 500;
+  border: none;
+  padding: 0;
+}
+.btn-primary::after {
+  border: none;
+}
+.btn-primary.disabled {
+  background: #E9E4DB;
+  color: #A9A39A;
+}
+
+.btn-ghost {
+  flex: 1;
+  height: 84rpx;
+  line-height: 84rpx;
+  border-radius: 20rpx;
+  background: #fff;
+  border: 1rpx solid var(--line);
+  color: var(--sub);
+  font-size: 27rpx;
+  padding: 0;
+  margin: 0;
+}
+.btn-ghost::after {
+  border: none;
+}
+
+.notice {
+  font-size: 22rpx;
+  line-height: 1.55;
+  background: var(--warn-soft);
+  color: #7A4E0C;
+  border-radius: 16rpx;
+  padding: 18rpx 22rpx;
+  margin-top: 16rpx;
+}
+.notice.ok {
+  background: var(--ok-soft);
+  color: #0F6E56;
+}
+
+.row-flex {
+  display: flex;
+  align-items: center;
+}
+
+/* 滑块 */
+.slider-row {
+  display: flex;
+  align-items: center;
+  margin-top: 12rpx;
+}
+.slider-row slider {
+  flex: 1;
+  margin: 0 20rpx 0 0;
+}
+.slider-val {
+  width: 76rpx;
+  text-align: right;
+  font-size: 27rpx;
+  font-weight: 500;
+}

@@ -1,0 +1,90 @@
+.wrap {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #FAF7F2;
+}
+
+.bar {
+  flex-shrink: 0;
+  padding: 16rpx 30rpx;
+  font-size: 22rpx;
+  color: #6B6760;
+  text-align: center;
+  border-bottom: 1rpx solid #F2EDE4;
+  background: #fff;
+}
+
+.stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 16rpx;
+}
+
+.cv {
+  box-shadow: 0 4rpx 24rpx rgba(70, 50, 30, 0.1);
+  border-radius: 8rpx;
+}
+
+.exp-canvas {
+  position: fixed;
+  left: -9999rpx;
+  top: 0;
+  width: 100px;
+  height: 100px;
+}
+
+.tools {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 14rpx 20rpx calc(14rpx + env(safe-area-inset-bottom));
+  background: #fff;
+  border-top: 1rpx solid #F2EDE4;
+}
+
+.tool {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8rpx 0;
+  color: #6B6760;
+}
+.tool.on {
+  color: #C9501F;
+}
+.tool.on .tico {
+  background: #FFEDE5;
+  color: #C9501F;
+}
+
+.tico {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 16rpx;
+  background: #F3EFE7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  color: #6B6760;
+  margin-bottom: 6rpx;
+}
+
+.tlabel {
+  font-size: 20rpx;
+}
+
+.tool.save .tico {
+  background: #FF7A45;
+  color: #fff;
+}
+.tool.save {
+  color: #C9501F;
+  font-weight: 500;
+}

@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>拼豆图纸 · 产品原型 v1</title>
+<style>
+:root{
+  --bg:#FAF7F2; --card:#FFFFFF; --ink:#2C2C2A; --sub:#6B6760; --muted:#9C978E;
+  --line:#E7E1D7; --line2:#F0EBE2;
+  --brand:#FF7A45; --brand-soft:#FFEDE5; --brand-deep:#C9501F;
+  --ok:#1D9E75; --ok-soft:#E1F5EE; --warn:#BA7517; --warn-soft:#FAEEDA;
+  --info:#185FA5; --info-soft:#E6F1FB;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg); color:var(--ink); height:100vh; display:flex; flex-direction:column; overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+header{
+  display:flex; align-items:center; gap:16px; padding:12px 20px; background:var(--card);
+  border-bottom:1px solid var(--line); flex-shrink:0;
+}
+.logo{width:26px;height:26px;border-radius:7px;background:var(--brand);display:grid;place-items:center;color:#fff;font-size:12px;font-weight:500}
+.htitle{font-size:14px;font-weight:500}
+.hsub{font-size:12px;color:var(--muted);margin-left:2px}
+.tabs{margin-left:auto;display:flex;gap:4px;background:var(--bg);padding:3px;border-radius:9px}
+.tab{padding:6px 14px;border-radius:7px;font-size:13px;color:var(--sub);cursor:pointer;border:none;background:none;font-family:inherit}
+.tab.on{background:var(--card);color:var(--ink);font-weight:500;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+
+.stage{flex:1;display:flex;overflow:hidden}
+.stage.hide{display:none}
+.page-list{width:158px;flex-shrink:0;border-right:1px solid var(--line);padding:14px 10px;overflow-y:auto;background:var(--card)}
+.group{display:none}
+.group.on{display:block}
+.glabel{font-size:11px;color:var(--muted);padding:6px 8px 8px;letter-spacing:.04em}
+.pbtn{display:block;width:100%;text-align:left;padding:7px 10px;border-radius:7px;font-size:12.5px;color:var(--sub);background:none;border:none;cursor:pointer;font-family:inherit;margin-bottom:1px;line-height:1.4}
+.pbtn:hover{background:var(--bg)}
+.pbtn.on{background:var(--brand-soft);color:var(--brand-deep);font-weight:500}
+.pbtn small{display:block;font-size:10.5px;color:var(--muted);font-weight:400}
+.pbtn.on small{color:var(--brand-deep);opacity:.7}
+
+.canvas{flex:1;overflow:auto;padding:26px;display:flex;justify-content:center;align-items:flex-start}
+
+/* phone */
+.phone{
+  width:375px;height:734px;background:#fff;border-radius:38px;border:1px solid var(--line);
+  box-shadow:0 8px 30px rgba(70,50,30,.08);overflow:hidden;position:relative;flex-shrink:0;
+}
+.notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:76px;height:21px;background:#111;border-radius:11px;z-index:50}
+.screen{display:none;flex-direction:column;height:100%;padding-top:38px}
+.screen.on{display:flex}
+.sbody{flex:1;overflow-y:auto;padding:0 16px 16px}
+.nav{display:flex;align-items:center;height:36px;padding:0 16px;flex-shrink:0;position:relative}
+.nav h1{font-size:16px;font-weight:500}
+.nav .back{font-size:19px;color:var(--sub);width:24px}
+.nav .more{margin-left:auto;color:var(--muted);font-size:16px;letter-spacing:1px}
+
+/* generic */
+.sec{margin-bottom:14px}
+.lbl{font-size:11.5px;color:var(--muted);margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.lbl b{font-weight:500;color:var(--sub)}
+.row{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 14px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:20px;background:var(--brand-soft);color:var(--brand-deep);font-size:12.5px;font-weight:500}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:var(--brand)}
+.btn{width:100%;padding:13px;border-radius:12px;background:var(--brand);color:#fff;border:none;font-size:14.5px;font-weight:500;font-family:inherit;cursor:pointer}
+.btn.dim{background:#E9E4DB;color:#A9A39A}
+.btn.ghost{background:var(--card);color:var(--sub);border:1px solid var(--line)}
+.bottom{padding:10px 16px 20px;flex-shrink:0;background:#fff;border-top:1px solid var(--line2)}
+.tabbar{display:flex;border-top:1px solid var(--line2);background:#fff;padding:7px 0 16px;flex-shrink:0}
+.tabi{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;color:var(--muted)}
+.tabi .ti{font-size:16px;line-height:1;color:#B4AFA6}
+.tabi.on{color:var(--brand-deep);font-weight:500}
+.tabi.on .ti{color:var(--brand)}
+
+/* upload */
+.up{height:236px;border:1.5px dashed #DCD5C9;border-radius:14px;background:#FCFAF6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px}
+.upico{width:44px;height:44px;border-radius:12px;background:var(--brand-soft);display:grid;place-items:center}
+.upico svg{width:22px;height:22px;stroke:var(--brand);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.uptit{font-size:13.5px;font-weight:500}
+.upsub{font-size:11.5px;color:var(--muted)}
+
+/* notice */
+.notice{display:flex;gap:9px;padding:10px 12px;border-radius:10px;font-size:11.8px;line-height:1.5;background:var(--warn-soft);color:#7a4e0c;border:.5px solid #E8CE9C}
+.notice b{font-weight:500}
+.notice .x{ml:auto}
+
+/* preview image */
+.pv{height:200px;border-radius:12px;overflow:hidden;position:relative;background:#EFE9E0}
+.pvimg{width:100%;height:100%;display:grid;justify-content:center;align-content:center}
+.pvbadge{position:absolute;left:8px;bottom:8px;background:rgba(255,255,255,.94);border-radius:6px;padding:3px 7px;font-size:10.5px;color:var(--sub)}
+
+/* sliders */
+.slider{display:flex;align-items:center;gap:12px;margin-top:8px}
+.track{flex:1;height:4px;border-radius:2px;background:#EDE7DD;position:relative}
+.fill{position:absolute;left:0;top:0;height:100%;border-radius:2px;background:var(--brand)}
+.knob{position:absolute;top:50%;width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid var(--brand);transform:translate(-50%,-50%);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.val{font-size:12.5px;font-weight:500;min-width:38px;text-align:right;font-variant-numeric:tabular-nums}
+.presets{display:flex;gap:6px;margin-top:9px}
+.pre{padding:5px 11px;border-radius:8px;border:1px solid var(--line);font-size:11.5px;color:var(--sub);background:var(--card)}
+.pre.on{border-color:var(--brand);background:var(--brand-soft);color:var(--brand-deep);font-weight:500}
+
+/* grid */
+.grid{display:grid;border:.5px solid #D7D1C6;background:#fff;margin:0 auto}
+.cell{position:relative;display:grid;place-items:center}
+.cell span{font-size:6.5px;color:rgba(0,0,0,.55);font-variant-numeric:tabular-nums;line-height:1}
+.cell.dark span{color:rgba(255,255,255,.75)}
+.boardline{position:absolute;border-left:2px solid rgba(255,122,69,.75);pointer-events:none}
+
+.pvwrap{position:relative;padding:12px 0}
+.zoomcard{position:absolute;right:0;bottom:-4px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px;box-shadow:0 3px 12px rgba(70,50,30,.12)}
+.zoomcard .zt{font-size:9px;color:var(--muted);margin-bottom:3px;text-align:center}
+
+/* toolbar */
+.tools{display:flex;justify-content:space-around;padding:9px 0 2px;border-top:1px solid var(--line2);margin-top:auto}
+.tool{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;color:var(--sub);cursor:pointer}
+.tool .ic{width:30px;height:30px;border-radius:9px;background:var(--bg);display:grid;place-items:center;font-size:13px}
+.tool.on .ic{background:var(--brand-soft)}
+.tool.on{color:var(--brand-deep);font-weight:500}
+
+/* summary */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:11px 12px}
+.stat .k{font-size:10.5px;color:var(--muted);margin-bottom:3px}
+.stat .v{font-size:17px;font-weight:500;font-variant-numeric:tabular-nums}
+.stat .v small{font-size:11px;font-weight:400;color:var(--muted);margin-left:2px}
+
+/* usage list */
+.ulist{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.urow{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid var(--line2)}
+.urow:last-child{border-bottom:none}
+.sw{width:24px;height:24px;border-radius:6px;border:.5px solid rgba(0,0,0,.1);flex-shrink:0}
+.ucode{font-size:12.5px;font-weight:500;font-variant-numeric:tabular-nums;width:34px}
+.uname{font-size:11.5px;color:var(--sub);flex:1}
+.cnt{font-size:12px;font-variant-numeric:tabular-nums;font-weight:500}
+.tag{font-size:9.5px;padding:2px 6px;border-radius:5px;font-weight:500}
+.tag.have{background:var(--ok-soft);color:#0F6E56}
+.tag.need{background:var(--warn-soft);color:#854F0B}
+
+/* palette */
+.search{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin-bottom:12px}
+.search span{font-size:12.5px;color:var(--muted)}
+.pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.pcell{aspect-ratio:1;border-radius:8px;border:.5px solid rgba(0,0,0,.08);position:relative;overflow:hidden}
+.pcell em{position:absolute;left:0;right:0;bottom:0;background:rgba(255,255,255,.9);font-size:8.5px;text-align:center;padding:1px 0;font-style:normal;color:#444;font-weight:500}
+
+/* detail */
+.bigsw{height:132px;border-radius:14px;border:.5px solid rgba(0,0,0,.08)}
+.kv{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line2);font-size:12.5px}
+.kv:last-child{border:none}
+.kv .k{color:var(--muted)}
+.kv .v{font-variant-numeric:tabular-nums;font-weight:500}
+.disclose{font-size:10.5px;color:var(--muted);line-height:1.6;background:#F7F4EE;border-radius:9px;padding:10px}
+
+/* history */
+.hgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hitem{background:var(--card);border:1px solid var(--line);border-radius:11px;overflow:hidden}
+.hthumb{height:96px;display:grid;background:#EFE9E0}
+.hmeta{padding:7px 9px}
+.hmeta .t{font-size:11px;font-weight:500}
+.hmeta .s{font-size:9.5px;color:var(--muted);margin-top:1px}
+
+/* admin */
+.browser{width:1040px;flex-shrink:0;background:#fff;border-radius:10px;border:1px solid var(--line);box-shadow:0 8px 30px rgba(70,50,30,.08);overflow:hidden;display:flex;flex-direction:column;height:706px}
+.bbar{height:36px;background:#F4F1EB;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px;padding:0 12px;flex-shrink:0}
+.bdot{width:9px;height:9px;border-radius:50%;background:#D9D3C8}
+.url{flex:1;max-width:330px;margin:0 auto;background:#fff;border-radius:6px;font-size:11px;color:var(--muted);padding:3px 10px;text-align:center}
+.app{flex:1;display:flex;overflow:hidden}
+.side{width:172px;background:#FBFAF7;border-right:1px solid var(--line);padding:12px 9px;flex-shrink:0;overflow-y:auto}
+.slogo{display:flex;align-items:center;gap:7px;padding:4px 8px 14px;font-size:12.5px;font-weight:500}
+.sitem{display:block;width:100%;text-align:left;padding:7px 9px;border-radius:7px;font-size:12px;color:var(--sub);border:none;background:none;cursor:pointer;font-family:inherit;margin-bottom:1px}
+.sitem.on{background:var(--brand-soft);color:var(--brand-deep);font-weight:500}
+.sitem:disabled{color:#C4BFB6;cursor:default}
+.sgroup{font-size:10px;color:var(--muted);padding:11px 9px 5px;letter-spacing:.03em}
+.badge{background:#F09595;color:#fff;font-size:9px;border-radius:8px;padding:1px 5px;margin-left:5px;font-weight:500}
+.sitem em{font-size:9px;font-style:normal;background:#EDE8DF;color:var(--muted);padding:1px 4px;border-radius:3px;margin-left:4px}
+.main{flex:1;overflow:auto;background:#FCFBF8}
+.abar{display:flex;align-items:center;gap:10px;padding:14px 20px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.abar h2{font-size:14px;font-weight:500}
+.abar .sp{margin-left:auto}
+.abtn{padding:6px 12px;border-radius:7px;font-size:12px;border:1px solid var(--line);background:#fff;color:var(--sub);cursor:pointer;font-family:inherit}
+.abtn.pri{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:500}
+.acontent{padding:18px 20px}
+
+.phbanner{display:flex;gap:9px;align-items:flex-start;background:var(--info-soft);border:.5px solid #B5D4F4;border-radius:9px;padding:10px 12px;font-size:11.5px;line-height:1.55;color:#0C447C;margin-bottom:16px}
+.phbanner b{font-weight:500}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 14px}
+.kpi .k{font-size:11px;color:var(--muted);margin-bottom:5px}
+.kpi .v{font-size:21px;font-weight:500;font-variant-numeric:tabular-nums}
+.kpi .d{font-size:10.5px;color:var(--muted);margin-top:3px}
+
+.panel{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:16px}
+.ptitle{padding:11px 14px;border-bottom:1px solid var(--line2);font-size:12.5px;font-weight:500;display:flex;align-items:center;gap:8px}
+.ptitle .sp{margin-left:auto}
+
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;padding:8px 12px;color:var(--muted);font-weight:400;font-size:10.5px;background:#FBFAF7;border-bottom:1px solid var(--line2)}
+td{padding:7px 12px;border-bottom:1px solid var(--line2);font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:none}
+td .mini{display:inline-block;width:16px;height:16px;border-radius:4px;border:.5px solid rgba(0,0,0,.1);vertical-align:-4px;margin-right:7px}
+.conf{font-size:9.5px;padding:2px 6px;border-radius:4px;font-weight:500}
+.conf.hi{background:var(--ok-soft);color:#0F6E56}
+.conf.mid{background:var(--warn-soft);color:#854F0B}
+.conf.lo{background:#FCEBEB;color:#A32D2D}
+
+.two{display:grid;grid-template-columns:1fr 300px;gap:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px}
+.flabel{font-size:11px;color:var(--muted);margin-bottom:5px}
+.finput{border:1px solid var(--line);border-radius:7px;padding:7px 10px;font-size:12px;margin-bottom:12px;background:#fff;color:var(--ink);font-family:inherit;width:100%}
+.swatchbig{height:80px;border-radius:9px;border:.5px solid rgba(0,0,0,.1);margin-bottom:10px}
+.checks{display:flex;flex-direction:column;gap:6px}
+.chk{display:flex;align-items:center;gap:8px;font-size:11.5px;padding:6px 9px;border-radius:7px;background:#FBFAF7}
+.chk .dot{width:14px;height:14px;border-radius:50%;display:grid;place-items:center;font-size:9px;color:#fff;flex-shrink:0}
+.chk.pass .dot{background:var(--ok)}
+.chk.fail .dot{background:#E24B4A}
+.chk .sp{margin-left:auto;color:var(--muted);font-size:10.5px}
+
+.legend{display:flex;gap:14px;font-size:10.5px;color:var(--muted);padding:8px 0 0;flex-wrap:wrap}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px}
+.hint{font-size:11px;color:var(--muted);line-height:1.6;margin-top:10px}
+.anno{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--brand-deep);background:var(--brand-soft);padding:1px 6px;border-radius:4px;font-weight:500}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">豆</div>
+  <div>
+    <span class="htitle">拼豆图纸</span><span class="hsub">产品原型 v1 · 2026-11-07</span>
+  </div>
+  <div class="tabs">
+    <button class="tab on" data-sec="mp">微信小程序</button>
+    <button class="tab" data-sec="admin">Web 管理后台</button>
+  </div>
+</header>
+
+<div class="stage" data-sec="mp">
+  <div class="page-list">
+    <div class="group on" data-sec="mp">
+      <div class="glabel">核心流程</div>
+      <button class="pbtn on" data-sec="mp" data-page="1">做图页 · 空态<small>上传入口</small></button>
+      <button class="pbtn" data-sec="mp" data-page="2">做图页 · 已选图<small>模式判定 + 参数</small></button>
+      <button class="pbtn" data-sec="mp" data-page="3">图纸预览<small>网格 + 分板线</small></button>
+      <button class="pbtn" data-sec="mp" data-page="4">用量清单<small>色号 + 颗数</small></button>
+      <div class="glabel" style="margin-top:10px">色卡</div>
+      <button class="pbtn" data-sec="mp" data-page="5">色卡浏览<small>品牌 / 系列 / 搜索</small></button>
+      <button class="pbtn" data-sec="mp" data-page="6">色号详情<small>色值 + 披露</small></button>
+      <div class="glabel" style="margin-top:10px">其他</div>
+      <button class="pbtn" data-sec="mp" data-page="7">我的<small>历史 + 套装</small></button>
+    </div>
+    <div class="group" data-sec="admin">
+      <div class="glabel">Phase 1 可用</div>
+      <button class="pbtn on" data-sec="admin" data-page="a1">仪表盘<small>健康度概览</small></button>
+      <button class="pbtn" data-sec="admin" data-page="a2">色卡管理<small>221 色号编辑</small></button>
+      <button class="pbtn" data-sec="admin" data-page="a3">数据校验<small>散点图 + 离群</small></button>
+      <button class="pbtn" data-sec="admin" data-page="a4">套装配置<small>盒装色号组</small></button>
+      <button class="pbtn" data-sec="admin" data-page="a5">LUT 构建<small>导出静态产物</small></button>
+      <div class="glabel" style="margin-top:10px">Phase 2 需后端</div>
+      <button class="pbtn" disabled style="opacity:.45">纠错工单</button>
+      <button class="pbtn" disabled style="opacity:.45">用户 / 图纸</button>
+    </div>
+  </div>
+
+  <div class="canvas">
+    <div class="phone">
+      <div class="notch"></div>
+
+      <!-- P1 做图页空态 -->
+      <div class="screen on" data-sec="mp" data-page="1">
+        <div class="nav"><h1>做图</h1></div>
+        <div class="sbody">
+          <div class="sec" style="margin-top:6px">
+            <div class="lbl">当前色卡</div>
+            <div class="row" style="display:flex;align-items:center">
+              <div class="chip"><span class="dot"></span>MARD 221 色</div>
+              <span style="margin-left:auto;font-size:12px;color:var(--muted)">切换</span>
+            </div>
+          </div>
+
+          <div class="sec" style="margin-top:18px">
+            <div class="up" data-goto="2" style="cursor:pointer">
+              <div class="upico">
+                <svg viewBox="0 0 24 24"><path d="M12 16V4M12 4L7 9M12 4l5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
+              </div>
+              <div class="uptit">选择图片</div>
+              <div class="upsub">照片或像素图都行 · 图片不会上传</div>
+            </div>
+          </div>
+
+          <div style="margin-top:20px;padding:0 4px">
+            <div style="font-size:11.5px;color:var(--muted);line-height:1.75">
+              · 照片模式：自动配色，适合人像、宠物、风景<br>
+              · 直接导入：像素图 1:1 还原，不改变任何一个像素
+            </div>
+          </div>
+        </div>
+        <div class="bottom"><button class="btn dim">先选一张图</button></div>
+        <div class="tabbar">
+          <div class="tabi on" data-goto="1"><span class="ti">✎</span>做图</div>
+          <div class="tabi" data-goto="5"><span class="ti">▦</span>色卡</div>
+          <div class="tabi" data-goto="7"><span class="ti">◔</span>我的</div>
+        </div>
+      </div>
+
+      <!-- P2 已选图 -->
+      <div class="screen" data-sec="mp" data-page="2">
+        <div class="nav"><div class="back">‹</div><h1>调整</h1></div>
+        <div class="sbody">
+          <div class="pv" style="margin-top:6px">
+            <div class="pvimg" id="srcGrid"></div>
+            <div class="pvbadge">432 × 432 px</div>
+          </div>
+
+          <div class="notice" style="margin-top:12px">
+            <div>
+              <b>检测到像素图</b>（每格 8 px，共 54 × 54）<br>
+              将按原图 1:1 还原，不改色、不去噪。
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="abtn" style="flex:1;padding:7px">改用照片模式</button>
+            <button class="abtn pri" style="flex:1;padding:7px;border:none">按 1:1 导入</button>
+          </div>
+
+          <div class="sec" style="margin-top:18px">
+            <div class="lbl"><b>格数</b> <span style="color:var(--brand-deep)">自动识别 54 × 54</span></div>
+            <div class="presets">
+              <div class="pre">29</div><div class="pre">48</div><div class="pre on">54</div><div class="pre">96</div><div class="pre">自定义</div>
+            </div>
+          </div>
+
+          <div class="sec">
+            <div class="lbl"><b>色数</b> <span>保留原图 14 色</span></div>
+            <div class="slider">
+              <div class="track"><div class="fill" style="width:28%"></div><div class="knob" style="left:28%"></div></div>
+              <div class="val">14</div>
+            </div>
+          </div>
+
+          <div class="row" style="display:flex;justify-content:space-between;font-size:12px;margin-top:14px">
+            <span style="color:var(--sub)">成品尺寸（5mm 豆）</span>
+            <span style="font-weight:500">27 × 27 cm</span>
+          </div>
+          <div class="row" style="display:flex;justify-content:space-between;font-size:12px;margin-top:8px">
+            <span style="color:var(--sub)">所需底板（29×29）</span>
+            <span style="font-weight:500">4 块</span>
+          </div>
+        </div>
+        <div class="bottom"><button class="btn" data-goto="3">生成图纸</button></div>
+      </div>
+
+      <!-- P3 预览 -->
+      <div class="screen" data-sec="mp" data-page="3">
+        <div class="nav"><div class="back">‹</div><h1>图纸预览</h1><div class="more">···</div></div>
+        <div class="sbody" style="padding-top:4px">
+          <div class="pvwrap">
+            <div class="grid" id="mainGrid" style="position:relative"></div>
+            <div class="zoomcard">
+              <div class="zt">放大 3.0x</div>
+              <div class="grid" id="zoomGrid"></div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:center;gap:16px;font-size:10.5px;color:var(--muted);margin-top:10px">
+            <span>54 × 54</span><span>·</span><span>14 色</span><span>·</span><span>1,842 颗</span>
+          </div>
+        </div>
+        <div class="tools">
+          <div class="tool on"><div class="ic">◱</div>分板</div>
+          <div class="tool"><div class="ic">◉</div>烫后</div>
+          <div class="tool"><div class="ic">✎</div>换色</div>
+          <div class="tool" data-goto="4"><div class="ic">⤓</div>导出</div>
+        </div>
+      </div>
+
+      <!-- P4 用量 -->
+      <div class="screen" data-sec="mp" data-page="4">
+        <div class="nav"><div class="back">‹</div><h1>用量清单</h1></div>
+        <div class="sbody">
+          <div class="stats" style="margin-top:6px">
+            <div class="stat"><div class="k">总颗数</div><div class="v">1,842<small>颗</small></div></div>
+            <div class="stat"><div class="k">用色</div><div class="v">14<small>色</small></div></div>
+            <div class="stat"><div class="k">底板</div><div class="v">4<small>块</small></div></div>
+            <div class="stat"><div class="k">成品</div><div class="v">27<small>cm</small></div></div>
+          </div>
+
+          <div class="sec" style="margin-top:16px">
+            <div class="lbl">MARD 221 · 按用量排序 <span style="margin-left:auto;color:var(--brand-deep)">2 色需补货</span></div>
+            <div class="ulist">
+              <div class="urow"><div class="sw" style="background:#FFFFFF"></div><div class="ucode">A1</div><div class="uname">白色</div><span class="tag have">已有</span><div class="cnt">612</div></div>
+              <div class="urow"><div class="sw" style="background:#3D3A38"></div><div class="ucode">C4</div><div class="uname">深灰</div><span class="tag have">已有</span><div class="cnt">284</div></div>
+              <div class="urow"><div class="sw" style="background:#E8B48C"></div><div class="ucode">A7</div><div class="uname">肤色</div><span class="tag have">已有</span><div class="cnt">246</div></div>
+              <div class="urow"><div class="sw" style="background:#F6DFC8"></div><div class="ucode">A5</div><div class="uname">浅肤</div><span class="tag have">已有</span><div class="cnt">198</div></div>
+              <div class="urow"><div class="sw" style="background:#D9633F"></div><div class="ucode">B5</div><div class="uname">砖红</div><span class="tag need">补 120</span><div class="cnt">156</div></div>
+              <div class="urow"><div class="sw" style="background:#F2A65A"></div><div class="ucode">B2</div><div class="uname">橙</div><span class="tag have">已有</span><div class="cnt">132</div></div>
+              <div class="urow"><div class="sw" style="background:#9CC3D5"></div><div class="ucode">D1</div><div class="uname">浅蓝</div><span class="tag need">补 80</span><div class="cnt">98</div></div>
+              <div class="urow"><div class="sw" style="background:#6B8E6B"></div><div class="ucode">E2</div><div class="uname">灰绿</div><span class="tag have">已有</span><div class="cnt">116</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom" style="display:flex;gap:9px">
+          <button class="btn ghost" style="flex:1">复制清单</button>
+          <button class="btn" style="flex:1.4">保存图纸</button>
+        </div>
+      </div>
+
+      <!-- P5 色卡 -->
+      <div class="screen" data-sec="mp" data-page="5">
+        <div class="nav"><h1>色卡</h1></div>
+        <div class="sbody">
+          <div style="display:flex;gap:7px;margin:6px 0 12px">
+            <div class="chip"><span class="dot"></span>MARD</div>
+            <div class="chip" style="background:var(--bg);color:var(--sub)">COCO</div>
+          </div>
+          <div class="presets" style="margin-bottom:14px">
+            <div class="pre on">221 色</div><div class="pre">291 色</div>
+          </div>
+          <div class="search"><span>⌕</span><span style="flex:1">搜索 A12 / 肤色</span></div>
+          <div class="pgrid" id="paletteGrid"></div>
+          <div style="margin-top:14px;font-size:10px;color:var(--muted);line-height:1.6">
+            色值来自公开资料整理，与实物可能存在差异。大批量采购前建议先看商家实物色卡。
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tabi" data-goto="1"><span class="ti">✎</span>做图</div>
+          <div class="tabi on" data-goto="5"><span class="ti">▦</span>色卡</div>
+          <div class="tabi" data-goto="7"><span class="ti">◔</span>我的</div>
+        </div>
+      </div>
+
+      <!-- P6 色号详情 -->
+      <div class="screen" data-sec="mp" data-page="6">
+        <div class="nav"><div class="back">‹</div><h1>A12</h1></div>
+        <div class="sbody">
+          <div class="bigsw" style="background:#8FC4DC;margin-top:6px"></div>
+          <div style="display:flex;align-items:baseline;gap:8px;margin:12px 0 2px">
+            <span style="font-size:19px;font-weight:500">A12</span>
+            <span style="font-size:12.5px;color:var(--sub)">浅湖蓝</span>
+            <span class="tag have" style="margin-left:auto">已收录</span>
+          </div>
+
+          <div class="row" style="margin-top:12px">
+            <div class="kv"><span class="k">HEX</span><span class="v">#8FC4DC</span></div>
+            <div class="kv"><span class="k">Lab</span><span class="v">76.4, −9.2, −12.1</span></div>
+            <div class="kv"><span class="k">质感</span><span class="v">实色</span></div>
+            <div class="kv"><span class="k">数据来源</span><span class="v">公开资料 · 3 源一致</span></div>
+          </div>
+
+          <div class="lbl" style="margin-top:18px">同品牌近似色</div>
+          <div style="display:flex;gap:9px">
+            <div style="flex:1"><div class="pcell" style="background:#A8D3E6"></div><div style="font-size:10px;text-align:center;margin-top:4px;color:var(--sub)">A11</div></div>
+            <div style="flex:1"><div class="pcell" style="background:#7AB6D4"></div><div style="font-size:10px;text-align:center;margin-top:4px;color:var(--sub)">A13</div></div>
+            <div style="flex:1"><div class="pcell" style="background:#9ECAD8"></div><div style="font-size:10px;text-align:center;margin-top:4px;color:var(--sub)">D3</div></div>
+            <div style="flex:1"><div class="pcell" style="background:#6FA9C9"></div><div style="font-size:10px;text-align:center;margin-top:4px;color:var(--sub)">D5</div></div>
+          </div>
+
+          <div class="disclose" style="margin-top:16px">
+            色值为公开资料整理，非品牌官方测量。屏幕显示与实物豆存在色差，且不同批次会有轻微差异。
+          </div>
+        </div>
+        <div class="bottom"><button class="btn ghost">这个颜色不对</button></div>
+      </div>
+
+      <!-- P7 我的 -->
+      <div class="screen" data-sec="mp" data-page="7">
+        <div class="nav"><h1>我的</h1></div>
+        <div class="sbody">
+          <div class="row" style="display:flex;align-items:center;gap:10px;margin-top:6px">
+            <div style="width:36px;height:36px;border-radius:10px;background:var(--brand-soft);display:grid;place-items:center;font-size:14px">🎒</div>
+            <div><div style="font-size:13px;font-weight:500">我的套装：MARD 72 色</div><div style="font-size:10.5px;color:var(--muted);margin-top:1px">生成时只使用套装内颜色</div></div>
+            <div style="margin-left:auto;font-size:12px;color:var(--muted)">›</div>
+          </div>
+
+          <div class="lbl" style="margin-top:18px">最近图纸 <span style="margin-left:auto">全部</span></div>
+          <div class="hgrid">
+            <div class="hitem"><div class="hthumb" id="h1"></div><div class="hmeta"><div class="t">猫脸</div><div class="s">54×54 · 14 色 · 昨天</div></div></div>
+            <div class="hitem"><div class="hthumb" id="h2"></div><div class="hmeta"><div class="t">像素小房子</div><div class="s">32×32 · 9 色 · 11/05</div></div></div>
+            <div class="hitem"><div class="hthumb" id="h3"></div><div class="hmeta"><div class="t">合影</div><div class="s">48×48 · 22 色 · 11/03</div></div></div>
+            <div class="hitem"><div class="hthumb" id="h4"></div><div class="hmeta"><div class="t">钥匙扣</div><div class="s">16×16 · 6 色 · 11/01</div></div></div>
+          </div>
+
+          <div class="row" style="margin-top:16px;display:flex;justify-content:space-between;font-size:12.5px">
+            <span>关于与数据说明</span><span style="color:var(--muted)">›</span>
+          </div>
+          <div class="row" style="margin-top:8px;display:flex;justify-content:space-between;font-size:12.5px">
+            <span>色号纠错</span><span style="color:var(--muted)">›</span>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tabi" data-goto="1"><span class="ti">✎</span>做图</div>
+          <div class="tabi" data-goto="5"><span class="ti">▦</span>色卡</div>
+          <div class="tabi on" data-goto="7"><span class="ti">◔</span>我的</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="stage hide" data-sec="admin">
+  <div class="canvas">
+    <div class="browser">
+      <div class="bbar">
+        <div class="bdot"></div><div class="bdot"></div><div class="bdot"></div>
+        <div class="url">localhost:3000 / palette</div>
+      </div>
+      <div class="app">
+        <div class="side">
+          <div class="slogo"><div class="logo" style="width:20px;height:20px;font-size:10px">豆</div>管理后台</div>
+
+          <div class="sgroup">概览</div>
+          <button class="sitem on" data-sec="admin" data-page="a1">仪表盘</button>
+
+          <div class="sgroup">色卡数据</div>
+          <button class="sitem" data-sec="admin" data-page="a2">色卡管理</button>
+          <button class="sitem" data-sec="admin" data-page="a3">数据校验</button>
+          <button class="sitem" data-sec="admin" data-page="a4">套装配置</button>
+          <button class="sitem" data-sec="admin" data-page="a5">LUT 构建</button>
+
+          <div class="sgroup">用户运营</div>
+          <button class="sitem" data-sec="admin" data-page="a6">用户管理</button>
+          <button class="sitem" data-sec="admin" data-page="a7">图纸管理</button>
+          <button class="sitem" data-sec="admin" data-page="a8">纠错工单<span class="badge">3</span></button>
+          <button class="sitem" data-sec="admin" data-page="a9">内容审核<span class="badge">2</span></button>
+
+          <div class="sgroup">商业</div>
+          <button class="sitem" data-sec="admin" data-page="a10">订单与会员</button>
+
+          <div class="sgroup">系统</div>
+          <button class="sitem" data-sec="admin" data-page="a11">版本发布</button>
+          <button class="sitem" data-sec="admin" data-page="a12">操作日志</button>
+          <button class="sitem" data-sec="admin" data-page="a13">设置</button>
+        </div>
+
+        <div class="main">
+          <!-- A1 -->
+          <div class="screen on" data-sec="admin" data-page="a1" style="padding-top:0">
+            <div class="abar"><h2>仪表盘</h2><div class="sp"></div><button class="abtn">导入 CSV</button><button class="abtn pri">导出 JSON</button></div>
+            <div class="acontent">
+              <div class="phbanner">
+                <div><b>当前为 Phase 1 本地工作台。</b>数据存在浏览器本地（IndexedDB），不上传服务器。编辑完成后导出 <code>colors.json</code> 与 LUT 二进制，手动放入小程序分包目录即可发布。零服务器成本。</div>
+              </div>
+
+              <div class="kpis">
+                <div class="kpi"><div class="k">MARD 221 收录</div><div class="v">221 <span style="font-size:12px;color:var(--ok)">/ 221</span></div><div class="d">完整</div></div>
+                <div class="kpi"><div class="k">多源一致率</div><div class="v">78<span style="font-size:12px">%</span></div><div class="d">ΔE00 &lt; 2 的色号</div></div>
+                <div class="kpi"><div class="k">待人工裁决</div><div class="v" style="color:#A32D2D">17</div><div class="d">ΔE00 &gt; 5</div></div>
+                <div class="kpi"><div class="k">LUT 产物</div><div class="v">262<span style="font-size:12px"> KB</span></div><div class="d">gzip 后 41 KB</div></div>
+              </div>
+
+              <div class="two">
+                <div class="panel">
+                  <div class="ptitle">最近变更<div class="sp"></div><span style="font-size:10.5px;color:var(--muted)">本地记录</span></div>
+                  <table>
+                    <thead><tr><th>色号</th><th>变更</th><th>原因</th><th>时间</th></tr></thead>
+                    <tbody>
+                      <tr><td><span class="mini" style="background:#8FC4DC"></span>A12</td><td>#8AC0D9 → #8FC4DC</td><td>三源取中位数</td><td>21:14</td></tr>
+                      <tr><td><span class="mini" style="background:#D9633F"></span>B5</td><td>标记为 low</td><td>来源间 ΔE00 = 8.4</td><td>21:08</td></tr>
+                      <tr><td><span class="mini" style="background:#F2A65A"></span>B2</td><td>补全名称「橙」</td><td>清单缺名</td><td>20:52</td></tr>
+                      <tr><td><span class="mini" style="background:#FFFFFF"></span>A1</td><td>#FFFFFF 校验通过</td><td>三源一致</td><td>20:40</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="card">
+                  <div style="font-size:12px;font-weight:500;margin-bottom:8px">发布前检查</div>
+                  <div class="checks">
+                    <div class="chk pass"><div class="dot">✓</div>色号数量 221<div class="sp">通过</div></div>
+                    <div class="chk pass"><div class="dot">✓</div>无重复色号<div class="sp">通过</div></div>
+                    <div class="chk fail"><div class="dot">!</div>17 个待裁决<div class="sp">17</div></div>
+                    <div class="chk pass"><div class="dot">✓</div>HEX 格式合法<div class="sp">通过</div></div>
+                    <div class="chk fail"><div class="dot">!</div>未构建 LUT<div class="sp">-</div></div>
+                  </div>
+                  <div class="hint">裁决完成并构建 LUT 后，才能导出发布包。</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- A2 -->
+          <div class="screen" data-sec="admin" data-page="a2" style="padding-top:0">
+            <div class="abar">
+              <h2>色卡管理</h2>
+              <div style="display:flex;gap:5px;margin-left:14px">
+                <span class="pre on" style="padding:4px 9px;font-size:11px">MARD 221</span>
+                <span class="pre" style="padding:4px 9px;font-size:11px">COCO 291</span>
+              </div>
+              <div class="sp"></div>
+              <button class="abtn">+ 新增色号</button>
+              <button class="abtn pri">导入 CSV</button>
+            </div>
+            <div class="acontent">
+              <div style="display:flex;gap:8px;margin-bottom:12px">
+                <input class="finput" style="margin:0;max-width:220px" value="搜索色号 / 名称">
+                <select class="finput" style="margin:0;max-width:130px"><option>全部可信度</option><option>高</option><option>中</option><option>低</option></select>
+                <select class="finput" style="margin:0;max-width:130px"><option>全部色系</option><option>A</option><option>B</option></select>
+                <span style="margin-left:auto;font-size:11px;color:var(--muted);align-self:center">221 条 · 显示 12</span>
+              </div>
+
+              <div class="panel">
+                <table>
+                  <thead><tr><th style="width:60px">色块</th><th>色号</th><th>名称</th><th>HEX</th><th>Lab</th><th>质感</th><th>可信度</th><th style="width:70px">操作</th></tr></thead>
+                  <tbody>
+                    <tr><td><span class="mini" style="background:#FFFFFF;width:20px;height:20px"></span></td><td><b>A1</b></td><td>白色</td><td>#FFFFFF</td><td>100.0, 0.0, 0.0</td><td>实色</td><td><span class="conf hi">高</span></td><td style="color:var(--brand-deep)">编辑</td></tr>
+                    <tr><td><span class="mini" style="background:#F6DFC8;width:20px;height:20px"></span></td><td><b>A5</b></td><td>浅肤</td><td>#F6DFC8</td><td>89.6, 5.4, 12.8</td><td>实色</td><td><span class="conf hi">高</span></td><td style="color:var(--brand-deep)">编辑</td></tr>
+                    <tr><td><span class="mini" style="background:#E8B48C;width:20px;height:20px"></span></td><td><b>A7</b></td><td>肤色</td><td>#E8B48C</td><td>78.2, 16.1, 26.4</td><td>实色</td><td><span class="conf hi">高</span></td><td style="color:var(--brand-deep)">编辑</td></tr>
+                    <tr><td><span class="mini" style="background:#8FC4DC;width:20px;height:20px"></span></td><td><b>A12</b></td><td>浅湖蓝</td><td>#8FC4DC</td><td>76.4, −9.2, −12.1</td><td>实色</td><td><span class="conf mid">中</span></td><td style="color:var(--brand-deep)">编辑</td></tr>
+                    <tr><td><span class="mini" style="background:#D9633F;width:20px;height:20px"></span></td><td><b>B5</b></td><td>砖红</td><td>#D9633F</td><td>49.8, 46.2, 38.1</td><td>实色</td><td><span class="conf lo">低</span></td><td style="color:var(--brand-deep)">裁决</td></tr>
+                    <tr><td><span class="mini" style="background:#F2A65A;width:20px;height:20px"></span></td><td><b>B2</b></td><td>橙</td><td>#F2A65A</td><td>73.1, 32.5, 51.2</td><td>实色</td><td><span class="conf mid">中</span></td><td style="color:var(--brand-deep)">编辑</td></tr>
+                    <tr><td><span class="mini" style="background:#3D3A38;width:20px;height:20px"></span></td><td><b>C4</b></td><td>深灰</td><td>#3D3A38</td><td>25.4, 1.2, 1.8</td><td>实色</td><td><span class="conf hi">高</span></td><td style="color:var(--brand-deep)">编辑</td></tr>
+                    <tr><td><span class="mini" style="background:#9CC3D5;width:20px;height:20px"></span></td><td><b>D1</b></td><td>浅蓝</td><td>#9CC3D5</td><td>78.0, −8.1, −9.4</td><td>实色</td><td><span class="conf hi">高</span></td><td style="color:var(--brand-deep)">编辑</td></tr>
+                    <tr><td><span class="mini" style="background:#6B8E6B;width:20px;height:20px"></span></td><td><b>E2</b></td><td>灰绿</td><td>#6B8E6B</td><td>55.3, −14.2, 12.6</td><td>实色</td><td><span class="conf mid">中</span></td><td style="color:var(--brand-deep)">编辑</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="legend">
+                <span><span class="anno">高</span> 三源 ΔE00 &lt; 2</span>
+                <span><span class="anno">中</span> 2–5，取中位数</span>
+                <span><span class="anno">低</span> &gt; 5，需人工裁决</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- A3 -->
+          <div class="screen" data-sec="admin" data-page="a3" style="padding-top:0">
+            <div class="abar"><h2>数据校验</h2><div class="sp"></div><button class="abtn">重新计算 ΔE00</button><button class="abtn pri">导出裁决清单</button></div>
+            <div class="acontent">
+              <div class="two">
+                <div class="panel" style="margin:0">
+                  <div class="ptitle">Lab a-b 平面散点<div class="sp"></div><span style="font-size:10.5px;color:var(--muted)">按色系上色 · 每点 = 1 个色号</span></div>
+                  <div style="padding:14px">
+                    <svg id="scatter" viewBox="0 0 520 320" style="width:100%;height:auto;display:block"></svg>
+                    <div class="legend">
+                      <span><i style="background:#E24B4A"></i>A 系 红</span>
+                      <span><i style="background:#BA7517"></i>B 系 橙</span>
+                      <span><i style="background:#639922"></i>C 系 绿</span>
+                      <span><i style="background:#378ADD"></i>D 系 蓝</span>
+                      <span><i style="background:#7F77DD"></i>E 系 紫</span>
+                    </div>
+                    <div class="hint">离群点（红圈标记）几乎一定是录入错误：贴错标签、抄错行，或该色号来自不同来源导致整体偏移。</div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="card" style="margin-bottom:14px">
+                    <div style="font-size:12px;font-weight:500;margin-bottom:9px">自动检查</div>
+                    <div class="checks">
+                      <div class="chk pass"><div class="dot">✓</div>色号数 221<div class="sp">通过</div></div>
+                      <div class="chk pass"><div class="dot">✓</div>HEX 格式<div class="sp">通过</div></div>
+                      <div class="chk pass"><div class="dot">✓</div>无重复 HEX<div class="sp">通过</div></div>
+                      <div class="chk pass"><div class="dot">✓</div>多源覆盖 ≥ 2<div class="sp">通过</div></div>
+                      <div class="chk fail"><div class="dot">!</div>离群点<div class="sp">5</div></div>
+                      <div class="chk fail"><div class="dot">!</div>ΔE00 &gt; 5 分歧<div class="sp">17</div></div>
+                    </div>
+                  </div>
+
+                  <div class="panel" style="margin:0">
+                    <div class="ptitle">待裁决</div>
+                    <table>
+                      <tbody>
+                        <tr><td><span class="mini" style="background:#D9633F"></span><b>B5</b> 砖红</td><td style="text-align:right;color:#A32D2D">ΔE 8.4</td></tr>
+                        <tr><td><span class="mini" style="background:#C4703C"></span><b>B7</b> 焦糖</td><td style="text-align:right;color:#A32D2D">ΔE 7.1</td></tr>
+                        <tr><td><span class="mini" style="background:#A8552E"></span><b>B9</b> 赭石</td><td style="text-align:right;color:#A32D2D">ΔE 6.6</td></tr>
+                        <tr><td><span class="mini" style="background:#8E9B6A"></span><b>E14</b> 橄榄</td><td style="text-align:right;color:#A32D2D">ΔE 6.2</td></tr>
+                        <tr><td><span class="mini" style="background:#7A6E8C"></span><b>F3</b> 灰紫</td><td style="text-align:right;color:#A32D2D">ΔE 5.4</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- A4 -->
+          <div class="screen" data-sec="admin" data-page="a4" style="padding-top:0">
+            <div class="abar"><h2>套装配置</h2><div class="sp"></div><button class="abtn pri">+ 新建套装</button></div>
+            <div class="acontent">
+              <div class="two">
+                <div class="panel" style="margin:0">
+                  <div class="ptitle">MARD 72 色套装<div class="sp"></div><span style="font-size:10.5px;color:var(--muted)">已选 72 / 221</span></div>
+                  <div style="padding:14px">
+                    <div class="pgrid" id="setGrid"></div>
+                    <div class="hint">点击色块加入或移出套装。用户在「我的套装」中选择后，生成图纸时只会使用这里的颜色，套装外的需求会在用量清单标「需补货」。</div>
+                  </div>
+                </div>
+                <div>
+                  <div class="card" style="margin-bottom:14px">
+                    <div class="flabel">套装名称</div>
+                    <input class="finput" value="MARD 72 色套装">
+                    <div class="flabel">对应系列</div>
+                    <select class="finput"><option>MARD 221</option><option>COCO 291</option></select>
+                    <div class="flabel">色数</div>
+                    <input class="finput" value="72">
+                    <button class="abtn pri" style="width:100%">保存套装</button>
+                  </div>
+                  <div class="card">
+                    <div style="font-size:12px;font-weight:500;margin-bottom:8px">已有套装</div>
+                    <div style="font-size:11.5px;color:var(--sub);line-height:2">
+                      MARD 24 色 · 24 色<br>
+                      MARD 48 色 · 48 色<br>
+                      MARD 72 色 · 72 色<br>
+                      MARD 144 色 · 144 色<br>
+                      MARD 216 色 · 216 色
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- A5 -->
+          <div class="screen" data-sec="admin" data-page="a5" style="padding-top:0">
+            <div class="abar"><h2>LUT 构建</h2><div class="sp"></div><button class="abtn">重新校验</button><button class="abtn pri">构建并导出</button></div>
+            <div class="acontent">
+              <div class="phbanner">
+                <div><b>LUT 必须在这里构建，不要在 CI 里跑。</b>它是纯静态产物，产出稳定，构建一次约 30 秒。产物直接提交进小程序分包目录 <code>assets/lut/</code>。</div>
+              </div>
+
+              <div class="two">
+                <div class="panel" style="margin:0">
+                  <div class="ptitle">构建参数</div>
+                  <div style="padding:16px">
+                    <div class="flabel">系列</div>
+                    <select class="finput"><option>MARD 221</option><option>COCO 291</option></select>
+
+                    <div class="flabel">网格粒度 N</div>
+                    <select class="finput"><option>32 × 32 × 32（推荐）</option><option>16 × 16 × 16</option><option>48 × 48 × 48</option></select>
+
+                    <div class="flabel">每格候选数 TOP_K</div>
+                    <select class="finput"><option>4（推荐）</option><option>6（更准，体积 ×1.5）</option></select>
+
+                    <div class="flabel">数据版本</div>
+                    <input class="finput" value="2026.11.1">
+
+                    <div style="background:#FBFAF7;border-radius:8px;padding:11px 12px;font-size:11px;color:var(--sub);line-height:1.7">
+                      预计产物 <b>262 KB</b> · gzip 后约 <b>41 KB</b><br>
+                      预计构建时间 <b>约 28 秒</b><br>
+                      预计 ΔE00 一致性 <b>&gt; 99.5%</b>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="card" style="margin-bottom:14px">
+                    <div style="font-size:12px;font-weight:500;margin-bottom:9px">产物清单</div>
+                    <div style="font-size:11px;color:var(--sub);line-height:2.1;font-family:ui-monospace,monospace">
+                      assets/colors/mard-221.json<br>
+                      <span style="color:var(--muted)">12.4 KB · gzip 3.1 KB</span><br>
+                      assets/lut/mard-221.bin<br>
+                      <span style="color:var(--muted)">262 KB · gzip 41 KB</span>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div style="font-size:12px;font-weight:500;margin-bottom:8px">一致性抽检</div>
+                    <div class="checks">
+                      <div class="chk pass"><div class="dot">✓</div>LUT vs 全量<div class="sp">99.7%</div></div>
+                      <div class="chk pass"><div class="dot">✓</div>构建耗时<div class="sp">26.4s</div></div>
+                      <div class="chk fail"><div class="dot">!</div>待裁决色号<div class="sp">17</div></div>
+                    </div>
+                    <div class="hint">存在待裁决色号时，允许构建但会记警告。正式发布前应处理完。</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="screen" data-sec="admin" data-page="a6" style="padding-top:0">
+            <div class="abar"><h2>用户管理</h2><div class="sp"></div><button class="abtn">导出 CSV</button><button class="abtn">群发通知</button></div>
+            <div class="acontent">
+              <div class="kpis">
+                <div class="kpi"><div class="k">总用户</div><div class="v">8,412</div><div class="d">今日 +124</div></div>
+                <div class="kpi"><div class="k">7 日活跃</div><div class="v">2,067</div><div class="d">24.6%</div></div>
+                <div class="kpi"><div class="k">Pro 会员</div><div class="v">186</div><div class="d">付费率 2.2%</div></div>
+                <div class="kpi"><div class="k">人均图纸</div><div class="v">2.4</div><div class="d">张 / 月</div></div>
+              </div>
+
+              <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center">
+                <input class="finput" style="margin:0;max-width:210px" value="搜索昵称 / openid">
+                <select class="finput" style="margin:0;max-width:120px"><option>全部用户</option><option>Pro 会员</option><option>7 日活跃</option><option>沉默 30 天</option></select>
+                <select class="finput" style="margin:0;max-width:110px"><option>全部来源</option><option>小程序</option><option>H5</option></select>
+                <span style="margin-left:auto;font-size:11px;color:var(--muted)">8,412 条 · 第 1 / 421 页</span>
+              </div>
+
+              <div class="panel">
+                <table>
+                  <thead><tr><th style="width:150px">用户</th><th>openid</th><th>注册</th><th>最后活跃</th><th>图纸</th><th>会员</th><th>状态</th><th style="width:90px">操作</th></tr></thead>
+                  <tbody>
+                    <tr><td><span class="mini" style="background:#FFD9C7;border-radius:50%"></span><b>小豆芽</b></td><td style="color:var(--muted)">oX7b…9k2</td><td>2026-10-02</td><td>2 分钟前</td><td>14</td><td><span class="conf hi">Pro</span></td><td>正常</td><td style="color:var(--brand-deep)">详情</td></tr>
+                    <tr><td><span class="mini" style="background:#C8E0F0;border-radius:50%"></span><b>阿橘</b></td><td style="color:var(--muted)">oX7b…3m8</td><td>2026-10-11</td><td>1 小时前</td><td>9</td><td><span class="conf mid">免费</span></td><td>正常</td><td style="color:var(--brand-deep)">详情</td></tr>
+                    <tr><td><span class="mini" style="background:#E6D6F0;border-radius:50%"></span><b>pixel_lu</b></td><td style="color:var(--muted)">oX7b…7q1</td><td>2026-09-18</td><td>3 小时前</td><td>31</td><td><span class="conf hi">Pro</span></td><td>正常</td><td style="color:var(--brand-deep)">详情</td></tr>
+                    <tr><td><span class="mini" style="background:#D9EAD3;border-radius:50%"></span><b>豆豆妈</b></td><td style="color:var(--muted)">oX7b…1c4</td><td>2026-08-30</td><td>昨天</td><td>6</td><td><span class="conf mid">免费</span></td><td>正常</td><td style="color:var(--brand-deep)">详情</td></tr>
+                    <tr><td><span class="mini" style="background:#F7D6D6;border-radius:50%"></span><b>手作阿明</b></td><td style="color:var(--muted)">oX7b…5t9</td><td>2026-07-14</td><td>5 天前</td><td>52</td><td><span class="conf hi">Pro</span></td><td>正常</td><td style="color:var(--brand-deep)">详情</td></tr>
+                    <tr><td><span class="mini" style="background:#EFE3C8;border-radius:50%"></span><b>匿名用户</b></td><td style="color:var(--muted)">oX7b…8w3</td><td>2026-11-06</td><td>2 天前</td><td>0</td><td><span class="conf mid">免费</span></td><td><span class="conf lo">疑似异常</span></td><td style="color:var(--brand-deep)">详情</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="legend">
+                <span>用户数据仅在完成登录体系后可用。首期无账号，此页为规划占位。</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="screen" data-sec="admin" data-page="a7" style="padding-top:0">
+            <div class="abar"><h2>图纸管理</h2><div class="sp"></div><button class="abtn">批量下架</button><button class="abtn pri">导出报表</button></div>
+            <div class="acontent">
+              <div class="kpis">
+                <div class="kpi"><div class="k">总图纸</div><div class="v">21,860</div><div class="d">今日 +382</div></div>
+                <div class="kpi"><div class="k">公开分享</div><div class="v">1,204</div><div class="d">占 5.5%</div></div>
+                <div class="kpi"><div class="k">待审核</div><div class="v" style="color:#A32D2D">2</div><div class="d">公开前必审</div></div>
+                <div class="kpi"><div class="k">被举报</div><div class="v">0</div><div class="d">近 7 天</div></div>
+              </div>
+
+              <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center">
+                <input class="finput" style="margin:0;max-width:210px" value="搜索标题 / 用户">
+                <select class="finput" style="margin:0;max-width:120px"><option>全部可见性</option><option>公开</option><option>私密</option></select>
+                <select class="finput" style="margin:0;max-width:110px"><option>全部模式</option><option>照片</option><option>直接导入</option></select>
+                <span style="margin-left:auto;font-size:11px;color:var(--muted)">21,860 条</span>
+              </div>
+
+              <div class="panel">
+                <table>
+                  <thead><tr><th style="width:52px">缩略</th><th>标题</th><th>作者</th><th>格数</th><th>色数</th><th>模式</th><th>可见性</th><th>创建</th><th style="width:90px">操作</th></tr></thead>
+                  <tbody>
+                    <tr><td><span class="mini" style="background:linear-gradient(135deg,#E8B48C,#9CC3D5);width:26px;height:26px"></span></td><td><b>猫脸</b></td><td>小豆芽</td><td>54 × 54</td><td>14</td><td>直接导入</td><td><span class="conf hi">公开</span></td><td>11-07</td><td style="color:var(--brand-deep)">查看</td></tr>
+                    <tr><td><span class="mini" style="background:linear-gradient(135deg,#F2A65A,#E24B4A);width:26px;height:26px"></span></td><td><b>像素小房子</b></td><td>pixel_lu</td><td>32 × 32</td><td>9</td><td>直接导入</td><td><span class="conf hi">公开</span></td><td>11-06</td><td style="color:var(--brand-deep)">查看</td></tr>
+                    <tr><td><span class="mini" style="background:linear-gradient(135deg,#9CC3D5,#6B8E6B);width:26px;height:26px"></span></td><td><b>合影</b></td><td>手作阿明</td><td>48 × 48</td><td>22</td><td>照片</td><td><span class="conf mid">私密</span></td><td>11-05</td><td style="color:var(--brand-deep)">查看</td></tr>
+                    <tr><td><span class="mini" style="background:linear-gradient(135deg,#7A6E8C,#F6DFC8);width:26px;height:26px"></span></td><td><b>钥匙扣</b></td><td>豆豆妈</td><td>16 × 16</td><td>6</td><td>照片</td><td><span class="conf mid">私密</span></td><td>11-03</td><td style="color:var(--brand-deep)">查看</td></tr>
+                    <tr><td><span class="mini" style="background:linear-gradient(135deg,#F09595,#BA7517);width:26px;height:26px"></span></td><td><b>未命名</b></td><td>匿名用户</td><td>96 × 96</td><td>38</td><td>照片</td><td><span class="conf lo">待审核</span></td><td>11-07</td><td style="color:var(--brand-deep)">审核</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="hint">图纸全部存于用户本机，后台仅在用户主动公开分享时才能看到。私密图纸任何情况下不可读取，这是隐私承诺，不要为了让后台"数据好看"就破例。</div>
+            </div>
+          </div>
+
+          <div class="screen" data-sec="admin" data-page="a8" style="padding-top:0">
+            <div class="abar"><h2>纠错工单</h2><div class="sp"></div><button class="abtn">批量标记已处理</button><button class="abtn pri">导出裁决清单</button></div>
+            <div class="acontent">
+              <div class="two">
+                <div class="panel" style="margin:0">
+                  <div class="ptitle">待处理<div class="sp"></div><span style="font-size:10.5px;color:var(--muted)">3 条未读</span></div>
+                  <table>
+                    <thead><tr><th>色号</th><th>问题</th><th>用户</th><th>时间</th><th>状态</th></tr></thead>
+                    <tbody>
+                      <tr style="background:#FFFBF7"><td><span class="mini" style="background:#D9633F"></span><b>B5</b> 砖红</td><td>实物更偏橙</td><td>小豆芽</td><td>21:32</td><td><span class="conf lo">待处理</span></td></tr>
+                      <tr><td><span class="mini" style="background:#8FC4DC"></span><b>A12</b> 浅湖蓝</td><td>附图对比偏灰</td><td>阿橘</td><td>20:15</td><td><span class="conf lo">待处理</span></td></tr>
+                      <tr><td><span class="mini" style="background:#6B8E6B"></span><b>E2</b> 灰绿</td><td>色号写错，应为 E3</td><td>pixel_lu</td><td>昨天</td><td><span class="conf mid">处理中</span></td></tr>
+                      <tr><td><span class="mini" style="background:#F6DFC8"></span><b>A5</b> 浅肤</td><td>已确认并修正</td><td>豆豆妈</td><td>11-05</td><td><span class="conf hi">已修正</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div>
+                  <div class="card" style="margin-bottom:14px">
+                    <div style="display:flex;align-items:center;gap:9px;margin-bottom:10px">
+                      <div class="swatchbig" style="width:44px;height:44px;margin:0;background:#D9633F;flex-shrink:0"></div>
+                      <div>
+                        <div style="font-size:13px;font-weight:500">B5 · 砖红</div>
+                        <div style="font-size:10.5px;color:var(--muted);margin-top:2px">当前 #D9633F · 可信度 低</div>
+                      </div>
+                    </div>
+                    <div style="background:#FBFAF7;border-radius:8px;padding:10px;font-size:11.5px;line-height:1.6;color:var(--sub)">
+                      「实物比屏幕上的更偏橙一点，我拿 A7 旁边比过，应该接近 #E06A42。」
+                      <div style="margin-top:7px;color:var(--muted);font-size:10.5px">用户附图 1 张</div>
+                      <div style="height:64px;border-radius:6px;background:linear-gradient(135deg,#E8B48C,#D9633F);margin-top:6px"></div>
+                    </div>
+                    <div class="flabel" style="margin-top:12px">修正为</div>
+                    <input class="finput" value="#E06A42">
+                    <div style="display:flex;gap:7px">
+                      <button class="abtn" style="flex:1">驳回</button>
+                      <button class="abtn pri" style="flex:1.5">采纳并修正色值</button>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div style="font-size:12px;font-weight:500;margin-bottom:7px">处理规则</div>
+                    <div class="hint" style="margin:0">同一色号累计 ≥ 3 条独立反馈才改动数据。改完要重新构建 LUT 并重新提审，不是即时生效。</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="screen" data-sec="admin" data-page="a9" style="padding-top:0">
+            <div class="abar"><h2>内容审核</h2><div class="sp"></div><button class="abtn">审核规则</button><button class="abtn pri">全部通过</button></div>
+            <div class="acontent">
+              <div class="phbanner" style="background:#FCEBEB;border-color:#F7C1C1;color:#791F1F">
+                <div><b>这个小程序不做公开社区时，这一页可以一直空着。</b>一旦开放图纸广场，审核就是强制的——无审核的公开图片，是小程序被封最快的路径。</div>
+              </div>
+
+              <div style="display:flex;gap:6px;margin-bottom:14px">
+                <span class="pre on" style="padding:4px 11px;font-size:11px">待审核 2</span>
+                <span class="pre" style="padding:4px 11px;font-size:11px">已通过</span>
+                <span class="pre" style="padding:4px 11px;font-size:11px">已拒绝</span>
+                <span class="pre" style="padding:4px 11px;font-size:11px">举报队列</span>
+              </div>
+
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+                <div class="card" style="padding:0;overflow:hidden">
+                  <div style="height:130px;background:linear-gradient(135deg,#F09595,#BA7517);position:relative">
+                    <div style="position:absolute;left:7px;top:7px;background:rgba(255,255,255,.92);border-radius:5px;padding:2px 6px;font-size:9.5px">96 × 96 · 38 色</div>
+                  </div>
+                  <div style="padding:10px 11px">
+                    <div style="font-size:12px;font-weight:500">未命名</div>
+                    <div style="font-size:10.5px;color:var(--muted);margin-top:2px">匿名用户 · 2 分钟前提交</div>
+                    <div style="display:flex;gap:6px;margin-top:9px">
+                      <button class="abtn" style="flex:1;padding:5px;font-size:11px">拒绝</button>
+                      <button class="abtn pri" style="flex:1;padding:5px;font-size:11px">通过</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card" style="padding:0;overflow:hidden">
+                  <div style="height:130px;background:linear-gradient(135deg,#9CC3D5,#7A6E8C);position:relative">
+                    <div style="position:absolute;left:7px;top:7px;background:rgba(255,255,255,.92);border-radius:5px;padding:2px 6px;font-size:9.5px">64 × 64 · 18 色</div>
+                  </div>
+                  <div style="padding:10px 11px">
+                    <div style="font-size:12px;font-weight:500">蓝色小怪物</div>
+                    <div style="font-size:10.5px;color:var(--muted);margin-top:2px">pixel_lu · 8 分钟前提交</div>
+                    <div style="display:flex;gap:6px;margin-top:9px">
+                      <button class="abtn" style="flex:1;padding:5px;font-size:11px">拒绝</button>
+                      <button class="abtn pri" style="flex:1;padding:5px;font-size:11px">通过</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card" style="padding:14px;display:flex;flex-direction:column;justify-content:center;background:#FBFAF7">
+                  <div style="font-size:11.5px;color:var(--sub);line-height:1.8">
+                    审核要点<br>
+                    · 是否含人物肖像且无授权<br>
+                    · 是否含品牌 Logo / 版权角色<br>
+                    · 是否含违规文字（图纸角落）<br>
+                    · 是否重复投稿
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="screen" data-sec="admin" data-page="a10" style="padding-top:0">
+            <div class="abar"><h2>订单与会员</h2><div class="sp"></div><button class="abtn">导出对账单</button></div>
+            <div class="acontent">
+              <div class="phbanner" style="background:#FAEEDA;border-color:#E8CE9C;color:#633806">
+                <div><b>支付未开通。</b>个人主体小程序无法接入微信支付。要开通会员，需企业主体 + 微信认证（¥300/年）。这一页现在只做规划，不接真实数据。</div>
+              </div>
+
+              <div class="kpis">
+                <div class="kpi"><div class="k">本月收入</div><div class="v">¥3,280</div><div class="d">环比 +18%</div></div>
+                <div class="kpi"><div class="k">有效订阅</div><div class="v">186</div><div class="d">月付 142 · 年付 44</div></div>
+                <div class="kpi"><div class="k">续费率</div><div class="v">71<span style="font-size:12px">%</span></div><div class="d">上月 68%</div></div>
+                <div class="kpi"><div class="k">退款</div><div class="v">2</div><div class="d">退款率 1.1%</div></div>
+              </div>
+
+              <div class="panel">
+                <div class="ptitle">最近订单</div>
+                <table>
+                  <thead><tr><th>订单号</th><th>用户</th><th>套餐</th><th>金额</th><th>支付方式</th><th>状态</th><th>时间</th></tr></thead>
+                  <tbody>
+                    <tr><td style="color:var(--muted)">PD20261107001</td><td>小豆芽</td><td>年付 Pro</td><td>¥98</td><td>微信支付</td><td><span class="conf hi">已支付</span></td><td>11-07 20:12</td></tr>
+                    <tr><td style="color:var(--muted)">PD20261107002</td><td>pixel_lu</td><td>月付 Pro</td><td>¥12</td><td>微信支付</td><td><span class="conf hi">已支付</span></td><td>11-07 18:40</td></tr>
+                    <tr><td style="color:var(--muted)">PD20261106013</td><td>手作阿明</td><td>年付 Pro</td><td>¥98</td><td>微信支付</td><td><span class="conf hi">已支付</span></td><td>11-06 21:03</td></tr>
+                    <tr><td style="color:var(--muted)">PD20261105008</td><td>豆豆妈</td><td>月付 Pro</td><td>¥12</td><td>微信支付</td><td><span class="conf mid">退款中</span></td><td>11-05 14:22</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="screen" data-sec="admin" data-page="a11" style="padding-top:0">
+            <div class="abar"><h2>版本发布</h2><div class="sp"></div><button class="abtn">回滚上一版</button><button class="abtn pri">发布到小程序</button></div>
+            <div class="acontent">
+              <div class="two">
+                <div>
+                  <div class="panel">
+                    <div class="ptitle">线上版本<div class="sp"></div><span class="conf hi">运行中</span></div>
+                    <div style="padding:14px">
+                      <div style="display:flex;gap:24px;font-size:11.5px;color:var(--sub)">
+                        <div><div style="color:var(--muted);font-size:10.5px;margin-bottom:3px">小程序版本</div><b style="font-size:13px">v1.0.2</b></div>
+                        <div><div style="color:var(--muted);font-size:10.5px;margin-bottom:3px">色卡数据</div><b style="font-size:13px">2026.11.1</b></div>
+                        <div><div style="color:var(--muted);font-size:10.5px;margin-bottom:3px">LUT 版本</div><b style="font-size:13px">32³ / top4</b></div>
+                        <div><div style="color:var(--muted);font-size:10.5px;margin-bottom:3px">发布于</div><b style="font-size:13px">11-05</b></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="panel">
+                    <div class="ptitle">待发布<div class="sp"></div><span class="conf mid">3 项变更</span></div>
+                    <table>
+                      <thead><tr><th style="width:90px">类型</th><th>内容</th><th>影响</th></tr></thead>
+                      <tbody>
+                        <tr><td><span class="conf mid">色卡</span></td><td>A5 浅肤 #F3DCC4 → #F6DFC8</td><td>相关图纸配色微调</td></tr>
+                        <tr><td><span class="conf mid">色卡</span></td><td>E2 灰绿 名称修正</td><td>仅显示</td></tr>
+                        <tr><td><span class="conf hi">功能</span></td><td>直接导入支持透明通道</td><td>新能力</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="card" style="margin-bottom:14px">
+                    <div style="font-size:12px;font-weight:500;margin-bottom:11px">发布前检查</div>
+                    <div class="checks">
+                      <div class="chk pass"><div class="dot">✓</div>数据校验通过<div class="sp">—</div></div>
+                      <div class="chk pass"><div class="dot">✓</div>LUT 已重建<div class="sp">26s</div></div>
+                      <div class="chk pass"><div class="dot">✓</div>产物已放置<div class="sp">2 文件</div></div>
+                      <div class="chk fail"><div class="dot">!</div>17 个色号待裁决<div class="sp">建议先处理</div></div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div style="font-size:12px;font-weight:500;margin-bottom:8px">发布流程</div>
+                    <div style="font-size:11px;color:var(--sub);line-height:2">
+                      1. 校验数据<br>
+                      2. 构建 LUT<br>
+                      3. 导出 colors.json<br>
+                      4. 放入小程序分包<br>
+                      5. 微信开发者工具上传<br>
+                      6. 提交审核（1–7 天）<br>
+                      7. 审核通过后发布
+                    </div>
+                    <div class="hint">色卡变更必须重新提审，不能热更新。这是零后端架构的代价，要接受。</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="screen" data-sec="admin" data-page="a12" style="padding-top:0">
+            <div class="abar"><h2>操作日志</h2><div class="sp"></div><button class="abtn">导出日志</button></div>
+            <div class="acontent">
+              <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center">
+                <input class="finput" style="margin:0;max-width:200px" value="搜索对象 / 操作人">
+                <select class="finput" style="margin:0;max-width:130px"><option>全部类型</option><option>色卡编辑</option><option>套装变更</option><option>LUT 构建</option><option>用户操作</option></select>
+                <select class="finput" style="margin:0;max-width:120px"><option>近 7 天</option><option>近 30 天</option></select>
+              </div>
+              <div class="panel">
+                <table>
+                  <thead><tr><th style="width:130px">时间</th><th>操作人</th><th>动作</th><th>对象</th><th>IP</th></tr></thead>
+                  <tbody>
+                    <tr><td>11-07 21:32</td><td>admin</td><td>修正色值</td><td>B5 砖红 #D9633F → #E06A42</td><td style="color:var(--muted)">127.0.0.1</td></tr>
+                    <tr><td>11-07 21:14</td><td>admin</td><td>修正色值</td><td>A12 浅湖蓝 #8AC0D9 → #8FC4DC</td><td style="color:var(--muted)">127.0.0.1</td></tr>
+                    <tr><td>11-07 20:58</td><td>admin</td><td>构建 LUT</td><td>mard-221 · 32³ · top4</td><td style="color:var(--muted)">127.0.0.1</td></tr>
+                    <tr><td>11-07 20:41</td><td>admin</td><td>导入 CSV</td><td>MARD 221 · 221 行</td><td style="color:var(--muted)">127.0.0.1</td></tr>
+                    <tr><td>11-07 19:20</td><td>admin</td><td>修改套装</td><td>MARD 72 色 · 增 3 减 1</td><td style="color:var(--muted)">127.0.0.1</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="hint">首期后台是本地工具，日志存在浏览器里。接入后端后应改为服务端审计日志，且不可被前端清除。</div>
+            </div>
+          </div>
+
+          <div class="screen" data-sec="admin" data-page="a13" style="padding-top:0">
+            <div class="abar"><h2>设置</h2><div class="sp"></div><button class="abtn pri">保存</button></div>
+            <div class="acontent">
+              <div class="two">
+                <div class="panel" style="margin:0">
+                  <div class="ptitle">数据来源披露</div>
+                  <div style="padding:16px">
+                    <div class="flabel">小程序「关于」页展示的文案</div>
+                    <textarea class="finput" style="height:76px;resize:none;line-height:1.6">色值与色号均为公开资料整理，非品牌官方测量数据。屏幕显示与实物豆存在差异，不同批次亦有轻微色差。大批量采购前建议先查看商家实物色卡。</textarea>
+                    <div class="flabel">色号详情页脚注</div>
+                    <textarea class="finput" style="height:60px;resize:none;line-height:1.6">色值来自公开资料，与实物可能存在差异。</textarea>
+                    <div class="flabel">数据来源列表（只读）</div>
+                    <div style="font-size:11px;color:var(--sub);line-height:2">
+                      · 品牌官方色卡图<br>
+                      · 公开色卡站点（3 源交叉）<br>
+                      · 用户实物反馈（众包）
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="card" style="margin-bottom:14px">
+                    <div style="font-size:12px;font-weight:500;margin-bottom:10px">小程序配置</div>
+                    <div class="flabel">AppID</div>
+                    <input class="finput" value="wx0000000000000000" style="font-family:ui-monospace,monospace;font-size:11px">
+                    <div class="flabel">客服纠错入口</div>
+                    <select class="finput"><option>开启（open-type=contact）</option><option>关闭</option></select>
+                    <div class="flabel">默认色卡</div>
+                    <select class="finput"><option>MARD 221</option><option>COCO 291</option></select>
+                  </div>
+
+                  <div class="card">
+                    <div style="font-size:12px;font-weight:500;margin-bottom:10px">本地数据</div>
+                    <div style="font-size:11px;color:var(--sub);line-height:1.9">
+                      色卡记录 221 条<br>
+                      编辑历史 43 条<br>
+                      占用空间 1.2 MB<br>
+                      存储位置 浏览器 IndexedDB
+                    </div>
+                    <div style="display:flex;gap:7px;margin-top:11px">
+                      <button class="abtn" style="flex:1;font-size:11px">导出备份</button>
+                      <button class="abtn" style="flex:1;font-size:11px">清空缓存</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PALETTE=[
+  {code:'A1',hex:'#FFFFFF'},{code:'A5',hex:'#F6DFC8'},{code:'A7',hex:'#E8B48C'},
+  {code:'B5',hex:'#D9633F'},{code:'C4',hex:'#3D3A38'},{code:'B2',hex:'#F2A65A'},
+  {code:'D1',hex:'#9CC3D5'},{code:'E2',hex:'#6B8E6B'},{code:'A12',hex:'#8FC4DC'},
+  {code:'C1',hex:'#F4F1EA'},{code:'D5',hex:'#6FA9C9'},{code:'F1',hex:'#7A6E8C'}
+];
+
+function buildFace(n){
+  const g=[];
+  const c=(n-1)/2;
+  for(let y=0;y<n;y++){
+    const row=[];
+    for(let x=0;x<n;x++){
+      const dx=(x-c)/(n*0.42), dy=(y-c)/(n*0.44);
+      const d=Math.hypot(dx,dy);
+      let i=0;
+      if(d<1.0) i=3;
+      if(d<0.93) i=2;
+      if(d<0.86) i=1;
+      const ex=Math.abs(x-c);
+      if(d<0.55 && ex>n*0.13 && ex<n*0.26 && y>c-n*0.16 && y<c+n*0.02) i=4;
+      const r=Math.hypot(dx-0.42,dy-0.24);
+      if(r<0.16) i=5;
+      if(Math.hypot(dx+0.42,dy-0.24)<0.16) i=5;
+      if(Math.hypot(dx,dy-0.45)<0.12) i=3;
+      row.push(i);
+    }
+    g.push(row);
+  }
+  return g;
+}
+
+function isDark(hex){
+  const n=parseInt(hex.slice(1),16);
+  const r=(n>>16)&255,g=(n>>8)&255,b=n&255;
+  return (0.299*r+0.587*g+0.114*b)<140;
+}
+
+function renderGrid(el,w,h,cells,cell,showCode){
+  el.style.gridTemplateColumns='repeat('+w+', '+cell+'px)';
+  el.style.width=(w*cell)+'px';
+  el.style.gridAutoRows=cell+'px';
+  let html='';
+  for(let y=0;y<h;y++){
+    for(let x=0;x<w;x++){
+      const p=PALETTE[cells[y][x]%PALETTE.length];
+      const dark=isDark(p.hex)?' dark':'';
+      html+='<div class="cell'+dark+'" style="background:'+p.hex+'">'+(showCode?'<span>'+p.code+'</span>':'')+'</div>';
+    }
+  }
+  el.innerHTML=html;
+}
+
+const face=buildFace(54);
+renderGrid(document.getElementById('srcGrid'),54,54,face,3.6,false);
+renderGrid(document.getElementById('mainGrid'),54,54,face,6.1,false);
+
+const zoom=[];
+for(let y=20;y<30;y++){const r=[];for(let x=20;x<30;x++)r.push(face[y][x]);zoom.push(r);}
+renderGrid(document.getElementById('zoomGrid'),10,10,zoom,15,true);
+
+for(const id of ['h1','h2','h3','h4']){
+  const el=document.getElementById(id);
+  if(!el) continue;
+  const n=id==='h4'?16:24;
+  const g=buildFace(n);
+  const s=Math.floor(96/n);
+  el.style.gridTemplateColumns='repeat('+n+', '+(96/n)+'px)';
+  el.style.gridAutoRows=(96/n)+'px';
+  let html='';
+  for(let y=0;y<n;y++)for(let x=0;x<n;x++)html+='<div style="background:'+PALETTE[g[y][x]%PALETTE.length].hex+'"></div>';
+  el.innerHTML=html;
+}
+
+const pg=document.getElementById('paletteGrid');
+let ph='';
+PALETTE.forEach(p=>{ph+='<div class="pcell" style="background:'+p.hex+'"><em>'+p.code+'</em></div>';});
+for(let i=0;i<18;i++){
+  const p=PALETTE[i%PALETTE.length];
+  ph+='<div class="pcell" style="background:'+p.hex+';opacity:'+(0.92-i*0.012)+'"><em>'+(p.code)+'</em></div>';
+}
+pg.innerHTML=ph;
+
+const sg=document.getElementById('setGrid');
+let sh='';
+for(let i=0;i<60;i++){
+  const p=PALETTE[i%PALETTE.length];
+  sh+='<div class="pcell" style="background:'+p.hex+'"></div>';
+}
+sg.innerHTML=sh;
+
+(function(){
+  const svg=document.getElementById('scatter');
+  const W=520,H=320,cx=W/2,cy=H/2;
+  let s='';
+  s+='<line x1="30" y1="'+cy+'" x2="'+(W-20)+'" y2="'+cy+'" stroke="#E7E1D7" stroke-width="1"/>';
+  s+='<line x1="'+cx+'" y1="20" x2="'+cx+'" y2="'+(H-30)+'" stroke="#E7E1D7" stroke-width="1"/>';
+  s+='<text x="'+(W-16)+'" y="'+(cy-6)+'" font-size="10" fill="#9C978E">a</text>';
+  s+='<text x="'+(cx+6)+'" y="26" font-size="10" fill="#9C978E">b</text>';
+  const clusters=[
+    {x:-30,y:20,c:'#E24B4A',n:22},{x:20,y:45,c:'#BA7517',n:20},
+    {x:-25,y:-30,c:'#639922',n:18},{x:18,y:-35,c:'#378ADD',n:20},
+    {x:-55,y:5,c:'#7F77DD',n:12}
+  ];
+  let rnd=7;
+  function rand(){rnd=(rnd*9301+49297)%233280;return rnd/233280;}
+  clusters.forEach(cl=>{
+    for(let i=0;i<cl.n;i++){
+      const px=cx+cl.x+(rand()-0.5)*110;
+      const py=cy+cl.y+(rand()-0.5)*110;
+      s+='<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="4" fill="'+cl.c+'" opacity=".78"/>';
+    }
+  });
+  const out=[[cx+150,cy-90],[cx-160,cy+96],[cx+120,cy+120],[cx-90,cy-118],[cx+170,cy+40]];
+  out.forEach(p=>{
+    s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="5.5" fill="none" stroke="#E24B4A" stroke-width="1.5"/>';
+    s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3" fill="#E24B4A"/>';
+  });
+  svg.innerHTML=s;
+})();
+
+document.querySelectorAll('.tab').forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    const sec=t.dataset.sec;
+    document.querySelectorAll('.stage').forEach(s=>s.classList.toggle('hide',s.dataset.sec!==sec));
+    document.querySelectorAll('.page-list').forEach(l=>{
+      l.querySelectorAll('.group').forEach(g=>{
+        const on=g.dataset.sec===sec;
+        g.classList.toggle('on',on);
+        if(on) g.style.display='';
+      });
+    });
+    const first=document.querySelector('.page-list .group.on .pbtn');
+    if(first) first.click();
+  };
+});
+
+document.querySelectorAll('.pbtn[data-page]').forEach(b=>{
+  b.onclick=()=>{
+    const sec=b.dataset.sec,page=b.dataset.page;
+    if(sec==='admin'){
+      document.querySelectorAll('.pbtn[data-sec="admin"]').forEach(x=>x.classList.remove('on'));
+      document.querySelectorAll('.sitem[data-page]').forEach(x=>x.classList.toggle('on',x.dataset.page===page));
+    }else{
+      document.querySelectorAll('.pbtn[data-sec="mp"]').forEach(x=>x.classList.remove('on'));
+    }
+    b.classList.add('on');
+    document.querySelectorAll('.screen[data-sec="'+sec+'"]').forEach(s=>{
+      s.classList.toggle('on',s.dataset.page===page);
+    });
+  };
+});
+
+document.querySelectorAll('.sitem[data-page]').forEach(b=>{
+  b.onclick=()=>{
+    const page=b.dataset.page;
+    document.querySelectorAll('.sitem[data-page]').forEach(x=>x.classList.toggle('on',x.dataset.page===page));
+    document.querySelectorAll('.screen[data-sec="admin"]').forEach(s=>{
+      s.classList.toggle('on',s.dataset.page===page);
+    });
+  };
+});
+
+document.querySelectorAll('[data-goto]').forEach(el=>{
+  el.style.cursor='pointer';
+  el.onclick=()=>{
+    const p=el.dataset.goto;
+    document.querySelectorAll('.screen[data-sec="mp"]').forEach(s=>s.classList.toggle('on',s.dataset.page===p));
+    document.querySelectorAll('.pbtn[data-sec="mp"]').forEach(x=>x.classList.toggle('on',x.dataset.page===p));
+  };
+});
+</script>
+</body>
+</html>

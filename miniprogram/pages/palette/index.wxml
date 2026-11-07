@@ -1,0 +1,34 @@
+<view class="wrap">
+  <view class="detail">
+    <block wx:if="{{selected}}">
+      <view class="bigsw" style="background: {{selected.hex}}"></view>
+      <view class="dinfo">
+        <view class="dcode">{{selected.code}}</view>
+        <view class="dname">{{selected.name}}</view>
+        <view class="dhex">{{selected.hex}}</view>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="dempty">点下方色块查看色号</view>
+    </block>
+  </view>
+
+  <scroll-view scroll-y class="scroll">
+    <view class="grid">
+      <view
+        class="cell"
+        wx:for="{{colors}}"
+        wx:key="code"
+        data-i="{{index}}"
+        bindtap="pick"
+      >
+        <view class="sw" style="background: {{item.hex}}"></view>
+        <text class="code">{{item.code}}</text>
+      </view>
+    </view>
+
+    <view class="disclose">
+      色值与色号来自公开资料整理，非品牌官方测量。屏幕显示与实物豆存在色差，且不同批次会有轻微差异。
+    </view>
+  </scroll-view>
+</view>

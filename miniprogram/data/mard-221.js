@@ -1,0 +1,4260 @@
+// 自动生成，勿手改。源数据：apps/web/public/data/mard-221.json
+// 当前为空位示例色值（confidence: placeholder），需替换为真实采集数据。
+module.exports = {
+ "id": "mard-221",
+ "seriesId": "mard-221",
+ "brandName": "MARD",
+ "beadSize": 5,
+ "version": "2026.11.4",
+ "source": "makebead/craft-color-codes",
+ "status": "community",
+ "attribution": {
+  "dataset": "Craft Color Codes",
+  "author": "MakeBead",
+  "url": "https://github.com/makebead/craft-color-codes",
+  "license": "CC-BY-4.0",
+  "upstream": [
+   "peiseka.com color chart <https://peiseka.com/>",
+   "pixel-beads.com MARD chart <https://pixel-beads.com/perler-bead-color-chart>"
+  ],
+  "note": "色值为社区采样，非分光测色仪实测。屏幕显示与实物豆存在差异，不同批次亦有轻微色差。"
+ },
+ "colors": [
+  {
+   "id": "mard-221:A1",
+   "code": "A1",
+   "name": "Light Amber",
+   "hex": "#FAF4C8",
+   "lab": {
+    "L": 95.66,
+    "a": -4.93,
+    "b": 21.97
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A2",
+   "code": "A2",
+   "name": "Light Yellow",
+   "hex": "#FFFFD5",
+   "lab": {
+    "L": 99.06,
+    "a": -6.76,
+    "b": 20.13
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A3",
+   "code": "A3",
+   "name": "Yellow",
+   "hex": "#FEFF8B",
+   "lab": {
+    "L": 97.82,
+    "a": -15.97,
+    "b": 54.97
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A4",
+   "code": "A4",
+   "name": "Amber",
+   "hex": "#FBED56",
+   "lab": {
+    "L": 92.47,
+    "a": -12.26,
+    "b": 71.82
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A5",
+   "code": "A5",
+   "name": "Amber",
+   "hex": "#F4D738",
+   "lab": {
+    "L": 86.07,
+    "a": -5.56,
+    "b": 75.99
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A6",
+   "code": "A6",
+   "name": "Orange",
+   "hex": "#FEAC4C",
+   "lab": {
+    "L": 76.74,
+    "a": 21.74,
+    "b": 59.68
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A7",
+   "code": "A7",
+   "name": "Vermilion",
+   "hex": "#FE8B4C",
+   "lab": {
+    "L": 69.51,
+    "a": 38.8,
+    "b": 51.92
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A8",
+   "code": "A8",
+   "name": "Amber",
+   "hex": "#FFDA45",
+   "lab": {
+    "L": 87.89,
+    "a": -1.95,
+    "b": 73.7
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A9",
+   "code": "A9",
+   "name": "Vermilion",
+   "hex": "#FF995B",
+   "lab": {
+    "L": 72.76,
+    "a": 32.85,
+    "b": 48.22
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A10",
+   "code": "A10",
+   "name": "Vermilion",
+   "hex": "#F77C31",
+   "lab": {
+    "L": 65.29,
+    "a": 42.52,
+    "b": 59.59
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A11",
+   "code": "A11",
+   "name": "Light Amber",
+   "hex": "#FFDD99",
+   "lab": {
+    "L": 89.52,
+    "a": 2.74,
+    "b": 37.72
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A12",
+   "code": "A12",
+   "name": "Vermilion",
+   "hex": "#FE9F72",
+   "lab": {
+    "L": 74.25,
+    "a": 30.95,
+    "b": 38.17
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A13",
+   "code": "A13",
+   "name": "Orange",
+   "hex": "#FFC365",
+   "lab": {
+    "L": 82.5,
+    "a": 11.61,
+    "b": 54.64
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A14",
+   "code": "A14",
+   "name": "Red",
+   "hex": "#FD543D",
+   "lab": {
+    "L": 59.5,
+    "a": 62.91,
+    "b": 48.58
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A15",
+   "code": "A15",
+   "name": "Yellow",
+   "hex": "#FFF365",
+   "lab": {
+    "L": 94.44,
+    "a": -12.69,
+    "b": 67.98
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A16",
+   "code": "A16",
+   "name": "Light Yellow",
+   "hex": "#FFFF9F",
+   "lab": {
+    "L": 98.15,
+    "a": -13.6,
+    "b": 45.87
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A17",
+   "code": "A17",
+   "name": "Amber",
+   "hex": "#FFE36E",
+   "lab": {
+    "L": 90.47,
+    "a": -4.14,
+    "b": 59.64
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A18",
+   "code": "A18",
+   "name": "Orange",
+   "hex": "#FEBE7D",
+   "lab": {
+    "L": 81.5,
+    "a": 15.67,
+    "b": 41.62
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A19",
+   "code": "A19",
+   "name": "Red",
+   "hex": "#FD7C72",
+   "lab": {
+    "L": 66.91,
+    "a": 48.26,
+    "b": 28.72
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A20",
+   "code": "A20",
+   "name": "Amber",
+   "hex": "#FFD568",
+   "lab": {
+    "L": 86.92,
+    "a": 2.53,
+    "b": 58.31
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A21",
+   "code": "A21",
+   "name": "Light Amber",
+   "hex": "#FFE395",
+   "lab": {
+    "L": 90.95,
+    "a": -0.73,
+    "b": 41.57
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A22",
+   "code": "A22",
+   "name": "Yellow",
+   "hex": "#F4F57D",
+   "lab": {
+    "L": 94.32,
+    "a": -16.24,
+    "b": 57.07
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A23",
+   "code": "A23",
+   "name": "Light Vermilion",
+   "hex": "#E6C9B7",
+   "lab": {
+    "L": 82.92,
+    "a": 7.4,
+    "b": 12.74
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A24",
+   "code": "A24",
+   "name": "Light Yellow",
+   "hex": "#F7F8A2",
+   "lab": {
+    "L": 95.8,
+    "a": -12.87,
+    "b": 41.26
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A25",
+   "code": "A25",
+   "name": "Amber",
+   "hex": "#FFD67D",
+   "lab": {
+    "L": 87.41,
+    "a": 3.64,
+    "b": 48.96
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:A26",
+   "code": "A26",
+   "name": "Amber",
+   "hex": "#FFC830",
+   "lab": {
+    "L": 83.33,
+    "a": 6.49,
+    "b": 76.37
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B1",
+   "code": "B1",
+   "name": "Yellow",
+   "hex": "#E6EE31",
+   "lab": {
+    "L": 90.87,
+    "a": -22.94,
+    "b": 81.8
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B2",
+   "code": "B2",
+   "name": "Green",
+   "hex": "#63F347",
+   "lab": {
+    "L": 85.61,
+    "a": -68.55,
+    "b": 67.68
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B3",
+   "code": "B3",
+   "name": "Green",
+   "hex": "#9EF780",
+   "lab": {
+    "L": 89.56,
+    "a": -48,
+    "b": 48.66
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B4",
+   "code": "B4",
+   "name": "Deep Green",
+   "hex": "#5DE035",
+   "lab": {
+    "L": 79.55,
+    "a": -64.72,
+    "b": 67.6
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B5",
+   "code": "B5",
+   "name": "Deep Green",
+   "hex": "#35E352",
+   "lab": {
+    "L": 79.78,
+    "a": -70.71,
+    "b": 56.94
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B6",
+   "code": "B6",
+   "name": "Mint",
+   "hex": "#65E2A6",
+   "lab": {
+    "L": 81.79,
+    "a": -48.56,
+    "b": 19.02
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B7",
+   "code": "B7",
+   "name": "Deep Mint",
+   "hex": "#3DAF80",
+   "lab": {
+    "L": 64.33,
+    "a": -43.26,
+    "b": 14.88
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B8",
+   "code": "B8",
+   "name": "Deep Green",
+   "hex": "#1C9C4F",
+   "lab": {
+    "L": 56.67,
+    "a": -50.58,
+    "b": 30.99
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B9",
+   "code": "B9",
+   "name": "Dark Mint",
+   "hex": "#27523A",
+   "lab": {
+    "L": 31.28,
+    "a": -21.35,
+    "b": 9.58
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B10",
+   "code": "B10",
+   "name": "Mint",
+   "hex": "#95D3C2",
+   "lab": {
+    "L": 80.11,
+    "a": -23.34,
+    "b": 2.09
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B11",
+   "code": "B11",
+   "name": "Dark Lime",
+   "hex": "#5D722A",
+   "lab": {
+    "L": 44.98,
+    "a": -19.56,
+    "b": 36.42
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B12",
+   "code": "B12",
+   "name": "Dark Mint",
+   "hex": "#166F41",
+   "lab": {
+    "L": 41.09,
+    "a": -36.8,
+    "b": 18.56
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B13",
+   "code": "B13",
+   "name": "Lime",
+   "hex": "#CAEB7B",
+   "lab": {
+    "L": 88.64,
+    "a": -27.81,
+    "b": 50.46
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B14",
+   "code": "B14",
+   "name": "Lime",
+   "hex": "#ADE946",
+   "lab": {
+    "L": 85.81,
+    "a": -42.1,
+    "b": 69.25
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B15",
+   "code": "B15",
+   "name": "Dark Green",
+   "hex": "#2E5132",
+   "lab": {
+    "L": 31.1,
+    "a": -20.24,
+    "b": 14.37
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B16",
+   "code": "B16",
+   "name": "Chartreuse",
+   "hex": "#C5ED9C",
+   "lab": {
+    "L": 89.32,
+    "a": -26.69,
+    "b": 35.11
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B17",
+   "code": "B17",
+   "name": "Deep Lime",
+   "hex": "#9BB13A",
+   "lab": {
+    "L": 68.55,
+    "a": -23.98,
+    "b": 55.85
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B18",
+   "code": "B18",
+   "name": "Yellow",
+   "hex": "#E6EE49",
+   "lab": {
+    "L": 90.99,
+    "a": -21.97,
+    "b": 74.59
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B19",
+   "code": "B19",
+   "name": "Deep Mint",
+   "hex": "#24B88C",
+   "lab": {
+    "L": 66.94,
+    "a": -47.72,
+    "b": 11.89
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B20",
+   "code": "B20",
+   "name": "Light Green",
+   "hex": "#C2F0CC",
+   "lab": {
+    "L": 90.85,
+    "a": -21.61,
+    "b": 12.59
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B21",
+   "code": "B21",
+   "name": "Dark Teal",
+   "hex": "#156A6B",
+   "lab": {
+    "L": 40.46,
+    "a": -23.17,
+    "b": -7.55
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B22",
+   "code": "B22",
+   "name": "Dark Teal",
+   "hex": "#0B3C43",
+   "lab": {
+    "L": 22.68,
+    "a": -12.92,
+    "b": -8.9
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B23",
+   "code": "B23",
+   "name": "Dark Lime",
+   "hex": "#303A21",
+   "lab": {
+    "L": 22.88,
+    "a": -9.44,
+    "b": 14.2
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B24",
+   "code": "B24",
+   "name": "Light Yellow",
+   "hex": "#EEFCA5",
+   "lab": {
+    "L": 96.21,
+    "a": -17.83,
+    "b": 40.19
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B25",
+   "code": "B25",
+   "name": "Deep Mint",
+   "hex": "#4E846D",
+   "lab": {
+    "L": 50.95,
+    "a": -23.56,
+    "b": 6.84
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B26",
+   "code": "B26",
+   "name": "Chestnut",
+   "hex": "#8D7A35",
+   "lab": {
+    "L": 51.66,
+    "a": -1.4,
+    "b": 39.63
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B27",
+   "code": "B27",
+   "name": "Light Chartreuse",
+   "hex": "#CCE1AF",
+   "lab": {
+    "L": 86.89,
+    "a": -15.62,
+    "b": 22.2
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B28",
+   "code": "B28",
+   "name": "Green",
+   "hex": "#9EE5B9",
+   "lab": {
+    "L": 85.41,
+    "a": -31.13,
+    "b": 14.5
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B29",
+   "code": "B29",
+   "name": "Lime",
+   "hex": "#C5E254",
+   "lab": {
+    "L": 85.46,
+    "a": -28.83,
+    "b": 64.01
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B30",
+   "code": "B30",
+   "name": "Light Lime",
+   "hex": "#E2FCB1",
+   "lab": {
+    "L": 95.57,
+    "a": -20.68,
+    "b": 33.21
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B31",
+   "code": "B31",
+   "name": "Chartreuse",
+   "hex": "#B0E792",
+   "lab": {
+    "L": 86.23,
+    "a": -32.6,
+    "b": 35.85
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:B32",
+   "code": "B32",
+   "name": "Deep Lime",
+   "hex": "#9CAB5A",
+   "lab": {
+    "L": 67.23,
+    "a": -17.85,
+    "b": 39.71
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C1",
+   "code": "C1",
+   "name": "Pale Green",
+   "hex": "#E8FFE7",
+   "lab": {
+    "L": 97.81,
+    "a": -11.77,
+    "b": 8.93
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C2",
+   "code": "C2",
+   "name": "Light Teal",
+   "hex": "#A9F9FC",
+   "lab": {
+    "L": 93.11,
+    "a": -23.53,
+    "b": -9.21
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C3",
+   "code": "C3",
+   "name": "Light Cyan",
+   "hex": "#A0E2FB",
+   "lab": {
+    "L": 86.42,
+    "a": -14.7,
+    "b": -18.74
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C4",
+   "code": "C4",
+   "name": "Cyan",
+   "hex": "#41CCFF",
+   "lab": {
+    "L": 77,
+    "a": -20.56,
+    "b": -35.57
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C5",
+   "code": "C5",
+   "name": "Deep Cyan",
+   "hex": "#01ACEB",
+   "lab": {
+    "L": 66.14,
+    "a": -14.55,
+    "b": -41.71
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C6",
+   "code": "C6",
+   "name": "Sky",
+   "hex": "#50AAF0",
+   "lab": {
+    "L": 67.08,
+    "a": -5.26,
+    "b": -42.87
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C7",
+   "code": "C7",
+   "name": "Deep Sky",
+   "hex": "#3677D2",
+   "lab": {
+    "L": 50.25,
+    "a": 10.57,
+    "b": -52.89
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C8",
+   "code": "C8",
+   "name": "Deep Sky",
+   "hex": "#0F54C0",
+   "lab": {
+    "L": 38.28,
+    "a": 22.84,
+    "b": -61.89
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C9",
+   "code": "C9",
+   "name": "Deep Blue",
+   "hex": "#324BCA",
+   "lab": {
+    "L": 37.79,
+    "a": 35.22,
+    "b": -68.47
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C10",
+   "code": "C10",
+   "name": "Cyan",
+   "hex": "#3EBCE2",
+   "lab": {
+    "L": 71.2,
+    "a": -22,
+    "b": -28.89
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C11",
+   "code": "C11",
+   "name": "Deep Teal",
+   "hex": "#28DDDE",
+   "lab": {
+    "L": 80.42,
+    "a": -41.2,
+    "b": -12.77
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C12",
+   "code": "C12",
+   "name": "Dark Sky",
+   "hex": "#1C334D",
+   "lab": {
+    "L": 20.64,
+    "a": 0.14,
+    "b": -18.71
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C13",
+   "code": "C13",
+   "name": "Light Sky",
+   "hex": "#CDE8FF",
+   "lab": {
+    "L": 90.74,
+    "a": -4.12,
+    "b": -14.08
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C14",
+   "code": "C14",
+   "name": "Light Teal",
+   "hex": "#D5FDFF",
+   "lab": {
+    "L": 96.66,
+    "a": -12.33,
+    "b": -5.23
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C15",
+   "code": "C15",
+   "name": "Deep Teal",
+   "hex": "#22C4C6",
+   "lab": {
+    "L": 72.16,
+    "a": -37.35,
+    "b": -12.22
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C16",
+   "code": "C16",
+   "name": "Deep Sky",
+   "hex": "#1557A8",
+   "lab": {
+    "L": 37.48,
+    "a": 11.51,
+    "b": -49.04
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C17",
+   "code": "C17",
+   "name": "Deep Teal",
+   "hex": "#04D1F6",
+   "lab": {
+    "L": 77.45,
+    "a": -29.72,
+    "b": -30.12
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C18",
+   "code": "C18",
+   "name": "Dark Sky",
+   "hex": "#1D3344",
+   "lab": {
+    "L": 20.23,
+    "a": -2.96,
+    "b": -13.27
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C19",
+   "code": "C19",
+   "name": "Deep Cyan",
+   "hex": "#1887A2",
+   "lab": {
+    "L": 51.98,
+    "a": -19.51,
+    "b": -22.66
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C20",
+   "code": "C20",
+   "name": "Deep Sky",
+   "hex": "#176DAF",
+   "lab": {
+    "L": 44.54,
+    "a": 0.31,
+    "b": -41.88
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C21",
+   "code": "C21",
+   "name": "Light Sky",
+   "hex": "#BEDDFF",
+   "lab": {
+    "L": 86.94,
+    "a": -2.87,
+    "b": -19.89
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C22",
+   "code": "C22",
+   "name": "Teal",
+   "hex": "#67B4BE",
+   "lab": {
+    "L": 68.93,
+    "a": -21.13,
+    "b": -12.5
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C23",
+   "code": "C23",
+   "name": "Light Sky",
+   "hex": "#C8E2FF",
+   "lab": {
+    "L": 88.87,
+    "a": -2.52,
+    "b": -16.92
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C24",
+   "code": "C24",
+   "name": "Sky",
+   "hex": "#7CC4FF",
+   "lab": {
+    "L": 76.67,
+    "a": -6.59,
+    "b": -35.92
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C25",
+   "code": "C25",
+   "name": "Light Teal",
+   "hex": "#A9E5E5",
+   "lab": {
+    "L": 87.06,
+    "a": -18.86,
+    "b": -6.15
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C26",
+   "code": "C26",
+   "name": "Deep Cyan",
+   "hex": "#3CAED8",
+   "lab": {
+    "L": 66.66,
+    "a": -18.2,
+    "b": -30.41
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C27",
+   "code": "C27",
+   "name": "Light Blue",
+   "hex": "#D3DFFA",
+   "lab": {
+    "L": 88.7,
+    "a": 1.33,
+    "b": -14.48
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C28",
+   "code": "C28",
+   "name": "Light Sky",
+   "hex": "#BBCFED",
+   "lab": {
+    "L": 82.54,
+    "a": -0.43,
+    "b": -17.01
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:C29",
+   "code": "C29",
+   "name": "Deep Blue",
+   "hex": "#34488E",
+   "lab": {
+    "L": 32.52,
+    "a": 15.46,
+    "b": -41.29
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D1",
+   "code": "D1",
+   "name": "Light Blue",
+   "hex": "#AEB4F2",
+   "lab": {
+    "L": 74.86,
+    "a": 11.46,
+    "b": -31.49
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D2",
+   "code": "D2",
+   "name": "Blue",
+   "hex": "#858EDD",
+   "lab": {
+    "L": 61.27,
+    "a": 16.21,
+    "b": -41.34
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D3",
+   "code": "D3",
+   "name": "Deep Blue",
+   "hex": "#2F54AF",
+   "lab": {
+    "L": 37.91,
+    "a": 18.99,
+    "b": -52.46
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D4",
+   "code": "D4",
+   "name": "Dark Blue",
+   "hex": "#182A84",
+   "lab": {
+    "L": 22,
+    "a": 28.04,
+    "b": -52.23
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D5",
+   "code": "D5",
+   "name": "Deep Purple",
+   "hex": "#B843C5",
+   "lab": {
+    "L": 49.78,
+    "a": 63.75,
+    "b": -45.53
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D6",
+   "code": "D6",
+   "name": "Violet",
+   "hex": "#AC7BDE",
+   "lab": {
+    "L": 60.08,
+    "a": 38.07,
+    "b": -43.53
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D7",
+   "code": "D7",
+   "name": "Deep Violet",
+   "hex": "#8854B3",
+   "lab": {
+    "L": 45.4,
+    "a": 39.8,
+    "b": -42.42
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D8",
+   "code": "D8",
+   "name": "Light Violet",
+   "hex": "#E2D3FF",
+   "lab": {
+    "L": 86.99,
+    "a": 13.37,
+    "b": -19.57
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D9",
+   "code": "D9",
+   "name": "Light Violet",
+   "hex": "#D5B9F8",
+   "lab": {
+    "L": 79.4,
+    "a": 21.8,
+    "b": -27.48
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D10",
+   "code": "D10",
+   "name": "Dark Violet",
+   "hex": "#361851",
+   "lab": {
+    "L": 15.65,
+    "a": 27.22,
+    "b": -29.19
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D11",
+   "code": "D11",
+   "name": "Light Blue",
+   "hex": "#B9BAE1",
+   "lab": {
+    "L": 76.6,
+    "a": 7.58,
+    "b": -19.56
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D12",
+   "code": "D12",
+   "name": "Purple",
+   "hex": "#DE9AD4",
+   "lab": {
+    "L": 71.82,
+    "a": 34.45,
+    "b": -19.39
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D13",
+   "code": "D13",
+   "name": "Deep Magenta",
+   "hex": "#B90095",
+   "lab": {
+    "L": 41.98,
+    "a": 72.29,
+    "b": -29.45
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D14",
+   "code": "D14",
+   "name": "Deep Purple",
+   "hex": "#8B279B",
+   "lab": {
+    "L": 36.57,
+    "a": 56.71,
+    "b": -42.18
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D15",
+   "code": "D15",
+   "name": "Dark Indigo",
+   "hex": "#2F1F90",
+   "lab": {
+    "L": 22.29,
+    "a": 41.43,
+    "b": -59.19
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D16",
+   "code": "D16",
+   "name": "Light Indigo",
+   "hex": "#E3E1EE",
+   "lab": {
+    "L": 90.02,
+    "a": 3.05,
+    "b": -6.08
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D17",
+   "code": "D17",
+   "name": "Light Blue",
+   "hex": "#C4D4F6",
+   "lab": {
+    "L": 84.73,
+    "a": 1.64,
+    "b": -18.44
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D18",
+   "code": "D18",
+   "name": "Violet",
+   "hex": "#A45EC7",
+   "lab": {
+    "L": 51.86,
+    "a": 46.48,
+    "b": -43.55
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D19",
+   "code": "D19",
+   "name": "Light Purple",
+   "hex": "#D8C3D7",
+   "lab": {
+    "L": 81.04,
+    "a": 10.89,
+    "b": -7.27
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D20",
+   "code": "D20",
+   "name": "Deep Purple",
+   "hex": "#9C32B2",
+   "lab": {
+    "L": 42.1,
+    "a": 60.63,
+    "b": -46.94
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D21",
+   "code": "D21",
+   "name": "Dark Purple",
+   "hex": "#9A009B",
+   "lab": {
+    "L": 36.44,
+    "a": 67.56,
+    "b": -42.25
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D22",
+   "code": "D22",
+   "name": "Deep Blue",
+   "hex": "#333A95",
+   "lab": {
+    "L": 29.16,
+    "a": 27.2,
+    "b": -51.01
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D23",
+   "code": "D23",
+   "name": "Pale Violet",
+   "hex": "#EBDAFC",
+   "lab": {
+    "L": 89.31,
+    "a": 11.96,
+    "b": -14.42
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D24",
+   "code": "D24",
+   "name": "Blue",
+   "hex": "#7786E5",
+   "lab": {
+    "L": 58.63,
+    "a": 19.78,
+    "b": -50.02
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D25",
+   "code": "D25",
+   "name": "Deep Blue",
+   "hex": "#494FC7",
+   "lab": {
+    "L": 39.8,
+    "a": 34.69,
+    "b": -63.4
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:D26",
+   "code": "D26",
+   "name": "Pale Violet",
+   "hex": "#DFC2F8",
+   "lab": {
+    "L": 82.41,
+    "a": 20.08,
+    "b": -22.82
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E1",
+   "code": "E1",
+   "name": "Light Red",
+   "hex": "#FDD3CC",
+   "lab": {
+    "L": 87.89,
+    "a": 13.63,
+    "b": 8.97
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E2",
+   "code": "E2",
+   "name": "Light Magenta",
+   "hex": "#FEC0DF",
+   "lab": {
+    "L": 84.02,
+    "a": 26.87,
+    "b": -6.76
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E3",
+   "code": "E3",
+   "name": "Light Magenta",
+   "hex": "#FFB7E7",
+   "lab": {
+    "L": 82.32,
+    "a": 33.24,
+    "b": -13.55
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E4",
+   "code": "E4",
+   "name": "Magenta",
+   "hex": "#E8649E",
+   "lab": {
+    "L": 60.55,
+    "a": 56.84,
+    "b": -5.76
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E5",
+   "code": "E5",
+   "name": "Magenta",
+   "hex": "#F551A2",
+   "lab": {
+    "L": 59.81,
+    "a": 68.97,
+    "b": -8.96
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E6",
+   "code": "E6",
+   "name": "Pink",
+   "hex": "#F13D74",
+   "lab": {
+    "L": 55.39,
+    "a": 70.41,
+    "b": 11.6
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E7",
+   "code": "E7",
+   "name": "Deep Magenta",
+   "hex": "#C63478",
+   "lab": {
+    "L": 46.74,
+    "a": 61.9,
+    "b": -4.27
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E8",
+   "code": "E8",
+   "name": "Pale Pink",
+   "hex": "#FFDBE9",
+   "lab": {
+    "L": 90.69,
+    "a": 14.71,
+    "b": -2.21
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E9",
+   "code": "E9",
+   "name": "Magenta",
+   "hex": "#E970CC",
+   "lab": {
+    "L": 64.38,
+    "a": 57.95,
+    "b": -26.18
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E10",
+   "code": "E10",
+   "name": "Deep Magenta",
+   "hex": "#D33793",
+   "lab": {
+    "L": 50.32,
+    "a": 67.3,
+    "b": -14.98
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E11",
+   "code": "E11",
+   "name": "Light Vermilion",
+   "hex": "#FCDDD2",
+   "lab": {
+    "L": 90.35,
+    "a": 8.98,
+    "b": 9.33
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E12",
+   "code": "E12",
+   "name": "Magenta",
+   "hex": "#F78FC3",
+   "lab": {
+    "L": 71.8,
+    "a": 45.72,
+    "b": -9.74
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E13",
+   "code": "E13",
+   "name": "Deep Magenta",
+   "hex": "#B5006D",
+   "lab": {
+    "L": 39.46,
+    "a": 67.08,
+    "b": -8.64
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E14",
+   "code": "E14",
+   "name": "Light Vermilion",
+   "hex": "#FFD1BA",
+   "lab": {
+    "L": 87.2,
+    "a": 12.88,
+    "b": 17.5
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E15",
+   "code": "E15",
+   "name": "Light Pink",
+   "hex": "#F8C7C9",
+   "lab": {
+    "L": 84.5,
+    "a": 17.67,
+    "b": 5.62
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E16",
+   "code": "E16",
+   "name": "Pale Vermilion",
+   "hex": "#FFF3EB",
+   "lab": {
+    "L": 96.56,
+    "a": 2.68,
+    "b": 5.29
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E17",
+   "code": "E17",
+   "name": "Pale Pink",
+   "hex": "#FFE2EA",
+   "lab": {
+    "L": 92.4,
+    "a": 11.24,
+    "b": -0.24
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E18",
+   "code": "E18",
+   "name": "Light Pink",
+   "hex": "#FFC7DB",
+   "lab": {
+    "L": 85.62,
+    "a": 22.9,
+    "b": -2.25
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E19",
+   "code": "E19",
+   "name": "Light Pink",
+   "hex": "#FEBAD5",
+   "lab": {
+    "L": 82.38,
+    "a": 28.45,
+    "b": -3.82
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E20",
+   "code": "E20",
+   "name": "Light Magenta",
+   "hex": "#D8C7D1",
+   "lab": {
+    "L": 81.87,
+    "a": 7.68,
+    "b": -2.83
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E21",
+   "code": "E21",
+   "name": "Pink",
+   "hex": "#BD9DA1",
+   "lab": {
+    "L": 67.66,
+    "a": 12.47,
+    "b": 2.35
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E22",
+   "code": "E22",
+   "name": "Magenta",
+   "hex": "#B785A1",
+   "lab": {
+    "L": 61.15,
+    "a": 23.61,
+    "b": -7.28
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E23",
+   "code": "E23",
+   "name": "Deep Magenta",
+   "hex": "#937A8D",
+   "lab": {
+    "L": 54.08,
+    "a": 13.1,
+    "b": -6.66
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:E24",
+   "code": "E24",
+   "name": "Light Purple",
+   "hex": "#E1BCE8",
+   "lab": {
+    "L": 80.63,
+    "a": 20.83,
+    "b": -16.93
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F1",
+   "code": "F1",
+   "name": "Vermilion",
+   "hex": "#FD957B",
+   "lab": {
+    "L": 72.1,
+    "a": 36.48,
+    "b": 30.58
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F2",
+   "code": "F2",
+   "name": "Pink",
+   "hex": "#FC3D46",
+   "lab": {
+    "L": 56.57,
+    "a": 70.82,
+    "b": 40.46
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F3",
+   "code": "F3",
+   "name": "Red",
+   "hex": "#F74941",
+   "lab": {
+    "L": 57,
+    "a": 65.25,
+    "b": 43.47
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F4",
+   "code": "F4",
+   "name": "Pink",
+   "hex": "#FC283C",
+   "lab": {
+    "L": 54.6,
+    "a": 75.69,
+    "b": 43.85
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F5",
+   "code": "F5",
+   "name": "Deep Pink",
+   "hex": "#E7002F",
+   "lab": {
+    "L": 48.51,
+    "a": 75.03,
+    "b": 43.4
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F6",
+   "code": "F6",
+   "name": "Chestnut",
+   "hex": "#943630",
+   "lab": {
+    "L": 36.27,
+    "a": 39.17,
+    "b": 24.64
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F7",
+   "code": "F7",
+   "name": "Dark Pink",
+   "hex": "#971937",
+   "lab": {
+    "L": 33.03,
+    "a": 51.45,
+    "b": 16.2
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F8",
+   "code": "F8",
+   "name": "Deep Pink",
+   "hex": "#BC0028",
+   "lab": {
+    "L": 39.32,
+    "a": 64.4,
+    "b": 35.05
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F9",
+   "code": "F9",
+   "name": "Pink",
+   "hex": "#E2677A",
+   "lab": {
+    "L": 59.23,
+    "a": 49.58,
+    "b": 13.1
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F10",
+   "code": "F10",
+   "name": "Chestnut",
+   "hex": "#8A4526",
+   "lab": {
+    "L": 37.48,
+    "a": 26.82,
+    "b": 31.52
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F11",
+   "code": "F11",
+   "name": "Espresso",
+   "hex": "#5A2121",
+   "lab": {
+    "L": 21.48,
+    "a": 26.25,
+    "b": 13.44
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F12",
+   "code": "F12",
+   "name": "Pink",
+   "hex": "#FD4E6A",
+   "lab": {
+    "L": 59.32,
+    "a": 67.43,
+    "b": 23.23
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F13",
+   "code": "F13",
+   "name": "Red",
+   "hex": "#F35744",
+   "lab": {
+    "L": 58.32,
+    "a": 58.75,
+    "b": 43.12
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F14",
+   "code": "F14",
+   "name": "Light Pink",
+   "hex": "#FFA9AD",
+   "lab": {
+    "L": 77.67,
+    "a": 32.13,
+    "b": 11.03
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F15",
+   "code": "F15",
+   "name": "Deep Pink",
+   "hex": "#D30022",
+   "lab": {
+    "L": 44.19,
+    "a": 69.88,
+    "b": 44.88
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F16",
+   "code": "F16",
+   "name": "Light Vermilion",
+   "hex": "#FEC2A6",
+   "lab": {
+    "L": 83.13,
+    "a": 17.81,
+    "b": 22.4
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F17",
+   "code": "F17",
+   "name": "Vermilion",
+   "hex": "#E69C79",
+   "lab": {
+    "L": 70.86,
+    "a": 23.71,
+    "b": 29.51
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F18",
+   "code": "F18",
+   "name": "Vermilion",
+   "hex": "#D37C46",
+   "lab": {
+    "L": 60.52,
+    "a": 29.15,
+    "b": 43.29
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F19",
+   "code": "F19",
+   "name": "Deep Pink",
+   "hex": "#C1444A",
+   "lab": {
+    "L": 46.93,
+    "a": 50.36,
+    "b": 23.95
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F20",
+   "code": "F20",
+   "name": "Red",
+   "hex": "#CD9391",
+   "lab": {
+    "L": 66.44,
+    "a": 21.6,
+    "b": 9.77
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F21",
+   "code": "F21",
+   "name": "Light Pink",
+   "hex": "#F7B4C6",
+   "lab": {
+    "L": 79.9,
+    "a": 26.88,
+    "b": 0.55
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F22",
+   "code": "F22",
+   "name": "Light Pink",
+   "hex": "#FDC0D0",
+   "lab": {
+    "L": 83.52,
+    "a": 24.18,
+    "b": 0.52
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F23",
+   "code": "F23",
+   "name": "Red",
+   "hex": "#F67E66",
+   "lab": {
+    "L": 66.12,
+    "a": 43.84,
+    "b": 34.11
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F24",
+   "code": "F24",
+   "name": "Pink",
+   "hex": "#E698AA",
+   "lab": {
+    "L": 71,
+    "a": 31.62,
+    "b": 2.73
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:F25",
+   "code": "F25",
+   "name": "Red",
+   "hex": "#E54B4F",
+   "lab": {
+    "L": 54.3,
+    "a": 59.56,
+    "b": 31.63
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G1",
+   "code": "G1",
+   "name": "Light Vermilion",
+   "hex": "#FFE2CE",
+   "lab": {
+    "L": 91.73,
+    "a": 6.88,
+    "b": 13.42
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G2",
+   "code": "G2",
+   "name": "Light Vermilion",
+   "hex": "#FFC4AA",
+   "lab": {
+    "L": 83.78,
+    "a": 17.62,
+    "b": 21.19
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G3",
+   "code": "G3",
+   "name": "Light Vermilion",
+   "hex": "#F4C3A5",
+   "lab": {
+    "L": 82.37,
+    "a": 13.36,
+    "b": 21.73
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G4",
+   "code": "G4",
+   "name": "Orange",
+   "hex": "#E1B383",
+   "lab": {
+    "L": 76,
+    "a": 10.46,
+    "b": 30.84
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G5",
+   "code": "G5",
+   "name": "Orange",
+   "hex": "#EDB045",
+   "lab": {
+    "L": 75.75,
+    "a": 12.2,
+    "b": 61.08
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G6",
+   "code": "G6",
+   "name": "Deep Orange",
+   "hex": "#E99C17",
+   "lab": {
+    "L": 70.29,
+    "a": 19.62,
+    "b": 71.21
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G7",
+   "code": "G7",
+   "name": "Brown",
+   "hex": "#9D5B3E",
+   "lab": {
+    "L": 45.63,
+    "a": 24.19,
+    "b": 28.19
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G8",
+   "code": "G8",
+   "name": "Chestnut",
+   "hex": "#753832",
+   "lab": {
+    "L": 31.44,
+    "a": 26.12,
+    "b": 16.18
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G9",
+   "code": "G9",
+   "name": "Orange",
+   "hex": "#E6B483",
+   "lab": {
+    "L": 76.74,
+    "a": 11.92,
+    "b": 31.91
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G10",
+   "code": "G10",
+   "name": "Deep Orange",
+   "hex": "#D98C39",
+   "lab": {
+    "L": 64.81,
+    "a": 22.39,
+    "b": 54.34
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G11",
+   "code": "G11",
+   "name": "Orange",
+   "hex": "#E0C593",
+   "lab": {
+    "L": 80.68,
+    "a": 2.39,
+    "b": 28.61
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G12",
+   "code": "G12",
+   "name": "Light Orange",
+   "hex": "#FFC890",
+   "lab": {
+    "L": 84.27,
+    "a": 12.64,
+    "b": 35.46
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G13",
+   "code": "G13",
+   "name": "Brown",
+   "hex": "#B7714A",
+   "lab": {
+    "L": 54.42,
+    "a": 23.8,
+    "b": 33.05
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G14",
+   "code": "G14",
+   "name": "Brown",
+   "hex": "#8D614C",
+   "lab": {
+    "L": 45.27,
+    "a": 15.19,
+    "b": 19.14
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G15",
+   "code": "G15",
+   "name": "Pale Amber",
+   "hex": "#FCF9E0",
+   "lab": {
+    "L": 97.56,
+    "a": -3.15,
+    "b": 12.36
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G16",
+   "code": "G16",
+   "name": "Light Orange",
+   "hex": "#F2D9BA",
+   "lab": {
+    "L": 87.99,
+    "a": 3.92,
+    "b": 18.44
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G17",
+   "code": "G17",
+   "name": "Chestnut",
+   "hex": "#78524B",
+   "lab": {
+    "L": 38.79,
+    "a": 14.91,
+    "b": 10.5
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G18",
+   "code": "G18",
+   "name": "Light Orange",
+   "hex": "#FFE4CC",
+   "lab": {
+    "L": 92.18,
+    "a": 5.56,
+    "b": 15.09
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G19",
+   "code": "G19",
+   "name": "Deep Vermilion",
+   "hex": "#E07935",
+   "lab": {
+    "L": 61.47,
+    "a": 35.16,
+    "b": 53.05
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G20",
+   "code": "G20",
+   "name": "Deep Vermilion",
+   "hex": "#A94023",
+   "lab": {
+    "L": 41.57,
+    "a": 41.61,
+    "b": 39.02
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:G21",
+   "code": "G21",
+   "name": "Brown",
+   "hex": "#B88558",
+   "lab": {
+    "L": 59.59,
+    "a": 14.3,
+    "b": 31.86
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H1",
+   "code": "H1",
+   "name": "Pale Violet",
+   "hex": "#FDFBFF",
+   "lab": {
+    "L": 98.87,
+    "a": 1.36,
+    "b": -1.68
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H2",
+   "code": "H2",
+   "name": "Pale Teal",
+   "hex": "#FEFFFF",
+   "lab": {
+    "L": 99.93,
+    "a": -0.33,
+    "b": -0.12
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H3",
+   "code": "H3",
+   "name": "Silver",
+   "hex": "#B6B1BA",
+   "lab": {
+    "L": 72.85,
+    "a": 3.45,
+    "b": -3.95
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H4",
+   "code": "H4",
+   "name": "Grey",
+   "hex": "#89858C",
+   "lab": {
+    "L": 56.07,
+    "a": 2.87,
+    "b": -3.22
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H5",
+   "code": "H5",
+   "name": "Dark Grey",
+   "hex": "#48464E",
+   "lab": {
+    "L": 30.18,
+    "a": 2.64,
+    "b": -4.48
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H6",
+   "code": "H6",
+   "name": "Charcoal",
+   "hex": "#2F2B2F",
+   "lab": {
+    "L": 18.09,
+    "a": 2.74,
+    "b": -1.93
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H7",
+   "code": "H7",
+   "name": "Black",
+   "hex": "#000000",
+   "lab": {
+    "L": 0,
+    "a": 0,
+    "b": 0
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H8",
+   "code": "H8",
+   "name": "Pale Muted Red",
+   "hex": "#E7D6DB",
+   "lab": {
+    "L": 87.09,
+    "a": 6.7,
+    "b": -0.34
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H9",
+   "code": "H9",
+   "name": "White",
+   "hex": "#EDEDED",
+   "lab": {
+    "L": 93.75,
+    "a": 0,
+    "b": 0
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H10",
+   "code": "H10",
+   "name": "Pale Muted Red",
+   "hex": "#EEE9EA",
+   "lab": {
+    "L": 92.75,
+    "a": 1.85,
+    "b": 0.11
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H11",
+   "code": "H11",
+   "name": "Off White",
+   "hex": "#CECDD5",
+   "lab": {
+    "L": 82.69,
+    "a": 1.82,
+    "b": -3.84
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H12",
+   "code": "H12",
+   "name": "Pale Orange",
+   "hex": "#FFF5ED",
+   "lab": {
+    "L": 97.1,
+    "a": 2,
+    "b": 5.04
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H13",
+   "code": "H13",
+   "name": "Pale Yellow",
+   "hex": "#F5ECD2",
+   "lab": {
+    "L": 93.48,
+    "a": -1.21,
+    "b": 13.7
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H14",
+   "code": "H14",
+   "name": "Off White",
+   "hex": "#CFD7D3",
+   "lab": {
+    "L": 85.29,
+    "a": -3.44,
+    "b": 1.03
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H15",
+   "code": "H15",
+   "name": "Light Grey",
+   "hex": "#98A6A8",
+   "lab": {
+    "L": 67.11,
+    "a": -4.5,
+    "b": -2.72
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H16",
+   "code": "H16",
+   "name": "Deep Muted Red",
+   "hex": "#1D1414",
+   "lab": {
+    "L": 7.34,
+    "a": 4.53,
+    "b": 1.61
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H17",
+   "code": "H17",
+   "name": "Pale Muted Red",
+   "hex": "#F1EDED",
+   "lab": {
+    "L": 94.05,
+    "a": 1.34,
+    "b": 0.47
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H18",
+   "code": "H18",
+   "name": "Pale Yellow",
+   "hex": "#FFFDF0",
+   "lab": {
+    "L": 99.14,
+    "a": -1.55,
+    "b": 6.45
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H19",
+   "code": "H19",
+   "name": "Pale Orange",
+   "hex": "#F6EFE2",
+   "lab": {
+    "L": 94.66,
+    "a": 0.16,
+    "b": 7.12
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H20",
+   "code": "H20",
+   "name": "Light Grey",
+   "hex": "#949FA3",
+   "lab": {
+    "L": 64.75,
+    "a": -3.08,
+    "b": -3.42
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H21",
+   "code": "H21",
+   "name": "Pale Yellow",
+   "hex": "#FFFBE1",
+   "lab": {
+    "L": 98.31,
+    "a": -2.95,
+    "b": 12.94
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H22",
+   "code": "H22",
+   "name": "Light Muted Blue",
+   "hex": "#CACAD4",
+   "lab": {
+    "L": 81.59,
+    "a": 1.87,
+    "b": -4.96
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:H23",
+   "code": "H23",
+   "name": "Grey",
+   "hex": "#9A9D94",
+   "lab": {
+    "L": 64.26,
+    "a": -2.78,
+    "b": 4.33
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:M1",
+   "code": "M1",
+   "name": "Light Muted Green",
+   "hex": "#BCC6B8",
+   "lab": {
+    "L": 78.78,
+    "a": -6.01,
+    "b": 5.83
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:M2",
+   "code": "M2",
+   "name": "Muted Green",
+   "hex": "#8AA386",
+   "lab": {
+    "L": 64.42,
+    "a": -14.41,
+    "b": 12.21
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:M3",
+   "code": "M3",
+   "name": "Grey",
+   "hex": "#697D80",
+   "lab": {
+    "L": 50.95,
+    "a": -6.58,
+    "b": -4.07
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:M4",
+   "code": "M4",
+   "name": "Light Orange",
+   "hex": "#E3D2BC",
+   "lab": {
+    "L": 85.03,
+    "a": 2.34,
+    "b": 13.03
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:M5",
+   "code": "M5",
+   "name": "Light Yellow",
+   "hex": "#D0CCAA",
+   "lab": {
+    "L": 81.56,
+    "a": -4.23,
+    "b": 17.48
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:M6",
+   "code": "M6",
+   "name": "Muted Yellow",
+   "hex": "#B0A782",
+   "lab": {
+    "L": 68.37,
+    "a": -2.74,
+    "b": 20.35
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:M7",
+   "code": "M7",
+   "name": "Muted Orange",
+   "hex": "#B4A497",
+   "lab": {
+    "L": 68.38,
+    "a": 3.61,
+    "b": 8.85
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:M8",
+   "code": "M8",
+   "name": "Muted Red",
+   "hex": "#B38281",
+   "lab": {
+    "L": 59.1,
+    "a": 18.74,
+    "b": 8.01
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:M9",
+   "code": "M9",
+   "name": "Muted Orange",
+   "hex": "#A58767",
+   "lab": {
+    "L": 58.33,
+    "a": 6.8,
+    "b": 21.51
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:M10",
+   "code": "M10",
+   "name": "Light Muted Pink",
+   "hex": "#C5B2BC",
+   "lab": {
+    "L": 74.41,
+    "a": 8.54,
+    "b": -2.6
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:M11",
+   "code": "M11",
+   "name": "Muted Pink",
+   "hex": "#9F7594",
+   "lab": {
+    "L": 54.27,
+    "a": 21.69,
+    "b": -10.32
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:M12",
+   "code": "M12",
+   "name": "Dark Muted Red",
+   "hex": "#644749",
+   "lab": {
+    "L": 33.34,
+    "a": 12.74,
+    "b": 3.72
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:M13",
+   "code": "M13",
+   "name": "Orange",
+   "hex": "#D19066",
+   "lab": {
+    "L": 65.33,
+    "a": 19.93,
+    "b": 32.14
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:M14",
+   "code": "M14",
+   "name": "Red",
+   "hex": "#C77362",
+   "lab": {
+    "L": 57.36,
+    "a": 31.25,
+    "b": 23.75
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  },
+  {
+   "id": "mard-221:M15",
+   "code": "M15",
+   "name": "Grey",
+   "hex": "#757D78",
+   "lab": {
+    "L": 51.62,
+    "a": -4,
+    "b": 1.7
+   },
+   "finish": "solid",
+   "confidence": "medium"
+  }
+ ],
+ "sets": [
+  {
+   "id": "mard-set-24",
+   "name": "MARD 24 色套装",
+   "codes": [
+    "A4",
+    "A6",
+    "A7",
+    "B3",
+    "B5",
+    "B8",
+    "C3",
+    "C5",
+    "C8",
+    "D6",
+    "D7",
+    "D9",
+    "E2",
+    "E4",
+    "F5",
+    "G1",
+    "G5",
+    "G7",
+    "H1",
+    "H2",
+    "H3",
+    "H4",
+    "H5",
+    "H7"
+   ]
+  },
+  {
+   "id": "mard-set-48",
+   "name": "MARD 48 色套装",
+   "codes": [
+    "A4",
+    "A6",
+    "A7",
+    "B3",
+    "B5",
+    "B8",
+    "C3",
+    "C5",
+    "C8",
+    "D6",
+    "D7",
+    "D9",
+    "E2",
+    "E4",
+    "F5",
+    "G1",
+    "G5",
+    "G7",
+    "H1",
+    "H2",
+    "H3",
+    "H4",
+    "H5",
+    "H7",
+    "A10",
+    "A11",
+    "A13",
+    "B12",
+    "C2",
+    "C6",
+    "C7",
+    "C10",
+    "C11",
+    "C13",
+    "D3",
+    "D13",
+    "D15",
+    "D18",
+    "D19",
+    "D21",
+    "E3",
+    "E7",
+    "E8",
+    "F8",
+    "F13",
+    "G8",
+    "G9",
+    "G13"
+   ]
+  },
+  {
+   "id": "mard-set-72",
+   "name": "MARD 72 色套装",
+   "codes": [
+    "A4",
+    "A6",
+    "A7",
+    "B3",
+    "B5",
+    "B8",
+    "C3",
+    "C5",
+    "C8",
+    "D6",
+    "D7",
+    "D9",
+    "E2",
+    "E4",
+    "F5",
+    "G1",
+    "G5",
+    "G7",
+    "H1",
+    "H2",
+    "H3",
+    "H4",
+    "H5",
+    "H7",
+    "A10",
+    "A11",
+    "A13",
+    "B12",
+    "C2",
+    "C6",
+    "C7",
+    "C10",
+    "C11",
+    "C13",
+    "D3",
+    "D13",
+    "D15",
+    "D18",
+    "D19",
+    "D21",
+    "E3",
+    "E7",
+    "E8",
+    "F8",
+    "F13",
+    "G8",
+    "G9",
+    "G13",
+    "A3",
+    "B7",
+    "B10",
+    "B14",
+    "B17",
+    "B18",
+    "B19",
+    "B20",
+    "C16",
+    "D2",
+    "D8",
+    "D11",
+    "D12",
+    "D14",
+    "D16",
+    "D20",
+    "E1",
+    "E5",
+    "E12",
+    "E13",
+    "F7",
+    "F10",
+    "G2",
+    "G3"
+   ]
+  },
+  {
+   "id": "mard-set-96",
+   "name": "MARD 96 色套装",
+   "codes": [
+    "A4",
+    "A6",
+    "A7",
+    "B3",
+    "B5",
+    "B8",
+    "C3",
+    "C5",
+    "C8",
+    "D6",
+    "D7",
+    "D9",
+    "E2",
+    "E4",
+    "F5",
+    "G1",
+    "G5",
+    "G7",
+    "H1",
+    "H2",
+    "H3",
+    "H4",
+    "H5",
+    "H7",
+    "A10",
+    "A11",
+    "A13",
+    "B12",
+    "C2",
+    "C6",
+    "C7",
+    "C10",
+    "C11",
+    "C13",
+    "D3",
+    "D13",
+    "D15",
+    "D18",
+    "D19",
+    "D21",
+    "E3",
+    "E7",
+    "E8",
+    "F8",
+    "F13",
+    "G8",
+    "G9",
+    "G13",
+    "A3",
+    "B7",
+    "B10",
+    "B14",
+    "B17",
+    "B18",
+    "B19",
+    "B20",
+    "C16",
+    "D2",
+    "D8",
+    "D11",
+    "D12",
+    "D14",
+    "D16",
+    "D20",
+    "E1",
+    "E5",
+    "E12",
+    "E13",
+    "F7",
+    "F10",
+    "G2",
+    "G3",
+    "A14",
+    "D5",
+    "E6",
+    "E9",
+    "E10",
+    "E11",
+    "E14",
+    "E15",
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F6",
+    "F9",
+    "F11",
+    "F12",
+    "F14",
+    "G14",
+    "G17",
+    "H6",
+    "M5",
+    "M6",
+    "M9",
+    "M12"
+   ]
+  },
+  {
+   "id": "mard-set-120",
+   "name": "MARD 120 色套装",
+   "codes": [
+    "A4",
+    "A6",
+    "A7",
+    "B3",
+    "B5",
+    "B8",
+    "C3",
+    "C5",
+    "C8",
+    "D6",
+    "D7",
+    "D9",
+    "E2",
+    "E4",
+    "F5",
+    "G1",
+    "G5",
+    "G7",
+    "H1",
+    "H2",
+    "H3",
+    "H4",
+    "H5",
+    "H7",
+    "A10",
+    "A11",
+    "A13",
+    "B12",
+    "C2",
+    "C6",
+    "C7",
+    "C10",
+    "C11",
+    "C13",
+    "D3",
+    "D13",
+    "D15",
+    "D18",
+    "D19",
+    "D21",
+    "E3",
+    "E7",
+    "E8",
+    "F8",
+    "F13",
+    "G8",
+    "G9",
+    "G13",
+    "A3",
+    "B7",
+    "B10",
+    "B14",
+    "B17",
+    "B18",
+    "B19",
+    "B20",
+    "C16",
+    "D2",
+    "D8",
+    "D11",
+    "D12",
+    "D14",
+    "D16",
+    "D20",
+    "E1",
+    "E5",
+    "E12",
+    "E13",
+    "F7",
+    "F10",
+    "G2",
+    "G3",
+    "A14",
+    "D5",
+    "E6",
+    "E9",
+    "E10",
+    "E11",
+    "E14",
+    "E15",
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F6",
+    "F9",
+    "F11",
+    "F12",
+    "F14",
+    "G14",
+    "G17",
+    "H6",
+    "M5",
+    "M6",
+    "M9",
+    "M12",
+    "A1",
+    "A5",
+    "A8",
+    "A9",
+    "A12",
+    "A15",
+    "B1",
+    "B2",
+    "B4",
+    "B6",
+    "B11",
+    "B13",
+    "B15",
+    "B16",
+    "C1",
+    "C4",
+    "C9",
+    "C14",
+    "C15",
+    "C17",
+    "D1",
+    "D17",
+    "G6",
+    "H12"
+   ]
+  },
+  {
+   "id": "mard-set-144",
+   "name": "MARD 144 色套装",
+   "codes": [
+    "A4",
+    "A6",
+    "A7",
+    "B3",
+    "B5",
+    "B8",
+    "C3",
+    "C5",
+    "C8",
+    "D6",
+    "D7",
+    "D9",
+    "E2",
+    "E4",
+    "F5",
+    "G1",
+    "G5",
+    "G7",
+    "H1",
+    "H2",
+    "H3",
+    "H4",
+    "H5",
+    "H7",
+    "A10",
+    "A11",
+    "A13",
+    "B12",
+    "C2",
+    "C6",
+    "C7",
+    "C10",
+    "C11",
+    "C13",
+    "D3",
+    "D13",
+    "D15",
+    "D18",
+    "D19",
+    "D21",
+    "E3",
+    "E7",
+    "E8",
+    "F8",
+    "F13",
+    "G8",
+    "G9",
+    "G13",
+    "A3",
+    "B7",
+    "B10",
+    "B14",
+    "B17",
+    "B18",
+    "B19",
+    "B20",
+    "C16",
+    "D2",
+    "D8",
+    "D11",
+    "D12",
+    "D14",
+    "D16",
+    "D20",
+    "E1",
+    "E5",
+    "E12",
+    "E13",
+    "F7",
+    "F10",
+    "G2",
+    "G3",
+    "A14",
+    "D5",
+    "E6",
+    "E9",
+    "E10",
+    "E11",
+    "E14",
+    "E15",
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F6",
+    "F9",
+    "F11",
+    "F12",
+    "F14",
+    "G14",
+    "G17",
+    "H6",
+    "M5",
+    "M6",
+    "M9",
+    "M12",
+    "A1",
+    "A5",
+    "A8",
+    "A9",
+    "A12",
+    "A15",
+    "B1",
+    "B2",
+    "B4",
+    "B6",
+    "B11",
+    "B13",
+    "B15",
+    "B16",
+    "C1",
+    "C4",
+    "C9",
+    "C14",
+    "C15",
+    "C17",
+    "D1",
+    "D17",
+    "G6",
+    "H12",
+    "A2",
+    "G4",
+    "G10",
+    "G11",
+    "G12",
+    "G15",
+    "G16",
+    "H8",
+    "H9",
+    "H10",
+    "H11",
+    "H13",
+    "H14",
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M7",
+    "M8",
+    "M10",
+    "M11",
+    "M13",
+    "M14",
+    "M15"
+   ]
+  },
+  {
+   "id": "mard-set-168",
+   "name": "MARD 168 色套装",
+   "codes": [
+    "A4",
+    "A6",
+    "A7",
+    "B3",
+    "B5",
+    "B8",
+    "C3",
+    "C5",
+    "C8",
+    "D6",
+    "D7",
+    "D9",
+    "E2",
+    "E4",
+    "F5",
+    "G1",
+    "G5",
+    "G7",
+    "H1",
+    "H2",
+    "H3",
+    "H4",
+    "H5",
+    "H7",
+    "A10",
+    "A11",
+    "A13",
+    "B12",
+    "C2",
+    "C6",
+    "C7",
+    "C10",
+    "C11",
+    "C13",
+    "D3",
+    "D13",
+    "D15",
+    "D18",
+    "D19",
+    "D21",
+    "E3",
+    "E7",
+    "E8",
+    "F8",
+    "F13",
+    "G8",
+    "G9",
+    "G13",
+    "A3",
+    "B7",
+    "B10",
+    "B14",
+    "B17",
+    "B18",
+    "B19",
+    "B20",
+    "C16",
+    "D2",
+    "D8",
+    "D11",
+    "D12",
+    "D14",
+    "D16",
+    "D20",
+    "E1",
+    "E5",
+    "E12",
+    "E13",
+    "F7",
+    "F10",
+    "G2",
+    "G3",
+    "A14",
+    "D5",
+    "E6",
+    "E9",
+    "E10",
+    "E11",
+    "E14",
+    "E15",
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F6",
+    "F9",
+    "F11",
+    "F12",
+    "F14",
+    "G14",
+    "G17",
+    "H6",
+    "M5",
+    "M6",
+    "M9",
+    "M12",
+    "A1",
+    "A5",
+    "A8",
+    "A9",
+    "A12",
+    "A15",
+    "B1",
+    "B2",
+    "B4",
+    "B6",
+    "B11",
+    "B13",
+    "B15",
+    "B16",
+    "C1",
+    "C4",
+    "C9",
+    "C14",
+    "C15",
+    "C17",
+    "D1",
+    "D17",
+    "G6",
+    "H12",
+    "A2",
+    "G4",
+    "G10",
+    "G11",
+    "G12",
+    "G15",
+    "G16",
+    "H8",
+    "H9",
+    "H10",
+    "H11",
+    "H13",
+    "H14",
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M7",
+    "M8",
+    "M10",
+    "M11",
+    "M13",
+    "M14",
+    "M15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A21",
+    "A22",
+    "A24",
+    "B24",
+    "D23",
+    "E16",
+    "E17",
+    "E18",
+    "E19",
+    "E20",
+    "E24",
+    "F16",
+    "F17",
+    "F21",
+    "F22",
+    "F23",
+    "F24",
+    "H17",
+    "H18",
+    "H19"
+   ]
+  },
+  {
+   "id": "mard-set-192",
+   "name": "MARD 192 色套装",
+   "codes": [
+    "A4",
+    "A6",
+    "A7",
+    "B3",
+    "B5",
+    "B8",
+    "C3",
+    "C5",
+    "C8",
+    "D6",
+    "D7",
+    "D9",
+    "E2",
+    "E4",
+    "F5",
+    "G1",
+    "G5",
+    "G7",
+    "H1",
+    "H2",
+    "H3",
+    "H4",
+    "H5",
+    "H7",
+    "A10",
+    "A11",
+    "A13",
+    "B12",
+    "C2",
+    "C6",
+    "C7",
+    "C10",
+    "C11",
+    "C13",
+    "D3",
+    "D13",
+    "D15",
+    "D18",
+    "D19",
+    "D21",
+    "E3",
+    "E7",
+    "E8",
+    "F8",
+    "F13",
+    "G8",
+    "G9",
+    "G13",
+    "A3",
+    "B7",
+    "B10",
+    "B14",
+    "B17",
+    "B18",
+    "B19",
+    "B20",
+    "C16",
+    "D2",
+    "D8",
+    "D11",
+    "D12",
+    "D14",
+    "D16",
+    "D20",
+    "E1",
+    "E5",
+    "E12",
+    "E13",
+    "F7",
+    "F10",
+    "G2",
+    "G3",
+    "A14",
+    "D5",
+    "E6",
+    "E9",
+    "E10",
+    "E11",
+    "E14",
+    "E15",
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F6",
+    "F9",
+    "F11",
+    "F12",
+    "F14",
+    "G14",
+    "G17",
+    "H6",
+    "M5",
+    "M6",
+    "M9",
+    "M12",
+    "A1",
+    "A5",
+    "A8",
+    "A9",
+    "A12",
+    "A15",
+    "B1",
+    "B2",
+    "B4",
+    "B6",
+    "B11",
+    "B13",
+    "B15",
+    "B16",
+    "C1",
+    "C4",
+    "C9",
+    "C14",
+    "C15",
+    "C17",
+    "D1",
+    "D17",
+    "G6",
+    "H12",
+    "A2",
+    "G4",
+    "G10",
+    "G11",
+    "G12",
+    "G15",
+    "G16",
+    "H8",
+    "H9",
+    "H10",
+    "H11",
+    "H13",
+    "H14",
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M7",
+    "M8",
+    "M10",
+    "M11",
+    "M13",
+    "M14",
+    "M15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A21",
+    "A22",
+    "A24",
+    "B24",
+    "D23",
+    "E16",
+    "E17",
+    "E18",
+    "E19",
+    "E20",
+    "E24",
+    "F16",
+    "F17",
+    "F21",
+    "F22",
+    "F23",
+    "F24",
+    "H17",
+    "H18",
+    "H19",
+    "A20",
+    "A23",
+    "A25",
+    "A26",
+    "B26",
+    "B27",
+    "B28",
+    "B29",
+    "B30",
+    "B31",
+    "B32",
+    "C21",
+    "C22",
+    "C23",
+    "C24",
+    "C25",
+    "C27",
+    "C28",
+    "G18",
+    "H15",
+    "H20",
+    "H21",
+    "H22",
+    "H23"
+   ]
+  },
+  {
+   "id": "mard-set-216",
+   "name": "MARD 216 色套装",
+   "codes": [
+    "A4",
+    "A6",
+    "A7",
+    "B3",
+    "B5",
+    "B8",
+    "C3",
+    "C5",
+    "C8",
+    "D6",
+    "D7",
+    "D9",
+    "E2",
+    "E4",
+    "F5",
+    "G1",
+    "G5",
+    "G7",
+    "H1",
+    "H2",
+    "H3",
+    "H4",
+    "H5",
+    "H7",
+    "A10",
+    "A11",
+    "A13",
+    "B12",
+    "C2",
+    "C6",
+    "C7",
+    "C10",
+    "C11",
+    "C13",
+    "D3",
+    "D13",
+    "D15",
+    "D18",
+    "D19",
+    "D21",
+    "E3",
+    "E7",
+    "E8",
+    "F8",
+    "F13",
+    "G8",
+    "G9",
+    "G13",
+    "A3",
+    "B7",
+    "B10",
+    "B14",
+    "B17",
+    "B18",
+    "B19",
+    "B20",
+    "C16",
+    "D2",
+    "D8",
+    "D11",
+    "D12",
+    "D14",
+    "D16",
+    "D20",
+    "E1",
+    "E5",
+    "E12",
+    "E13",
+    "F7",
+    "F10",
+    "G2",
+    "G3",
+    "A14",
+    "D5",
+    "E6",
+    "E9",
+    "E10",
+    "E11",
+    "E14",
+    "E15",
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F6",
+    "F9",
+    "F11",
+    "F12",
+    "F14",
+    "G14",
+    "G17",
+    "H6",
+    "M5",
+    "M6",
+    "M9",
+    "M12",
+    "A1",
+    "A5",
+    "A8",
+    "A9",
+    "A12",
+    "A15",
+    "B1",
+    "B2",
+    "B4",
+    "B6",
+    "B11",
+    "B13",
+    "B15",
+    "B16",
+    "C1",
+    "C4",
+    "C9",
+    "C14",
+    "C15",
+    "C17",
+    "D1",
+    "D17",
+    "G6",
+    "H12",
+    "A2",
+    "G4",
+    "G10",
+    "G11",
+    "G12",
+    "G15",
+    "G16",
+    "H8",
+    "H9",
+    "H10",
+    "H11",
+    "H13",
+    "H14",
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M7",
+    "M8",
+    "M10",
+    "M11",
+    "M13",
+    "M14",
+    "M15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A21",
+    "A22",
+    "A24",
+    "B24",
+    "D23",
+    "E16",
+    "E17",
+    "E18",
+    "E19",
+    "E20",
+    "E24",
+    "F16",
+    "F17",
+    "F21",
+    "F22",
+    "F23",
+    "F24",
+    "H17",
+    "H18",
+    "H19",
+    "A20",
+    "A23",
+    "A25",
+    "A26",
+    "B26",
+    "B27",
+    "B28",
+    "B29",
+    "B30",
+    "B31",
+    "B32",
+    "C21",
+    "C22",
+    "C23",
+    "C24",
+    "C25",
+    "C27",
+    "C28",
+    "G18",
+    "H15",
+    "H20",
+    "H21",
+    "H22",
+    "H23",
+    "B21",
+    "B22",
+    "B23",
+    "B25",
+    "C18",
+    "C19",
+    "C20",
+    "C26",
+    "D22",
+    "D24",
+    "D25",
+    "D26",
+    "E21",
+    "E22",
+    "E23",
+    "F15",
+    "F18",
+    "F19",
+    "F20",
+    "F25",
+    "G19",
+    "G20",
+    "G21",
+    "H16"
+   ]
+  },
+  {
+   "id": "mard-set-221",
+   "name": "MARD 221 色套装",
+   "codes": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "A6",
+    "A7",
+    "A8",
+    "A9",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19",
+    "A20",
+    "A21",
+    "A22",
+    "A23",
+    "A24",
+    "A25",
+    "A26",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6",
+    "B7",
+    "B8",
+    "B9",
+    "B10",
+    "B11",
+    "B12",
+    "B13",
+    "B14",
+    "B15",
+    "B16",
+    "B17",
+    "B18",
+    "B19",
+    "B20",
+    "B21",
+    "B22",
+    "B23",
+    "B24",
+    "B25",
+    "B26",
+    "B27",
+    "B28",
+    "B29",
+    "B30",
+    "B31",
+    "B32",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "C9",
+    "C10",
+    "C11",
+    "C12",
+    "C13",
+    "C14",
+    "C15",
+    "C16",
+    "C17",
+    "C18",
+    "C19",
+    "C20",
+    "C21",
+    "C22",
+    "C23",
+    "C24",
+    "C25",
+    "C26",
+    "C27",
+    "C28",
+    "C29",
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7",
+    "D8",
+    "D9",
+    "D10",
+    "D11",
+    "D12",
+    "D13",
+    "D14",
+    "D15",
+    "D16",
+    "D17",
+    "D18",
+    "D19",
+    "D20",
+    "D21",
+    "D22",
+    "D23",
+    "D24",
+    "D25",
+    "D26",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "E6",
+    "E7",
+    "E8",
+    "E9",
+    "E10",
+    "E11",
+    "E12",
+    "E13",
+    "E14",
+    "E15",
+    "E16",
+    "E17",
+    "E18",
+    "E19",
+    "E20",
+    "E21",
+    "E22",
+    "E23",
+    "E24",
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F5",
+    "F6",
+    "F7",
+    "F8",
+    "F9",
+    "F10",
+    "F11",
+    "F12",
+    "F13",
+    "F14",
+    "F15",
+    "F16",
+    "F17",
+    "F18",
+    "F19",
+    "F20",
+    "F21",
+    "F22",
+    "F23",
+    "F24",
+    "F25",
+    "G1",
+    "G2",
+    "G3",
+    "G4",
+    "G5",
+    "G6",
+    "G7",
+    "G8",
+    "G9",
+    "G10",
+    "G11",
+    "G12",
+    "G13",
+    "G14",
+    "G15",
+    "G16",
+    "G17",
+    "G18",
+    "G19",
+    "G20",
+    "G21",
+    "H1",
+    "H2",
+    "H3",
+    "H4",
+    "H5",
+    "H6",
+    "H7",
+    "H8",
+    "H9",
+    "H10",
+    "H11",
+    "H12",
+    "H13",
+    "H14",
+    "H15",
+    "H16",
+    "H17",
+    "H18",
+    "H19",
+    "H20",
+    "H21",
+    "H22",
+    "H23",
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M5",
+    "M6",
+    "M7",
+    "M8",
+    "M9",
+    "M10",
+    "M11",
+    "M12",
+    "M13",
+    "M14",
+    "M15"
+   ]
+  }
+ ]
+};

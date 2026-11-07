@@ -1,0 +1,27 @@
+# 依赖
+node_modules/
+.pnpm-store/
+
+# 构建 / 临时产物
+tmp/
+dist/
+.vitest-cache/
+.vitest-tmp/
+
+# 工具与本地数据
+.workbuddy/
+.vscode/
+.idea/
+
+# 系统
+.DS_Store
+Thumbs.db
+*.log
+
+# 注意：以下产物**故意提交**，因为它们是小程序直接运行所必需的
+#   miniprogram/core/core.js     由 packages/core 打包而来
+#   miniprogram/data/mard-221.js 色卡数据模块
+# 改了 packages/core 之后记得 pnpm build:mp 重新生成再提交
+
+# 由 scripts/compare.mjs 生成的演示页（1.6MB，重跑脚本即可）
+docs/compare.html

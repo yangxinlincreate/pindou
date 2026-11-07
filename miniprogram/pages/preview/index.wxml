@@ -1,0 +1,29 @@
+<view class="wrap">
+  <view class="bar">{{info}}</view>
+
+  <view class="stage" id="stage">
+    <canvas type="2d" id="cv" class="cv"></canvas>
+  </view>
+
+  <!-- 导出专用的离屏画布 -->
+  <canvas type="2d" id="exp" class="exp-canvas"></canvas>
+
+  <view class="tools">
+    <view class="tool {{showBoard ? 'on' : ''}}" bindtap="toggleBoard">
+      <text class="tico">▦</text>
+      <text class="tlabel">分板</text>
+    </view>
+    <view class="tool {{showCode ? 'on' : ''}}" bindtap="toggleCode">
+      <text class="tico">A1</text>
+      <text class="tlabel">色号</text>
+    </view>
+    <view class="tool" bindtap="goUsage">
+      <text class="tico">≡</text>
+      <text class="tlabel">用量</text>
+    </view>
+    <view class="tool save" bindtap="saveImage">
+      <text class="tico">↓</text>
+      <text class="tlabel">保存</text>
+    </view>
+  </view>
+</view>

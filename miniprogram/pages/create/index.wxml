@@ -1,0 +1,105 @@
+<view class="page">
+  <!-- 离屏工作画布：只用于解码图片取像素，不显示 -->
+  <canvas type="2d" id="work" class="work-canvas"></canvas>
+
+  <!-- 未选图 -->
+  <view class="section" wx:if="{{!imagePath}}">
+    <view class="up" bindtap="chooseImage">
+      <view class="upico">
+        <text class="uparrow">↑</text>
+      </view>
+      <view class="uptit">选择图片</view>
+      <view class="upsub">照片或像素图都行 · 图片不会上传</view>
+    </view>
+
+    <view class="tips">
+      <view class="tip">· 照片模式：自动配色，适合人像、宠物、风景</view>
+      <view class="tip">· 直接导入：像素图 1:1 还原，不改变任何一个像素</view>
+    </view>
+  </view>
+
+  <!-- 已选图 -->
+  <block wx:else>
+    <view class="preview" bindtap="chooseImage">
+      <image class="pvimg" src="{{imagePath}}" mode="aspectFit" />
+      <view class="pvinfo">{{imgW}} × {{imgH}} px · 点击换图</view>
+    </view>
+
+    <view class="notice {{noticeType}}" wx:if="{{notice}}">{{notice}}</view>
+
+    <!-- 模式 -->
+    <view class="section" style="margin-top: 26rpx;">
+      <view class="label">转换模式</view>
+      <view class="seg">
+        <view class="segitem {{mode === 'auto' ? 'on' : ''}}" data-mode="auto" bindtap="setMode">自动判断</view>
+        <view class="segitem {{mode === 'photo' ? 'on' : ''}}" data-mode="photo" bindtap="setMode">照片</view>
+        <view class="segitem {{mode === 'import' ? 'on' : ''}}" data-mode="import" bindtap="setMode">直接导入</view>
+      </view>
+    </view>
+
+    <!-- 格数 -->
+    <view class="section">
+      <view class="label">
+        <text>格数</text>
+        <text class="val">{{gridW}} × {{gridH}}</text>
+      </view>
+      <view class="slider-row">
+        <slider
+          min="12"
+          max="300"
+          value="{{gridSize}}"
+          disabled="{{importLocked}}"
+          activeColor="#FF7A45"
+          backgroundColor="#EDE7DD"
+          block-size="18"
+          bindchanging="onGridChanging"
+          bindchange="onGridChange"
+        />
+        <text class="slider-val">{{gridSize}}</text>
+      </view>
+      <view class="sub">{{sizeHint}}</view>
+    </view>
+
+    <!-- 色数 -->
+    <view class="section">
+      <view class="label">
+        <text>色数</text>
+        <text class="val">{{colorCount}}</text>
+      </view>
+      <view class="slider-row">
+        <slider
+          min="2"
+          max="{{colorMax}}"
+          value="{{colorCount}}"
+          disabled="{{importLocked}}"
+          activeColor="#FF7A45"
+          backgroundColor="#EDE7DD"
+          block-size="18"
+          bindchanging="onColorChanging"
+          bindchange="onColorChange"
+        />
+        <text class="slider-val">{{colorCount}}</text>
+      </view>
+      <view class="sub">{{importLocked ? '直接导入不改色数，保留原图颜色' : '目标色数。照片本身没有那么多可分辨色调时，实际会更少'}}</view>
+    </view>
+
+    <!-- 套装 -->
+    <view class="section">
+      <view class="label">
+        <text>套装限制</text>
+      </view>
+      <picker range="{{setNames}}" value="{{setIndex}}" bindchange="onSetChange">
+        <view class="picker">
+          <text>{{setNames[setIndex]}}</text>
+          <text class="picker-arrow">›</text>
+        </view>
+      </picker>
+      <view class="sub">选了套装，生成时只会用套装里的颜色，套装外的会在用量清单标「需补货」</view>
+    </view>
+
+    <button class="btn-primary {{generating ? 'disabled' : ''}}" bindtap="generate" disabled="{{generating}}">
+      {{generating ? '生成中…' : '生成图纸'}}
+    </button>
+    <view class="timing" wx:if="{{timing}}">{{timing}}</view>
+  </block>
+</view>

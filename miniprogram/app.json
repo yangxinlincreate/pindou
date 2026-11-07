@@ -1,0 +1,29 @@
+{
+  "pages": [
+    "pages/create/index",
+    "pages/preview/index",
+    "pages/usage/index",
+    "pages/palette/index",
+    "pages/mine/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#FAF7F2",
+    "navigationBarTitleText": "拼豆图纸",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FAF7F2"
+  },
+  "tabBar": {
+    "color": "#9C978E",
+    "selectedColor": "#C9501F",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/create/index", "text": "做图" },
+      { "pagePath": "pages/palette/index", "text": "色卡" },
+      { "pagePath": "pages/mine/index", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

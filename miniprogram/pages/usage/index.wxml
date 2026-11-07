@@ -1,0 +1,45 @@
+<view class="page" wx:if="{{!empty}}">
+  <view class="stats">
+    <view class="stat">
+      <text class="k">总颗数</text>
+      <text class="v">{{stats.total}}<text class="u">颗</text></text>
+    </view>
+    <view class="stat">
+      <text class="k">用色</text>
+      <text class="v">{{stats.colorCount}}<text class="u">色</text></text>
+    </view>
+    <view class="stat">
+      <text class="k">底板</text>
+      <text class="v">{{stats.boardsTotal}}<text class="u">块</text></text>
+    </view>
+    <view class="stat">
+      <text class="k">成品</text>
+      <text class="v">{{stats.widthCm}}<text class="u">cm</text></text>
+    </view>
+  </view>
+
+  <view class="label" style="margin-top: 34rpx;">
+    <text>{{summary}}</text>
+    <text class="flag" wx:if="{{stats.restockCount > 0}}">{{stats.restockCount}} 色需补货</text>
+  </view>
+
+  <view class="list">
+    <view class="row" wx:for="{{items}}" wx:key="code">
+      <view class="sw" style="background: {{item.hex}}"></view>
+      <text class="code">{{item.code}}</text>
+      <text class="name">{{item.name}}</text>
+      <text class="need" wx:if="{{item.owned === false}}">补</text>
+      <text class="cnt">{{item.count}}</text>
+    </view>
+  </view>
+
+  <view class="disclose">
+    色值与色号来自公开资料整理，非品牌官方测量。屏幕显示与实物豆存在色差，不同批次亦有轻微差异。大批量采购前建议先看商家实物色卡。
+  </view>
+
+  <button class="btn-primary copybtn" bindtap="copyList">复制清单</button>
+</view>
+
+<view class="page" wx:else>
+  <view class="empty">还没有生成的图纸</view>
+</view>

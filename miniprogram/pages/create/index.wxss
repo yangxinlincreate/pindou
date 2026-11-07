@@ -1,0 +1,123 @@
+.work-canvas {
+  position: fixed;
+  left: -9999rpx;
+  top: 0;
+  width: 300px;
+  height: 300px;
+}
+
+.up {
+  height: 420rpx;
+  border: 3rpx dashed #DCD5C9;
+  border-radius: 26rpx;
+  background: #FCFAF6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.upico {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 26rpx;
+  background: #fff;
+  border: 1rpx solid #E7E1D7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20rpx;
+}
+.uparrow {
+  font-size: 44rpx;
+  color: #FF7A45;
+  line-height: 1;
+}
+.uptit {
+  font-size: 29rpx;
+  font-weight: 500;
+  color: #2C2C2A;
+}
+.upsub {
+  font-size: 22rpx;
+  color: #9C978E;
+  margin-top: 8rpx;
+}
+
+.tips {
+  margin-top: 34rpx;
+  padding: 0 8rpx;
+}
+.tip {
+  font-size: 22rpx;
+  color: #9C978E;
+  line-height: 1.9;
+}
+
+.preview {
+  position: relative;
+  height: 380rpx;
+  border-radius: 22rpx;
+  overflow: hidden;
+  background: #EFE9E0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pvimg {
+  width: 100%;
+  height: 100%;
+}
+.pvinfo {
+  position: absolute;
+  left: 16rpx;
+  bottom: 16rpx;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 10rpx;
+  padding: 6rpx 14rpx;
+  font-size: 20rpx;
+  color: #6B6760;
+}
+
+.seg {
+  display: flex;
+  background: #F3EFE7;
+  border-radius: 18rpx;
+  padding: 6rpx;
+}
+.segitem {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  border-radius: 14rpx;
+  font-size: 24rpx;
+  color: #6B6760;
+}
+.segitem.on {
+  background: #fff;
+  color: #2C2C2A;
+  font-weight: 500;
+}
+
+.picker {
+  height: 88rpx;
+  background: #fff;
+  border: 1rpx solid #E7E1D7;
+  border-radius: 18rpx;
+  padding: 0 26rpx;
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+  color: #2C2C2A;
+}
+.picker-arrow {
+  margin-left: auto;
+  color: #9C978E;
+  font-size: 32rpx;
+}
+
+.timing {
+  text-align: center;
+  font-size: 21rpx;
+  color: #9C978E;
+  margin-top: 20rpx;
+}

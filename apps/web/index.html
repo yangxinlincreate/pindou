@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>拼豆图纸 · 算法验证台</title>
+<link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <div class="mark">豆</div>
+      <div>
+        <div class="t1">拼豆图纸</div>
+        <div class="t2">算法验证台 · v0.1</div>
+      </div>
+    </div>
+    <div class="topright">
+      <span class="pill" id="catalogPill">MARD 221 · 示例数据</span>
+      <button class="ghost" id="btnSample">照片示例</button>
+      <button class="ghost" id="btnSample2">像素图示例</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <aside class="panel">
+      <div class="section">
+        <div class="label">图片</div>
+        <div class="drop" id="drop">
+          <input type="file" id="file" accept="image/*" hidden />
+          <div class="dropico">
+            <svg viewBox="0 0 24 24"><path d="M12 16V4M12 4L7 9M12 4l5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
+          </div>
+          <div class="dropt">点击或拖入图片</div>
+          <div class="drops">照片 / 像素图都可以</div>
+        </div>
+        <div class="filemeta" id="filemeta" hidden>
+          <span id="fileName">—</span>
+          <button class="link" id="btnClear">换一张</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="label">转换模式</div>
+        <div class="seg" id="modeSeg">
+          <button data-mode="auto" class="on">自动判断</button>
+          <button data-mode="photo">照片</button>
+          <button data-mode="import">直接导入</button>
+        </div>
+        <div class="notice" id="modeNotice" hidden></div>
+      </div>
+
+      <div class="section" id="gridSection">
+        <div class="label">
+          <span>格数</span>
+          <b id="gridVal">58</b>
+        </div>
+        <input type="range" id="gridSize" min="12" max="300" value="58" step="1" />
+        <div class="presets" id="gridPresets">
+          <button data-v="29">29</button>
+          <button data-v="48">48</button>
+          <button data-v="58" class="on">58</button>
+          <button data-v="96">96</button>
+        </div>
+        <div class="sub" id="sizeHint">5mm 豆 · 成品约 29 × 29 cm</div>
+      </div>
+
+      <div class="section">
+        <div class="label">
+          <span>色数</span>
+          <b id="colorVal">32</b>
+        </div>
+        <input type="range" id="colorCount" min="2" max="64" value="32" step="1" />
+        <div class="sub" id="colorHint">目标 24 色</div>
+      </div>
+
+      <div class="section">
+        <div class="label"><span>套装限制</span></div>
+        <select id="setSelect">
+          <option value="">不限（全部 221 色）</option>
+        </select>
+        <div class="sub">选了套装，生成时只会用套装里的颜色</div>
+      </div>
+
+      <button class="primary" id="btnRun" disabled>生成图纸</button>
+      <div class="timing" id="timing"></div>
+      <div class="credit">
+        色卡数据 <a href="https://github.com/makebead/craft-color-codes" target="_blank" rel="noopener">Craft Color Codes</a> · CC BY 4.0
+      </div>
+    </aside>
+
+    <section class="stage">
+      <div class="stagebar">
+        <span id="stageInfo">还没有图纸</span>
+        <div class="stageactions">
+          <label class="chk"><input type="checkbox" id="showCode" checked /> 显示色号</label>
+          <label class="chk"><input type="checkbox" id="showBoard" /> 分板线</label>
+          <button class="ghost small" id="btnDenoise" disabled>去杂质</button>
+          <button class="ghost small" id="btnExport" disabled>导出 PNG</button>
+        </div>
+      </div>
+      <div class="canvaswrap" id="canvasWrap">
+        <div class="pane">
+          <div class="panehead">
+            <span>对比基准</span>
+            <select id="refSelect">
+              <option value="sampled">算法输入（降采样后）</option>
+              <option value="source">原始图片</option>
+            </select>
+          </div>
+          <div class="panebox" id="paneRef"><canvas id="ref"></canvas></div>
+        </div>
+        <div class="pane">
+          <div class="panehead"><span>成品图纸</span></div>
+          <div class="panebox" id="paneMain"><canvas id="cv"></canvas></div>
+        </div>
+        <div class="empty" id="empty">载入一张图，或点右上角「照片示例」</div>
+      </div>
+    </section>
+
+    <aside class="usage">
+      <div class="section">
+        <div class="label">用量</div>
+        <div class="stats" id="stats"></div>
+      </div>
+      <div class="section grow">
+        <div class="label"><span>色号清单</span><b id="usageCount"></b></div>
+        <div class="ulist" id="ulist"></div>
+      </div>
+    </aside>
+  </main>
+</div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>

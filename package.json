@@ -1,0 +1,25 @@
+{
+  "name": "pindou",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dev": "pnpm --filter @pindou/web dev",
+    "build": "pnpm --filter @pindou/web build",
+    "build:core": "vite build --config vite.lib.config.ts",
+    "build:mp": "vite build --config vite.mpq.config.ts && node scripts/gen-miniprogram-data.mjs",
+    "verify:algo": "vite build --config vite.lib.config.ts && node scripts/verify-algo.mjs",
+    "verify:mp": "node scripts/verify-mp.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.8"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
+}
