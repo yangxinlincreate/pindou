@@ -2,31 +2,38 @@
   <view class="page" v-if="!empty">
     <view class="stats">
       <view class="stat" v-for="s in statList" :key="s.k">
-        <text class="k">{{ s.k }}</text>
-        <text class="v">{{ s.v }}<text class="u">{{ s.u }}</text></text>
+        <text class="stat-v num">{{ s.v }}<text class="stat-u">{{ s.u }}</text></text>
+        <text class="stat-k">{{ s.k }}</text>
       </view>
     </view>
 
-    <view class="label" style="margin-top: 34rpx">
-      <text>{{ summary }}</text>
-      <text class="flag" v-if="restock > 0">{{ restock }} 色需补货</text>
+    <view class="list-head">
+      <text class="list-title">色号清单</text>
+      <text class="list-sub">{{ summary }}</text>
     </view>
 
     <view class="list">
       <view class="row" v-for="item in items" :key="item.code">
         <view class="sw" :style="{ background: item.hex }"></view>
-        <text class="code">{{ item.code }}</text>
-        <text class="name">{{ item.name }}</text>
-        <text class="need" v-if="item.owned === false">补</text>
-        <text class="cnt">{{ item.count }}</text>
+        <view class="row-main">
+          <view class="row-top">
+            <text class="code num">{{ item.code }}</text>
+            <text class="name">{{ item.name }}</text>
+            <text class="need" v-if="item.owned === false">补</text>
+            <text class="cnt num">{{ item.count }}</text>
+          </view>
+          <view class="bar">
+            <view class="bar-in" :style="{ width: item.pct + '%', background: item.hex }"></view>
+          </view>
+        </view>
       </view>
     </view>
 
     <view class="disclose">
-      色值与色号来自公开资料整理，非品牌官方测量。屏幕显示与实物豆存在色差，不同批次亦有轻微差异。大批量采购前建议先看商家实物色卡。
+      色值与色号来自公开资料整理，非品牌官方测量。屏幕显示与实物豆存在色差，不同批次亦有轻微差异。
     </view>
 
-    <button class="btn-primary copybtn" @tap="copyList">复制清单</button>
+    <button class="btn-primary copy" @tap="copyList">复制清单</button>
   </view>
 
   <view class="page" v-else>
@@ -59,7 +66,15 @@ export default {
 
     const s = pattern.stats;
 
-    this.items = pattern.palette;
+    const maxCount = pattern.palette.reduce((m, p) => Math.max(m, p.count), 1);
+    this.items = pattern.palette.map((p) => ({
+      code: p.code,
+      name: p.name,
+      hex: p.hex,
+      count: p.count,
+      owned: p.owned,
+      pct: Math.max(6, Math.round((p.count / maxCount) * 100)),
+    }));
     this.restock = s.restockCount;
     this.summary = pattern.width + ' × ' + pattern.height + ' 格 · ' + s.colorCount + ' 色';
     this.statList = [
@@ -104,103 +119,133 @@ export default {
   width: calc(50% - 16rpx);
   margin: 8rpx;
   background: #fff;
-  border: 1rpx solid #e7e1d7;
-  border-radius: 20rpx;
-  padding: 22rpx 24rpx;
+  border-radius: 28rpx;
+  padding: 28rpx 30rpx;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
+  gap: 6rpx;
+  box-shadow: 0 2rpx 16rpx rgba(28, 27, 26, 0.05);
 }
-.stat .k {
-  font-size: 21rpx;
-  color: #9c978e;
-  margin-bottom: 8rpx;
-}
-.stat .v {
-  font-size: 40rpx;
-  font-weight: 500;
+.stat-v {
+  font-size: 52rpx;
+  font-weight: 700;
   line-height: 1.1;
+  letter-spacing: -0.02em;
 }
-.stat .u {
-  font-size: 22rpx;
+.stat-u {
+  font-size: 24rpx;
   font-weight: 400;
-  color: #9c978e;
+  color: var(--ink-3);
   margin-left: 6rpx;
+  letter-spacing: 0;
+}
+.stat-k {
+  font-size: 23rpx;
+  color: var(--ink-3);
 }
 
-.label .flag {
+.list-head {
+  display: flex;
+  align-items: baseline;
+  padding: 40rpx 8rpx 18rpx;
+}
+.list-title {
+  font-size: 32rpx;
+  font-weight: 600;
+}
+.list-sub {
   margin-left: auto;
-  color: #c9501f;
   font-size: 22rpx;
+  color: var(--ink-3);
 }
 
 .list {
   background: #fff;
-  border: 1rpx solid #e7e1d7;
-  border-radius: 22rpx;
+  border-radius: 32rpx;
   overflow: hidden;
+  box-shadow: 0 2rpx 16rpx rgba(28, 27, 26, 0.05);
 }
 .row {
   display: flex;
   align-items: center;
-  padding: 20rpx 24rpx;
-  border-bottom: 1rpx solid #f2ede4;
+  padding: 24rpx 28rpx;
+  border-bottom: 1rpx solid var(--line);
 }
 .row:last-child {
   border-bottom: none;
 }
 .sw {
-  width: 44rpx;
-  height: 44rpx;
-  border-radius: 10rpx;
-  border: 1rpx solid rgba(0, 0, 0, 0.1);
-  margin-right: 18rpx;
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 16rpx;
+  margin-right: 22rpx;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1rpx rgba(0, 0, 0, 0.06);
+}
+.row-main {
+  flex: 1;
+  min-width: 0;
+}
+.row-top {
+  display: flex;
+  align-items: baseline;
+  gap: 12rpx;
 }
 .code {
-  width: 80rpx;
-  font-size: 26rpx;
-  font-weight: 500;
+  font-size: 28rpx;
+  font-weight: 600;
+  width: 76rpx;
 }
 .name {
   flex: 1;
   font-size: 23rpx;
-  color: #6b6760;
+  color: var(--ink-3);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 .need {
   font-size: 19rpx;
-  color: #854f0b;
-  background: #faeeda;
+  color: #8a5a03;
+  background: var(--warn-soft);
   border-radius: 8rpx;
-  padding: 2rpx 10rpx;
-  margin-right: 12rpx;
+  padding: 3rpx 10rpx;
 }
 .cnt {
-  font-size: 26rpx;
-  font-weight: 500;
-  min-width: 70rpx;
-  text-align: right;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+.bar {
+  height: 8rpx;
+  background: #f2efe9;
+  border-radius: 4rpx;
+  margin-top: 14rpx;
+  overflow: hidden;
+}
+.bar-in {
+  height: 100%;
+  border-radius: 4rpx;
+  opacity: 0.85;
 }
 
 .disclose {
-  margin-top: 28rpx;
-  font-size: 20rpx;
-  color: #9c978e;
+  margin-top: 32rpx;
+  font-size: 21rpx;
+  color: var(--ink-3);
   line-height: 1.7;
-  background: #f7f4ee;
-  border-radius: 16rpx;
-  padding: 20rpx 24rpx;
+  background: #f0ece6;
+  border-radius: 20rpx;
+  padding: 22rpx 26rpx;
 }
 
-.copybtn {
-  margin-top: 30rpx;
+.copy {
+  margin-top: 32rpx;
 }
 
 .empty {
-  padding: 200rpx 0;
+  padding: 240rpx 0;
   text-align: center;
-  color: #9c978e;
+  color: var(--ink-3);
   font-size: 26rpx;
 }
 </style>

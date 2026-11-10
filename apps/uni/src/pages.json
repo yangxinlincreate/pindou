@@ -34,26 +34,32 @@
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "拼豆图纸",
-    "navigationBarBackgroundColor": "#FAF7F2",
-    "backgroundColor": "#FAF7F2"
+    "navigationBarBackgroundColor": "#F6F4F0",
+    "backgroundColor": "#F6F4F0"
   },
   "tabBar": {
-    "color": "#9C978E",
-    "selectedColor": "#C9501F",
+    "color": "#9A948C",
+    "selectedColor": "#FF6B35",
     "backgroundColor": "#FFFFFF",
     "borderStyle": "white",
     "list": [
       {
         "pagePath": "pages/create/index",
-        "text": "做图"
+        "text": "做图",
+        "iconPath": "static/tabbar/make.png",
+        "selectedIconPath": "static/tabbar/make-on.png"
       },
       {
         "pagePath": "pages/palette/index",
-        "text": "色卡"
+        "text": "色卡",
+        "iconPath": "static/tabbar/palette.png",
+        "selectedIconPath": "static/tabbar/palette-on.png"
       },
       {
         "pagePath": "pages/mine/index",
-        "text": "我的"
+        "text": "我的",
+        "iconPath": "static/tabbar/mine.png",
+        "selectedIconPath": "static/tabbar/mine-on.png"
       }
     ]
   }

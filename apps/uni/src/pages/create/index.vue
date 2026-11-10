@@ -1,99 +1,107 @@
 <template>
   <view class="page">
     <!-- 未选图 -->
-    <view v-if="!imagePath" class="section">
-      <view class="up" @tap="chooseImage">
-        <view class="upico"><text class="uparrow">↑</text></view>
-        <view class="uptit">选择图片</view>
-        <view class="upsub">照片或像素图都行 · 图片不会上传</view>
+    <block v-if="!imagePath">
+      <view class="hero">
+        <view class="t-hero">把照片</view>
+        <view class="t-hero">变成拼豆图纸</view>
+        <view class="hero-sub">自动配色 · 出色号 · 算用量</view>
       </view>
 
-      <view class="tips">
-        <view class="tip">· 照片模式：自动配色，适合人像、宠物、风景</view>
-        <view class="tip">· 直接导入：像素图 1:1 还原，不改变任何一个像素</view>
+      <view class="upload" @tap="chooseImage">
+        <view class="upload-plus">
+          <view class="plus-h"></view>
+          <view class="plus-v"></view>
+        </view>
+        <view class="upload-title">选择一张图片</view>
+        <view class="upload-sub">照片或像素图都行</view>
       </view>
-    </view>
+
+      <view class="features">
+        <view class="feature">
+          <view class="dot"></view>
+          <view class="feature-body">
+            <text class="feature-t">照片模式</text>
+            <text class="feature-s">自动配色，适合人像、宠物、风景</text>
+          </view>
+        </view>
+        <view class="feature">
+          <view class="dot dot-alt"></view>
+          <view class="feature-body">
+            <text class="feature-t">直接导入</text>
+            <text class="feature-s">像素图 1:1 还原，不改一个像素</text>
+          </view>
+        </view>
+        <view class="feature">
+          <view class="dot dot-ok"></view>
+          <view class="feature-body">
+            <text class="feature-t">全程本地</text>
+            <text class="feature-s">图片不上传、不联网</text>
+          </view>
+        </view>
+      </view>
+    </block>
 
     <!-- 已选图 -->
-    <view v-else>
+    <block v-else>
       <view class="preview" @tap="chooseImage">
-        <image class="pvimg" :src="imagePath" mode="aspectFit" />
-        <view class="pvinfo">{{ imgW }} × {{ imgH }} px · 点击换图</view>
+        <image class="preview-img" :src="imagePath" mode="aspectFill" />
+        <view class="preview-top">
+          <view class="preview-badge">{{ imgW }} × {{ imgH }}</view>
+          <view class="preview-change">换一张</view>
+        </view>
       </view>
 
       <view v-if="notice" class="notice" :class="noticeType">{{ notice }}</view>
 
-      <view class="section" style="margin-top: 26rpx">
-        <view class="label">转换模式</view>
-        <view class="seg">
-          <view class="segitem" :class="{ on: mode === 'auto' }" data-mode="auto" @tap="setMode">自动判断</view>
-          <view class="segitem" :class="{ on: mode === 'photo' }" data-mode="photo" @tap="setMode">照片</view>
-          <view class="segitem" :class="{ on: mode === 'import' }" data-mode="import" @tap="setMode">直接导入</view>
-        </view>
+      <view class="seg" style="margin-top: 24rpx">
+        <view class="seg-item" :class="{ on: mode === 'auto' }" data-mode="auto" @tap="setMode">自动</view>
+        <view class="seg-item" :class="{ on: mode === 'photo' }" data-mode="photo" @tap="setMode">照片</view>
+        <view class="seg-item" :class="{ on: mode === 'import' }" data-mode="import" @tap="setMode">导入</view>
       </view>
 
-      <view class="section">
-        <view class="label">
-          <text>格数</text>
-          <text class="val">{{ gridW }} × {{ gridH }}</text>
-        </view>
-        <view class="slider-row">
-          <slider
-            class="sl"
-            :min="12"
-            :max="300"
-            :value="gridSize"
-            :disabled="importLocked"
-            activeColor="#FF7A45"
-            backgroundColor="#EDE7DD"
-            block-size="18"
-            @changing="onGridChanging"
-            @change="onGridChange"
-          />
-          <text class="slider-val">{{ gridSize }}</text>
-        </view>
-        <view class="sub">{{ sizeHint }}</view>
-      </view>
-
-      <view class="section">
-        <view class="label">
-          <text>色数</text>
-          <text class="val">{{ colorCount }}</text>
-        </view>
-        <view class="slider-row">
-          <slider
-            class="sl"
-            :min="2"
-            :max="colorMax"
-            :value="colorCount"
-            :disabled="importLocked"
-            activeColor="#FF7A45"
-            backgroundColor="#EDE7DD"
-            block-size="18"
-            @changing="onColorChanging"
-            @change="onColorChange"
-          />
-          <text class="slider-val">{{ colorCount }}</text>
-        </view>
-        <view class="sub">{{ colorHint }}</view>
-      </view>
-
-      <view class="section">
-        <view class="label"><text>套装限制</text></view>
-        <picker :range="setNames" :value="setIndex" @change="onSetChange">
-          <view class="picker">
-            <text>{{ setNames[setIndex] }}</text>
-            <text class="picker-arrow">›</text>
+      <view class="card section">
+        <view class="param">
+          <view class="param-head">
+            <text class="param-label">格数</text>
+            <text class="param-value">{{ gridW }} × {{ gridH }}</text>
           </view>
-        </picker>
-        <view class="sub">选了套装，生成时只会用套装里的颜色</view>
+          <view class="slider-row">
+            <slider class="sl" :min="12" :max="300" :value="gridSize" :disabled="importLocked" activeColor="#FF6B35" backgroundColor="#EDE8E1" block-size="20" @changing="onGridChanging" @change="onGridChange" />
+          </view>
+          <view class="param-hint">{{ sizeHint }}</view>
+        </view>
+
+        <view class="param">
+          <view class="param-head">
+            <text class="param-label">色数</text>
+            <text class="param-value">{{ colorCount }}</text>
+          </view>
+          <view class="slider-row">
+            <slider class="sl" :min="2" :max="colorMax" :value="colorCount" :disabled="importLocked" activeColor="#FF6B35" backgroundColor="#EDE8E1" block-size="20" @changing="onColorChanging" @change="onColorChange" />
+          </view>
+          <view class="param-hint">{{ colorHint }}</view>
+        </view>
+
+        <view class="param">
+          <view class="param-head">
+            <text class="param-label">套装</text>
+          </view>
+          <picker :range="setNames" :value="setIndex" @change="onSetChange">
+            <view class="picker">
+              <text>{{ setNames[setIndex] }}</text>
+              <text class="chev">›</text>
+            </view>
+          </picker>
+          <view class="param-hint">只在套装内选色，套装外的会在用量里标「补」</view>
+        </view>
       </view>
 
-      <button class="btn-primary" :class="{ disabled: generating }" :disabled="generating" @tap="generate">
+      <button class="btn-primary section" :class="{ disabled: generating }" :disabled="generating" @tap="generate">
         {{ generating ? '生成中…' : '生成图纸' }}
       </button>
       <view v-if="timing" class="timing">{{ timing }}</view>
-    </view>
+    </block>
   </view>
 </template>
 
@@ -408,127 +416,130 @@ export default {
 </script>
 
 <style>
-.work-canvas {
-  position: fixed;
-  left: -9999rpx;
-  top: 0;
-  width: 300px;
-  height: 300px;
+.hero {
+  padding: 48rpx 8rpx 44rpx;
+}
+.hero-sub {
+  margin-top: 18rpx;
+  font-size: 26rpx;
+  color: var(--ink-3);
 }
 
-.up {
-  height: 420rpx;
-  border: 3rpx dashed #dcd5c9;
-  border-radius: 26rpx;
-  background: #fcfaf6;
+.upload {
+  height: 400rpx;
+  background: #fff;
+  border-radius: 40rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4rpx 28rpx rgba(28, 27, 26, 0.06);
 }
-.upico {
-  width: 96rpx;
-  height: 96rpx;
-  border-radius: 26rpx;
-  background: #fff;
-  border: 1rpx solid #e7e1d7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20rpx;
+.upload-plus {
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 36rpx;
+  background: var(--brand-soft);
+  position: relative;
+  margin-bottom: 26rpx;
 }
-.uparrow {
-  font-size: 44rpx;
-  color: #ff7a45;
-  line-height: 1;
+.plus-h,
+.plus-v {
+  position: absolute;
+  background: var(--brand);
+  border-radius: 4rpx;
 }
-.uptit {
-  font-size: 29rpx;
-  font-weight: 500;
-  color: #2c2c2a;
+.plus-h {
+  width: 40rpx;
+  height: 5rpx;
+  left: 36rpx;
+  top: 53rpx;
 }
-.upsub {
-  font-size: 22rpx;
-  color: #9c978e;
+.plus-v {
+  width: 5rpx;
+  height: 40rpx;
+  left: 53rpx;
+  top: 36rpx;
+}
+.upload-title {
+  font-size: 32rpx;
+  font-weight: 600;
+}
+.upload-sub {
+  font-size: 24rpx;
+  color: var(--ink-3);
   margin-top: 8rpx;
 }
 
-.tips {
-  margin-top: 34rpx;
-  padding: 0 8rpx;
+.features {
+  margin-top: 36rpx;
 }
-.tip {
-  font-size: 22rpx;
-  color: #9c978e;
-  line-height: 1.9;
+.feature {
+  display: flex;
+  align-items: flex-start;
+  padding: 22rpx 8rpx;
+}
+.dot {
+  width: 14rpx;
+  height: 14rpx;
+  border-radius: 50%;
+  background: var(--brand);
+  margin: 13rpx 20rpx 0 0;
+  flex-shrink: 0;
+}
+.dot-alt {
+  background: #4f8ef7;
+}
+.dot-ok {
+  background: var(--ok);
+}
+.feature-body {
+  display: flex;
+  flex-direction: column;
+}
+.feature-t {
+  font-size: 27rpx;
+  font-weight: 500;
+}
+.feature-s {
+  font-size: 23rpx;
+  color: var(--ink-3);
+  margin-top: 4rpx;
 }
 
 .preview {
   position: relative;
-  height: 380rpx;
-  border-radius: 22rpx;
+  height: 420rpx;
+  border-radius: 36rpx;
   overflow: hidden;
-  background: #efe9e0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: #e8e4dd;
+  box-shadow: 0 6rpx 28rpx rgba(28, 27, 26, 0.08);
 }
-.pvimg {
+.preview-img {
   width: 100%;
   height: 100%;
 }
-.pvinfo {
+.preview-top {
   position: absolute;
-  left: 16rpx;
-  bottom: 16rpx;
-  background: rgba(255, 255, 255, 0.92);
-  border-radius: 10rpx;
-  padding: 6rpx 14rpx;
-  font-size: 20rpx;
-  color: #6b6760;
-}
-
-.seg {
+  left: 20rpx;
+  right: 20rpx;
+  top: 20rpx;
   display: flex;
-  background: #f3efe7;
-  border-radius: 18rpx;
-  padding: 6rpx;
+  justify-content: space-between;
 }
-.segitem {
-  flex: 1;
-  text-align: center;
-  padding: 16rpx 0;
-  border-radius: 14rpx;
-  font-size: 24rpx;
-  color: #6b6760;
-}
-.segitem.on {
-  background: #fff;
-  color: #2c2c2a;
-  font-weight: 500;
-}
-
-.picker {
-  height: 88rpx;
-  background: #fff;
-  border: 1rpx solid #e7e1d7;
-  border-radius: 18rpx;
-  padding: 0 26rpx;
-  display: flex;
-  align-items: center;
-  font-size: 26rpx;
-  color: #2c2c2a;
-}
-.picker-arrow {
-  margin-left: auto;
-  color: #9c978e;
-  font-size: 32rpx;
+.preview-badge,
+.preview-change {
+  background: rgba(28, 27, 26, 0.55);
+  color: #fff;
+  font-size: 21rpx;
+  padding: 8rpx 18rpx;
+  border-radius: 20rpx;
 }
 
 .timing {
   text-align: center;
-  font-size: 21rpx;
-  color: #9c978e;
+  font-size: 22rpx;
+  color: var(--ink-3);
   margin-top: 20rpx;
 }
 </style>

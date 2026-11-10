@@ -1,62 +1,52 @@
 <template>
   <view class="page">
-    <view class="card">
-      <view class="row">
-        <text class="k">当前色卡</text>
-        <text class="v">{{ brandName }} {{ colorCount }} 色</text>
-      </view>
-      <view class="row">
-        <text class="k">数据版本</text>
-        <text class="v">{{ version }}</text>
-      </view>
-      <view class="row">
-        <text class="k">色值来源</text>
-        <text class="v">社区采样</text>
-      </view>
+    <view class="head">
+      <view class="head-title">{{ brandName }} {{ colorCount }} 色</view>
+      <view class="head-sub">数据版本 {{ version }} · 社区采样</view>
     </view>
 
-    <view class="section" style="margin-top: 30rpx">
-      <view class="label">我的套装</view>
+    <view class="section-title">我的套装</view>
+    <view class="card">
       <picker :range="setNames" :value="setIndex" @change="onSetChange">
-        <view class="picker">
-          <text>{{ setNames[setIndex] }}</text>
-          <text class="picker-arrow">›</text>
+        <view class="line">
+          <text class="line-label">当前套装</text>
+          <text class="line-value">{{ setNames[setIndex] }}</text>
+          <text class="chev">›</text>
         </view>
       </picker>
-      <view class="sub">选好后，做图时会只用套装内的颜色，套装外需求在用量清单标「需补货」。</view>
+      <view class="tip">做图时只会用套装内的颜色，套装外需求会在用量里标「补」</view>
+    </view>
+
+    <view class="section-title">数据说明</view>
+    <view class="card">
+      <view class="line">
+        <text class="line-label">色卡来源</text>
+        <text class="line-value dim">Craft Color Codes</text>
+      </view>
+      <view class="line">
+        <text class="line-label">许可协议</text>
+        <text class="line-value dim">CC BY 4.0</text>
+      </view>
+      <view class="line last">
+        <text class="line-label">采集方式</text>
+        <text class="line-value dim">社区采样，非仪器实测</text>
+      </view>
     </view>
 
     <view class="notice">
-      色值与色号来自公开资料整理，非品牌官方测量。屏幕显示与实物豆存在色差，不同批次亦有轻微差异。大批量采购前建议先查看商家实物色卡。
+      色值与色号来自公开资料整理，非品牌官方测量。屏幕显示与实物豆存在色差，不同批次亦有轻微差异。大批量采购前建议先看商家实物色卡。
     </view>
 
-    <view class="source">
-      色卡数据：Craft Color Codes（CC BY 4.0）· 上游来源 peiseka.com、pixel-beads.com · 社区采样，非仪器实测
-    </view>
+    <!-- #ifdef MP-WEIXIN -->
+    <button class="btn-ghost wide" style="margin-top: 32rpx" open-type="contact">色号纠错 / 意见反馈</button>
+    <!-- #endif -->
+    <!-- #ifdef H5 -->
+    <button class="btn-ghost wide" style="margin-top: 32rpx" @tap="copyContact">复制反馈邮箱</button>
+    <!-- #endif -->
 
-    <view class="section" style="margin-top: 34rpx">
-      <view class="label">帮助与反馈</view>
+    <button class="btn-ghost wide" style="margin-top: 20rpx" @tap="clearCache">清除本地设置</button>
 
-      <!-- #ifdef MP-WEIXIN -->
-      <button class="btn-ghost wide" open-type="contact">色号纠错 / 意见反馈</button>
-      <!-- #endif -->
-
-      <!-- #ifdef H5 -->
-      <button class="btn-ghost wide" @tap="copyContact">复制反馈邮箱</button>
-      <!-- #endif -->
-    </view>
-
-    <view class="section">
-      <view class="label">其他</view>
-      <view class="linkrow" @tap="clearCache">
-        <text>清除本地设置</text>
-        <text class="arrow">›</text>
-      </view>
-    </view>
-
-    <view class="footer">
-      <text>拼豆图纸 v0.1 · 原图不出设备</text>
-    </view>
+    <view class="footer">拼豆图纸 v0.1 · 原图不出设备</view>
   </view>
 </template>
 
@@ -133,80 +123,64 @@ export default {
 </script>
 
 <style>
-.card {
-  background: #fff;
-  border: 1rpx solid #e7e1d7;
-  border-radius: 22rpx;
-  padding: 6rpx 28rpx;
+.head {
+  padding: 40rpx 8rpx 16rpx;
 }
-.row {
-  display: flex;
-  align-items: center;
-  padding: 22rpx 0;
-  border-bottom: 1rpx solid #f2ede4;
+.head-title {
+  font-size: 48rpx;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
-.row:last-child {
-  border-bottom: none;
-}
-.row .k {
-  font-size: 26rpx;
-  color: #6b6760;
-}
-.row .v {
-  margin-left: auto;
-  font-size: 26rpx;
-  font-weight: 500;
+.head-sub {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: var(--ink-3);
 }
 
-.picker {
-  height: 88rpx;
-  background: #fff;
-  border: 1rpx solid #e7e1d7;
-  border-radius: 18rpx;
-  padding: 0 26rpx;
+.line {
   display: flex;
   align-items: center;
-  font-size: 26rpx;
+  min-height: 104rpx;
+  border-bottom: 1rpx solid var(--line);
 }
-.picker-arrow {
+.line.last,
+.line:last-child {
+  border-bottom: none;
+}
+.line-label {
+  font-size: 28rpx;
+  color: var(--ink);
+}
+.line-value {
   margin-left: auto;
-  color: #9c978e;
-  font-size: 32rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  max-width: 62%;
+  text-align: right;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.line-value.dim {
+  font-size: 25rpx;
+  font-weight: 400;
+  color: var(--ink-3);
+}
+.tip {
+  font-size: 22rpx;
+  color: var(--ink-3);
+  line-height: 1.55;
+  padding: 0 0 24rpx;
 }
 
 .btn-ghost.wide {
   width: 100%;
-  height: 88rpx;
-  line-height: 88rpx;
-}
-
-.linkrow {
-  height: 92rpx;
-  background: #fff;
-  border: 1rpx solid #e7e1d7;
-  border-radius: 18rpx;
-  padding: 0 26rpx;
-  display: flex;
-  align-items: center;
-  font-size: 26rpx;
-}
-.linkrow .arrow {
-  margin-left: auto;
-  color: #9c978e;
-}
-
-.source {
-  margin-top: 18rpx;
-  font-size: 19rpx;
-  color: #b4afa6;
-  line-height: 1.7;
-  padding: 0 8rpx;
 }
 
 .footer {
-  margin-top: 60rpx;
+  margin-top: 56rpx;
   text-align: center;
-  font-size: 20rpx;
-  color: #c4bfb6;
+  font-size: 21rpx;
+  color: #bdb6ac;
 }
 </style>

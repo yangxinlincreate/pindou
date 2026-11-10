@@ -1,7 +1,7 @@
 <template>
   <view class="wrap">
-    <view class="bar">
-      <text class="info">{{ info }}</text>
+    <view class="topbar">
+      <view class="info">{{ info }}</view>
       <view class="denoise" :class="{ on: denoised }" @tap="toggleDenoise">
         {{ denoised ? '撤销' : '去杂质' }}
       </view>
@@ -11,25 +11,24 @@
       <canvas type="2d" id="cv" class="cv" :style="{ width: cvW + 'px', height: cvH + 'px' }"></canvas>
     </view>
 
-    <!-- 导出专用的离屏画布 -->
     <canvas type="2d" id="exp" class="exp-canvas"></canvas>
 
     <view class="tools">
       <view class="tool" :class="{ on: showBoard }" @tap="toggleBoard">
-        <text class="tico">▦</text>
-        <text class="tlabel">分板</text>
+        <view class="tool-ico">▦</view>
+        <text class="tool-t">分板</text>
       </view>
       <view class="tool" :class="{ on: showCode }" @tap="toggleCode">
-        <text class="tico">A1</text>
-        <text class="tlabel">色号</text>
+        <view class="tool-ico">A1</view>
+        <text class="tool-t">色号</text>
       </view>
       <view class="tool" @tap="goUsage">
-        <text class="tico">≡</text>
-        <text class="tlabel">用量</text>
+        <view class="tool-ico">≡</view>
+        <text class="tool-t">用量</text>
       </view>
-      <view class="tool save" @tap="saveImage">
-        <text class="tico">↓</text>
-        <text class="tlabel">保存</text>
+      <view class="tool primary" @tap="saveImage">
+        <view class="tool-ico">↓</view>
+        <text class="tool-t">保存</text>
       </view>
     </view>
   </view>
@@ -350,35 +349,35 @@ function drawPattern(ctx, p, cell, showCode, showBoard) {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #faf7f2;
+  background: var(--bg);
 }
 
-.bar {
+.topbar {
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  padding: 16rpx 30rpx;
-  font-size: 22rpx;
-  color: #6b6760;
-  border-bottom: 1rpx solid #f2ede4;
+  gap: 16rpx;
+  padding: 20rpx 32rpx;
   background: #fff;
 }
-.bar .info {
+.info {
   flex: 1;
+  font-size: 22rpx;
+  color: var(--ink-2);
+  line-height: 1.5;
 }
 .denoise {
   flex-shrink: 0;
-  margin-left: 16rpx;
-  padding: 8rpx 20rpx;
-  border-radius: 20rpx;
-  background: #fff;
-  border: 1rpx solid #e7e1d7;
-  color: #c9501f;
-  font-size: 21rpx;
+  padding: 12rpx 26rpx;
+  border-radius: 24rpx;
+  background: var(--brand-soft);
+  color: var(--brand-deep);
+  font-size: 24rpx;
+  font-weight: 500;
 }
 .denoise.on {
-  background: #ffede5;
-  border-color: #ffc9b3;
+  background: #f0ece6;
+  color: var(--ink-2);
 }
 
 .stage {
@@ -387,17 +386,18 @@ function drawPattern(ctx, p, cell, showCode, showBoard) {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: auto;
-  padding: 16rpx;
+  padding: 24rpx;
+  overflow: hidden;
 }
 .cv {
-  box-shadow: 0 4rpx 24rpx rgba(70, 50, 30, 0.1);
-  border-radius: 8rpx;
+  border-radius: 16rpx;
+  background: #fff;
+  box-shadow: 0 8rpx 32rpx rgba(28, 27, 26, 0.1);
 }
 
 .exp-canvas {
   position: fixed;
-  left: -9999rpx;
+  left: -9999px;
   top: 0;
   width: 100px;
   height: 100px;
@@ -407,46 +407,48 @@ function drawPattern(ctx, p, cell, showCode, showBoard) {
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  padding: 14rpx 20rpx calc(14rpx + env(safe-area-inset-bottom));
+  padding: 16rpx 24rpx calc(16rpx + env(safe-area-inset-bottom));
   background: #fff;
-  border-top: 1rpx solid #f2ede4;
+  box-shadow: 0 -2rpx 20rpx rgba(28, 27, 26, 0.05);
 }
 .tool {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 8rpx 0;
-  color: #6b6760;
+  gap: 8rpx;
 }
-.tool.on {
-  color: #c9501f;
-}
-.tool.on .tico {
-  background: #ffede5;
-  color: #c9501f;
-}
-.tico {
-  width: 56rpx;
-  height: 56rpx;
-  border-radius: 16rpx;
-  background: #f3efe7;
+.tool-ico {
+  width: 68rpx;
+  height: 68rpx;
+  border-radius: 22rpx;
+  background: #f4f1ec;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24rpx;
-  color: #6b6760;
-  margin-bottom: 6rpx;
+  font-size: 26rpx;
+  color: var(--ink-2);
+  transition: all 0.18s ease;
 }
-.tlabel {
-  font-size: 20rpx;
+.tool-t {
+  font-size: 21rpx;
+  color: var(--ink-3);
 }
-.tool.save .tico {
-  background: #ff7a45;
+.tool.on .tool-ico {
+  background: var(--brand-soft);
+  color: var(--brand-deep);
+}
+.tool.on .tool-t {
+  color: var(--brand-deep);
+  font-weight: 500;
+}
+.tool.primary .tool-ico {
+  background: linear-gradient(135deg, #ff7d4d 0%, #ff5f28 100%);
   color: #fff;
+  box-shadow: 0 6rpx 16rpx rgba(255, 107, 53, 0.3);
 }
-.tool.save {
-  color: #c9501f;
+.tool.primary .tool-t {
+  color: var(--brand-deep);
   font-weight: 500;
 }
 </style>

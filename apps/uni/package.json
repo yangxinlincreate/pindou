@@ -12,6 +12,7 @@
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-alpha-5030620261106001",
     "@dcloudio/uni-components": "3.0.0-alpha-5030620261106001",
+    "@dcloudio/uni-h5": "3.0.0-alpha-5030620261106001",
     "@dcloudio/uni-mp-weixin": "3.0.0-alpha-5030620261106001",
     "@vue/runtime-dom": "3.4.21",
     "vue": "3.4.21"
