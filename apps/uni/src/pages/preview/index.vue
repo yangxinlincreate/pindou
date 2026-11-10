@@ -44,23 +44,25 @@
 
       <view class="sheet-body">
         <view class="sp">
-          <view class="sp-head">
+          <view class="sp-row">
             <text class="sp-label">格数</text>
-            <text class="sp-value num">{{ gridSize }}</text>
-          </view>
-          <view class="sp-slider-box">
-            <slider class="sp-slider" :value="gridSize" :min="12" :max="300" activeColor="#FF6B35" backgroundColor="#EDE8E1" block-size="20" @changing="onGridChanging" @change="onGridChange" />
+            <view class="stepper">
+              <view class="step-btn" :class="{ dis: gridSize <= 12 }" @tap="stepGrid(-4)">−</view>
+              <text class="step-val num">{{ gridSize }}</text>
+              <view class="step-btn" :class="{ dis: gridSize >= 300 }" @tap="stepGrid(4)">+</view>
+            </view>
           </view>
           <view class="sp-hint">{{ sizeHint }}</view>
         </view>
 
         <view class="sp">
-          <view class="sp-head">
+          <view class="sp-row">
             <text class="sp-label">色数</text>
-            <text class="sp-value num">{{ colorCount }}</text>
-          </view>
-          <view class="sp-slider-box">
-            <slider class="sp-slider" :value="colorCount" :min="2" :max="colorMax" activeColor="#FF6B35" backgroundColor="#EDE8E1" block-size="20" @changing="onColorChanging" @change="onColorChange" />
+            <view class="stepper">
+              <view class="step-btn" :class="{ dis: colorCount <= 2 }" @tap="stepColor(-1)">−</view>
+              <text class="step-val num">{{ colorCount }}</text>
+              <view class="step-btn" :class="{ dis: colorCount >= colorMax }" @tap="stepColor(1)">+</view>
+            </view>
           </view>
           <view class="sp-hint">{{ colorHint }}</view>
         </view>
@@ -191,6 +193,22 @@ export default {
       const cmH = ((h * 5) / 10).toFixed(1);
       this.sizeHint = cmW + ' × ' + cmH + ' cm · ' + this.gridSize + ' × ' + h + ' 格';
       this.colorHint = '目标 ' + this.colorCount + ' 色';
+    },
+
+    stepGrid(delta) {
+      const v = Math.max(12, Math.min(300, this.gridSize + delta));
+      if (v === this.gridSize) return;
+      this.gridSize = v;
+      this.updateHints();
+      this.scheduleApply();
+    },
+
+    stepColor(delta) {
+      const v = Math.max(2, Math.min(this.colorMax, this.colorCount + delta));
+      if (v === this.colorCount) return;
+      this.colorCount = v;
+      this.updateHints();
+      this.scheduleApply();
     },
 
     openParams() {
@@ -624,6 +642,7 @@ function drawPattern(ctx, p, cell, showCode, showBoard) {
   background: #fff;
   border-radius: 36rpx 36rpx 0 0;
   padding: 16rpx 32rpx calc(28rpx + env(safe-area-inset-bottom));
+  min-height: 520rpx;
   transform: translateY(110%);
   transition: transform 0.26s cubic-bezier(0.2, 0.8, 0.3, 1);
 }
@@ -653,36 +672,52 @@ function drawPattern(ctx, p, cell, showCode, showBoard) {
   font-weight: 500;
 }
 .sp {
-  padding: 24rpx 0;
-  min-height: 168rpx;
+  padding: 20rpx 0;
   border-bottom: 1rpx solid var(--line);
 }
 .sp:last-of-type {
   border-bottom: none;
 }
-.sp-head {
+.sp-row {
   display: flex;
-  align-items: baseline;
-  margin-bottom: 6rpx;
+  align-items: center;
+  min-height: 96rpx;
 }
 .sp-label {
-  font-size: 27rpx;
+  font-size: 28rpx;
   color: var(--ink);
   font-weight: 500;
 }
-.sp-value {
+.stepper {
   margin-left: auto;
-  font-size: 32rpx;
-  font-weight: 600;
-}
-.sp-slider-box {
-  height: 72rpx;
   display: flex;
   align-items: center;
+  background: #f4f1ec;
+  border-radius: 22rpx;
+  padding: 5rpx;
 }
-.sp-slider {
-  width: 100%;
-  margin: 0;
+.step-btn {
+  width: 68rpx;
+  height: 68rpx;
+  border-radius: 18rpx;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  line-height: 1;
+  color: var(--ink-2);
+  box-shadow: 0 1rpx 4rpx rgba(28, 27, 26, 0.08);
+}
+.step-btn.dis {
+  color: #d8d2c9;
+  box-shadow: none;
+}
+.step-val {
+  min-width: 104rpx;
+  text-align: center;
+  font-size: 30rpx;
+  font-weight: 600;
 }
 .sp-hint {
   font-size: 22rpx;
