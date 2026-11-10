@@ -9,10 +9,15 @@
     </view>
 
     <view class="stage" id="stage">
-      <canvas type="2d" id="cv" class="cv" :style="{ width: cvW + 'px', height: cvH + 'px' }"></canvas>
+      <image
+        v-if="previewSrc"
+        class="cv"
+        :src="previewSrc"
+        :style="{ width: cvW + 'px', height: cvH + 'px' }"
+        mode="scaleToFill"
+      />
+      <view v-else class="cv-holder">绘制中…</view>
     </view>
-
-    <canvas type="2d" id="exp" class="exp-canvas"></canvas>
 
     <view class="tools">
       <view class="tool" :class="{ on: showBoard }" @tap="toggleBoard">
@@ -76,7 +81,7 @@
 <script>
 import * as Core from '@/common/core.js';
 import store from '@/common/store.js';
-import { getBoxSize, getCanvasNode, getPixelRatio } from '@/common/canvas.js';
+import { createOffscreenCanvas, getBoxSize, getPixelRatio } from '@/common/canvas.js';
 
 const EMPTY_CELL = 255;
 
@@ -91,6 +96,7 @@ export default {
       info: '',
       showCode: true,
       showBoard: false,
+      previewSrc: '',
       cvW: 0,
       cvH: 0,
       denoised: false,
@@ -145,29 +151,34 @@ export default {
     async render() {
       if (!pattern) return;
       try {
-        const canvas = await getCanvasNode('#cv');
         const box = await getBoxSize('#stage');
-        const ctx = canvas.getContext('2d');
-
         const pad = 16;
         const maxW = Math.max(160, box.width - pad * 2);
         const maxH = Math.max(160, box.height - pad * 2);
         const w = pattern.width;
         const h = pattern.height;
         const cell = Math.max(2, Math.floor(Math.min(maxW / w, maxH / h)));
-
         const cw = cell * w;
         const ch = cell * h;
         const dpr = getPixelRatio();
 
-        canvas.width = Math.round(cw * dpr);
-        canvas.height = Math.round(ch * dpr);
-        // 小程序 canvas node 没有 style 属性，显示尺寸必须走模板绑定
-        this.cvW = cw;
-        this.cvH = ch;
+        const pxW = Math.round(cw * dpr);
+        const pxH = Math.round(ch * dpr);
 
+        // 离屏绘制再导出图片：canvas 是原生组件，层级压不住，用 image 就没这个问题
+        const canvas = createOffscreenCanvas(pxW, pxH);
+        if (!canvas) throw new Error('离屏画布不可用');
+        canvas.width = pxW;
+        canvas.height = pxH;
+
+        const ctx = canvas.getContext('2d');
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         drawPattern(ctx, pattern, cell, this.showCode, this.showBoard);
+
+        const src = await exportCanvas(canvas, pxW, pxH);
+        this.previewSrc = src;
+        this.cvW = cw;
+        this.cvH = ch;
         canvasReady = true;
       } catch (e) {
         console.error('render failed', e);
@@ -217,6 +228,8 @@ export default {
 
     closeParams() {
       this.showParams = false;
+      // canvas 隐藏过，关闭后补画一次，避免出现空白
+      setTimeout(() => this.render(), 80);
     },
 
     onGridChanging(e) {
@@ -361,44 +374,34 @@ export default {
         const cell = 14;
         const w = pattern.width;
         const h = pattern.height;
+        const pxW = w * cell;
+        const pxH = h * cell;
 
-        const canvas = await getCanvasNode('#exp');
+        const canvas = createOffscreenCanvas(pxW, pxH);
+        if (!canvas) throw new Error('离屏画布不可用');
+        canvas.width = pxW;
+        canvas.height = pxH;
+
         const ctx = canvas.getContext('2d');
-        canvas.width = w * cell;
-        canvas.height = h * cell;
         drawPattern(ctx, pattern, cell, this.showCode, this.showBoard);
+
+        const src = await exportCanvas(canvas, pxW, pxH);
 
         // #ifdef MP-WEIXIN
         await new Promise((resolve, reject) => {
-          uni.canvasToTempFilePath({
-            canvas,
-            x: 0,
-            y: 0,
-            width: w * cell,
-            height: h * cell,
-            destWidth: w * cell,
-            destHeight: h * cell,
+          uni.saveImageToPhotosAlbum({
+            filePath: src,
             success: resolve,
             fail: reject,
           });
-        }).then((r) => {
-          return new Promise((resolve, reject) => {
-            uni.saveImageToPhotosAlbum({
-              filePath: r.tempFilePath,
-              success: resolve,
-              fail: reject,
-            });
-          });
         });
-
         uni.hideLoading();
         uni.showToast({ title: '已保存到相册' });
         // #endif
 
         // #ifdef H5
-        const url = canvas.toDataURL('image/png');
         const a = document.createElement('a');
-        a.href = url;
+        a.href = src;
         a.download = 'pindou-' + w + 'x' + h + '.png';
         a.click();
         uni.hideLoading();
@@ -410,6 +413,31 @@ export default {
     },
   },
 };
+
+// ---------- 导出 ----------
+
+/** 把 canvas 转成可直接给 <image> 用的地址 */
+function exportCanvas(canvas, w, h) {
+  return new Promise((resolve, reject) => {
+    // #ifdef MP-WEIXIN
+    uni.canvasToTempFilePath({
+      canvas,
+      x: 0,
+      y: 0,
+      width: w,
+      height: h,
+      destWidth: w,
+      destHeight: h,
+      success: (r) => resolve(r.tempFilePath),
+      fail: reject,
+    });
+    // #endif
+
+    // #ifdef H5
+    resolve(canvas.toDataURL('image/png'));
+    // #endif
+  });
+}
 
 // ---------- 绘制 ----------
 
@@ -555,6 +583,13 @@ function drawPattern(ctx, p, cell, showCode, showBoard) {
   border-radius: 16rpx;
   background: #fff;
   box-shadow: 0 8rpx 32rpx rgba(28, 27, 26, 0.1);
+}
+/* 小程序 canvas 是原生组件，z-index 管不住它，弹窗时只能把它挪走 */
+.cv-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-140%);
+  pointer-events: none;
 }
 
 .exp-canvas {
