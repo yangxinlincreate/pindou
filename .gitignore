@@ -28,3 +28,6 @@ docs/compare.html
 
 # uni-app CLI 构建产物（重新编译即可，不进仓库）
 apps/uni/dist/
+
+# HBuilderX 运行产物
+apps/uni/unpackage/
