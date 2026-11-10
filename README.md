@@ -4,36 +4,45 @@
 
 ## 现在能跑什么
 
-**一、小程序（主形态）**
+**一、小程序（uni-app，主推）**
 
-用微信开发者工具打开 `miniprogram/` 目录即可运行，**不需要任何构建或 npm 安装**——`core` 已经打包成 `miniprogram/core/core.js`，色卡也在 `miniprogram/data/` 里。
+用 HBuilderX 打开 `apps/uni/` 目录，然后「运行 → 运行到小程序模拟器 → 微信开发者工具」。
 
-```
-微信开发者工具 → 导入项目 → 目录选 miniprogram/ → AppID 选「测试号」→ 编译
-```
+- 标准 uni-app 项目结构，**打开即用，不需要 npm install**
+- `core` 已打包成 ESM 放在 `apps/uni/common/core.js`（37KB）
+- 色卡在 `apps/uni/common/mard-221.js`
+- 首期跑微信小程序；同一套代码以后可直接出 H5 / App，`manifest.json` 里已配好 h5 段
 
-**二、浏览器验证台（调算法用）**
+如果 HBuilderX 提示 AppID 为空：`manifest.json` → 微信小程序配置 → 填自己的 AppID，或先用测试号（已预填 `touristappid`）。
+
+**二、原生小程序（备用，不依赖 HBuilderX）**
+
+`miniprogram/` 是改造成 uni-app 之前的原生版本，用微信开发者工具打开 `miniprogram/` 目录即可运行。保留它是为了对照行为——两边 UI 一致，出问题可以互相比对。
+
+**三、浏览器验证台（调算法用）**
 
 ```bash
 pnpm install
 pnpm dev                        # → http://127.0.0.1:5173
 node scripts/verify-algo.mjs    # 算法验证（26 项）
-node scripts/verify-mp.mjs      # 小程序工程检查（46 项）
+node scripts/verify-mp.mjs      # 原生小程序工程检查（46 项）
+node scripts/verify-uni.mjs     # uni-app 工程检查（48 项）
 ```
 
 ## 改了 core 之后必须重新打包
 
-小程序用的是打包产物，不是源码。改 `packages/core/` 之后：
+两端用的都是打包产物，不是源码：
 
 ```bash
-pnpm build:mp      # 重新打包 core + 重新生成色卡模块
+pnpm build:mp     # 一次搞定：小程序 CJS + uni-app ESM + 色卡模块
+pnpm build:uni    # 只更新 uni-app 那一份
 ```
 
-然后微信开发者工具会检测到文件变化自动刷新。**忘了这步就会出现「代码改了但小程序没反应」**，这个坑很常见。
+**忘了这步就会出现「代码改了但小程序没反应」**，这个坑很常见。HBuilderX 和微信开发者工具都会监听文件变化自动刷新，但刷新的是打包产物，不是你改的 TS。
 
 ## 小程序需要先配置隐私协议
 
-`wx.chooseMedia`、`wx.saveImageToPhotosAlbum` 属于隐私接口。**如果没在小程序后台配置《用户隐私保护指引》，选图会直接失败。**
+`uni.chooseImage`、`uni.saveImageToPhotosAlbum` 属于隐私接口。**没在小程序后台配置《用户隐私保护指引》的话，选图会直接失败。**
 
 配置位置：微信公众平台 → 设置 → 服务内容声明 → 用户隐私保护指引。
 需要声明：相册（选择图片）、相册（保存图片）。
@@ -48,10 +57,13 @@ pnpm build:mp      # 重新打包 core + 重新生成色卡模块
 | 照片模式 | 完成。面积平均降采样 → 加权 K-means → 映射色号 → 逐格分配 → 去噪 |
 | 直接导入模式 | 完成。GCD 识别格子边长、最近邻采样、透明通道、1:1 还原 |
 | 用量统计与分板 | 完成 |
-| 浏览器验证台 | 完成。参数可调、实时出图、导出 PNG |
-| **微信小程序** | **完成 5 个页面**：做图 / 预览 / 用量 / 色卡 / 我的，含自定义 tabBar |
-| 色卡数据 | **占位数据**，221 个色号结构齐但色值是生成的，需替换 |
-| Web 后台 | 未开始 |
+| 浏览器验证台 | 完成。参数可调、双栏对比、实时出图、导出 PNG |
+| **uni-app 小程序** | **完成 5 个页面**（做图 / 预览 / 用量 / 色卡 / 我的），HBuilderX 直接运行，可跨 H5/App |
+| 原生小程序 | 保留作对照，功能同步 |
+| 去杂质 | 完成。连通域按面积合并，ΔE 保护细节 |
+| 自动调参 | 完成。从少到多试色数，达还原度即停 |
+| 色卡数据 | **MARD 221 真实数据**，221 色 + 10 组零售套装（Craft Color Codes, CC BY 4.0） |
+| Web 后台 | 只有原型，未实现 |
 
 算法实测：200×150 格 / 48 色 **62ms**（原预算 2100ms，快了 30 多倍——因为没走 LUT，改成「Lab 欧氏取前 4 候选 + ΔE00 精选」）。
 
@@ -64,10 +76,14 @@ packages/core/          纯 TS，零平台依赖，小程序 / H5 / Node 共用
   src/quantize/         K-means、色号映射、分配、去噪
   src/importer/         像素图 1:1 导入（与 quantize 物理隔离，互不引用）
   src/pattern/          组装、统计、调色板压缩
-miniprogram/            微信小程序（原生，直接可跑）
-  core/core.js          由 packages/core 打包而来，勿手改
-  data/mard-221.js      色卡数据模块
-  pages/                create / preview / usage / palette / mine
+apps/uni/               uni-app 工程（HBuilderX 打开这个目录）
+  common/core.js        由 packages/core 打包而来（ESM），勿手改
+  common/mard-221.js    色卡数据（ESM）
+  pages/                create / preview / usage / palette / mine（Vue 3 单文件组件）
+miniprogram/            原生小程序（对照用）
+  core/core.js          由 packages/core 打包而来（CommonJS）
+  data/mard-221.js      色卡数据（CommonJS）
+  pages/                同上 5 个页面
 apps/web/               浏览器验证台（Vite + 原生 TS）
 scripts/                色卡生成、算法验证、小程序检查
 docs/                   产品与技术文档

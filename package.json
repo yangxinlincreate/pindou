@@ -9,10 +9,11 @@
     "dev": "pnpm --filter @pindou/web dev",
     "build": "pnpm --filter @pindou/web build",
     "build:core": "vite build --config vite.lib.config.ts",
-    "build:mp": "vite build --config vite.mpq.config.ts && node scripts/gen-miniprogram-data.mjs",
+    "build:mp": "vite build --config vite.mpq.config.ts && vite build --config vite.uni.config.ts && node scripts/gen-miniprogram-data.mjs",
     "verify:algo": "vite build --config vite.lib.config.ts && node scripts/verify-algo.mjs",
     "verify:mp": "node scripts/verify-mp.mjs",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build:uni": "vite build --config vite.uni.config.ts && node scripts/gen-miniprogram-data.mjs"
   },
   "devDependencies": {
     "typescript": "^5.6.3",
@@ -20,6 +21,8 @@
     "vitest": "^2.1.8"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild"]
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }

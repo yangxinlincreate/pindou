@@ -1,5 +1,5 @@
 // 自动生成，勿手改。源数据：apps/web/public/data/mard-221.json
-// 当前为空位示例色值（confidence: placeholder），需替换为真实采集数据。
+// 数据来源：makebead/craft-color-codes（CC BY 4.0）
 module.exports = {
  "id": "mard-221",
  "seriesId": "mard-221",

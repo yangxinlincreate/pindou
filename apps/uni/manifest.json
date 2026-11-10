@@ -1,0 +1,49 @@
+{
+  "name": "拼豆图纸",
+  "appid": "",
+  "description": "把照片变成能照着摆、照着买的拼豆图纸",
+  "versionName": "0.1.0",
+  "versionCode": "100",
+  "transformPx": false,
+  "app-plus": {
+    "usingComponents": true,
+    "nvueStyleCompiler": "uni-app",
+    "compilerVersion": 3,
+    "splashscreen": {
+      "alwaysShowBeforeRender": true,
+      "waiting": true,
+      "autoclose": true,
+      "delay": 0
+    },
+    "modules": {},
+    "distribute": {
+      "android": {
+        "permissions": []
+      },
+      "ios": {},
+      "sdkConfigs": {}
+    }
+  },
+  "quickapp": {},
+  "mp-weixin": {
+    "appid": "touristappid",
+    "setting": {
+      "urlCheck": false,
+      "es6": true,
+      "postcss": true,
+      "minified": true
+    },
+    "usingComponents": true,
+    "darkmode": false
+  },
+  "mp-alipay": {
+    "usingComponents": true
+  },
+  "vueVersion": "3",
+  "h5": {
+    "title": "拼豆图纸",
+    "router": {
+      "mode": "hash"
+    }
+  }
+}

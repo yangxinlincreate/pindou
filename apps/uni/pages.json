@@ -1,0 +1,60 @@
+{
+  "pages": [
+    {
+      "path": "pages/create/index",
+      "style": {
+        "navigationBarTitleText": "做图"
+      }
+    },
+    {
+      "path": "pages/preview/index",
+      "style": {
+        "navigationBarTitleText": "图纸预览"
+      }
+    },
+    {
+      "path": "pages/usage/index",
+      "style": {
+        "navigationBarTitleText": "用量清单"
+      }
+    },
+    {
+      "path": "pages/palette/index",
+      "style": {
+        "navigationBarTitleText": "色卡"
+      }
+    },
+    {
+      "path": "pages/mine/index",
+      "style": {
+        "navigationBarTitleText": "我的"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "拼豆图纸",
+    "navigationBarBackgroundColor": "#FAF7F2",
+    "backgroundColor": "#FAF7F2"
+  },
+  "tabBar": {
+    "color": "#9C978E",
+    "selectedColor": "#C9501F",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/create/index",
+        "text": "做图"
+      },
+      {
+        "pagePath": "pages/palette/index",
+        "text": "色卡"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "text": "我的"
+      }
+    ]
+  }
+}
