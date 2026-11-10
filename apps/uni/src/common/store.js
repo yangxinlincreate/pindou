@@ -11,6 +11,10 @@ const store = {
   series,
   /** 当前生成的图纸，预览页与用量页读它 */
   pattern: null,
+  /** 原图像素，预览页调参数时用它重新生成 */
+  raster: null,
+  /** 上次生成的参数：{ mode, gridSize, colorCount, setCodes, detectedGrid } */
+  params: null,
   /** 用户选的套装 id，空表示不限 */
   setId: '',
 };

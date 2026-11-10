@@ -2,6 +2,7 @@
   <view class="wrap">
     <view class="topbar">
       <view class="info">{{ info }}</view>
+      <view class="tbtn" @tap="openParams">参数</view>
       <view class="denoise" :class="{ on: denoised }" @tap="toggleDenoise">
         {{ denoised ? '撤销' : '去杂质' }}
       </view>
@@ -31,6 +32,38 @@
         <text class="tool-t">保存</text>
       </view>
     </view>
+
+    <!-- 参数面板 -->
+    <view v-if="showParams" class="mask" @tap="closeParams"></view>
+    <view class="sheet" :class="{ open: showParams }">
+      <view class="sheet-grip"></view>
+      <view class="sheet-head">
+        <text class="sheet-title">参数</text>
+        <text class="sheet-done" @tap="closeParams">完成</text>
+      </view>
+
+      <view class="sheet-body">
+        <view class="sp">
+          <view class="sp-head">
+            <text class="sp-label">格数</text>
+            <text class="sp-value num">{{ gridSize }}</text>
+          </view>
+          <slider class="sp-slider" :value="gridSize" :min="12" :max="300" activeColor="#FF6B35" backgroundColor="#EDE8E1" block-size="20" @changing="onGridChanging" @change="onGridChange" />
+          <view class="sp-hint">{{ sizeHint }}</view>
+        </view>
+
+        <view class="sp">
+          <view class="sp-head">
+            <text class="sp-label">色数</text>
+            <text class="sp-value num">{{ colorCount }}</text>
+          </view>
+          <slider class="sp-slider" :value="colorCount" :min="2" :max="colorMax" activeColor="#FF6B35" backgroundColor="#EDE8E1" block-size="20" @changing="onColorChanging" @change="onColorChange" />
+          <view class="sp-hint">{{ colorHint }}</view>
+        </view>
+
+        <view class="sp-tip">拖动即重新生成，不需要返回上一页</view>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -44,6 +77,7 @@ const EMPTY_CELL = 255;
 let pattern = null;
 let backup = null;
 let canvasReady = false;
+let applyTimer = null;
 
 export default {
   data() {
@@ -55,6 +89,13 @@ export default {
       cvH: 0,
       denoised: false,
       empty: false,
+      showParams: false,
+      gridSize: 58,
+      colorCount: 24,
+      colorMax: 221,
+      sizeHint: '',
+      colorHint: '',
+      busy: false,
     };
   },
 
@@ -62,6 +103,17 @@ export default {
     pattern = store.pattern;
     backup = null;
     canvasReady = false;
+
+    // 非 tabBar 页面理论上不显示 tabBar，这里显式隐藏一次，避免某些基础库残留
+    try { uni.hideTabBar({ animation: false }); } catch (e) { /* 非 tabBar 页会抛错，忽略 */ }
+
+    const params = store.params;
+    if (params) {
+      this.gridSize = params.gridSize;
+      this.colorCount = params.colorCount;
+      this.colorMax = params.setCodes ? params.setCodes.length : store.series.colors.length;
+      this.updateHints();
+    }
 
     if (!pattern) {
       this.empty = true;
@@ -77,6 +129,10 @@ export default {
       s.boardsTotal + ' 块板',
     ];
     this.info = parts.join(' · ');
+  },
+
+  onUnload() {
+    try { uni.showTabBar({ animation: false }); } catch (e) { /* 忽略 */ }
   },
 
   onReady() {
@@ -125,6 +181,95 @@ export default {
     toggleBoard() {
       this.showBoard = !this.showBoard;
       this.render();
+    },
+
+    // ---------- 参数面板 ----------
+
+    updateHints() {
+      const ratio = store.raster ? store.raster.height / store.raster.width : 1;
+      const h = Math.max(1, Math.round(this.gridSize * ratio));
+      const cmW = ((this.gridSize * 5) / 10).toFixed(1);
+      const cmH = ((h * 5) / 10).toFixed(1);
+      this.sizeHint = cmW + ' × ' + cmH + ' cm · ' + this.gridSize + ' × ' + h + ' 格';
+      this.colorHint = '目标 ' + this.colorCount + ' 色';
+    },
+
+    openParams() {
+      this.showParams = true;
+    },
+
+    closeParams() {
+      this.showParams = false;
+    },
+
+    onGridChanging(e) {
+      this.gridSize = e.detail.value;
+      this.updateHints();
+      this.scheduleApply();
+    },
+
+    onGridChange(e) {
+      this.gridSize = e.detail.value;
+      this.updateHints();
+      this.scheduleApply();
+    },
+
+    onColorChanging(e) {
+      this.colorCount = e.detail.value;
+      this.updateHints();
+      this.scheduleApply();
+    },
+
+    onColorChange(e) {
+      this.colorCount = e.detail.value;
+      this.updateHints();
+      this.scheduleApply();
+    },
+
+    scheduleApply() {
+      if (applyTimer) clearTimeout(applyTimer);
+      applyTimer = setTimeout(() => this.applyParams(), 280);
+    },
+
+    async applyParams() {
+      if (this.busy || !store.raster) return;
+      const params = store.params || {};
+      // 直接导入模式不吃色数参数，格数也由图片决定，不重算
+      if (params.mode === 'import') return;
+
+      this.busy = true;
+      try {
+        const ratio = store.raster.height / store.raster.width;
+        const w = this.gridSize;
+        const h = Math.max(1, Math.round(w * ratio));
+
+        const p = Core.convertPhoto(store.raster, {
+          targetWidth: w,
+          targetHeight: h,
+          colorCount: this.colorCount,
+          series: store.series,
+          setCodes: params.setCodes,
+        });
+
+        pattern = p;
+        store.pattern = p;
+        store.params = {
+          mode: params.mode,
+          gridSize: w,
+          colorCount: this.colorCount,
+          setCodes: params.setCodes,
+          detectedGrid: params.detectedGrid,
+        };
+
+        backup = null;
+        this.denoised = false;
+        this.refreshInfo();
+        await this.render();
+      } catch (err) {
+        uni.showToast({ title: '重新生成失败', icon: 'none' });
+      } finally {
+        this.busy = false;
+      }
     },
 
     // ---------- 去杂质 ----------
@@ -450,5 +595,97 @@ function drawPattern(ctx, p, cell, showCode, showBoard) {
 .tool.primary .tool-t {
   color: var(--brand-deep);
   font-weight: 500;
+}
+/* ---- 顶栏按钮 ---- */
+.tbtn {
+  flex-shrink: 0;
+  padding: 12rpx 24rpx;
+  border-radius: 24rpx;
+  background: #f4f1ec;
+  color: var(--ink-2);
+  font-size: 24rpx;
+}
+
+/* ---- 参数面板 ---- */
+.mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(28, 27, 26, 0.38);
+  z-index: 100;
+}
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 101;
+  background: #fff;
+  border-radius: 36rpx 36rpx 0 0;
+  padding: 16rpx 32rpx calc(28rpx + env(safe-area-inset-bottom));
+  transform: translateY(110%);
+  transition: transform 0.26s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.sheet.open {
+  transform: translateY(0);
+}
+.sheet-grip {
+  width: 72rpx;
+  height: 8rpx;
+  border-radius: 4rpx;
+  background: #e2ddd5;
+  margin: 0 auto 22rpx;
+}
+.sheet-head {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6rpx;
+}
+.sheet-title {
+  font-size: 32rpx;
+  font-weight: 600;
+}
+.sheet-done {
+  margin-left: auto;
+  font-size: 26rpx;
+  color: var(--brand-deep);
+  font-weight: 500;
+}
+.sp {
+  padding: 26rpx 0;
+  border-bottom: 1rpx solid var(--line);
+}
+.sp:last-of-type {
+  border-bottom: none;
+}
+.sp-head {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 6rpx;
+}
+.sp-label {
+  font-size: 27rpx;
+  color: var(--ink);
+  font-weight: 500;
+}
+.sp-value {
+  margin-left: auto;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+.sp-slider {
+  margin: 6rpx 0;
+}
+.sp-hint {
+  font-size: 22rpx;
+  color: var(--ink-3);
+}
+.sp-tip {
+  font-size: 21rpx;
+  color: var(--ink-3);
+  text-align: center;
+  padding: 20rpx 0 4rpx;
 }
 </style>

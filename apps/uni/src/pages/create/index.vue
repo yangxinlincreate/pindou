@@ -402,6 +402,14 @@ export default {
           }
 
           store.pattern = pattern;
+          store.raster = raster;
+          store.params = {
+            mode: real,
+            gridSize: this.gridSize,
+            colorCount: this.colorCount,
+            setCodes: this.getSetCodes(),
+            detectedGrid: detectedGrid,
+          };
           this.timing = '生成完成 · 耗时 ' + (Date.now() - t0) + ' ms';
           uni.navigateTo({ url: '/pages/preview/index' });
         } catch (err) {
