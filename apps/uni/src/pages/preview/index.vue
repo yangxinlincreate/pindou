@@ -48,7 +48,9 @@
             <text class="sp-label">格数</text>
             <text class="sp-value num">{{ gridSize }}</text>
           </view>
-          <slider class="sp-slider" :value="gridSize" :min="12" :max="300" activeColor="#FF6B35" backgroundColor="#EDE8E1" block-size="20" @changing="onGridChanging" @change="onGridChange" />
+          <view class="sp-slider-box">
+            <slider class="sp-slider" :value="gridSize" :min="12" :max="300" activeColor="#FF6B35" backgroundColor="#EDE8E1" block-size="20" @changing="onGridChanging" @change="onGridChange" />
+          </view>
           <view class="sp-hint">{{ sizeHint }}</view>
         </view>
 
@@ -57,7 +59,9 @@
             <text class="sp-label">色数</text>
             <text class="sp-value num">{{ colorCount }}</text>
           </view>
-          <slider class="sp-slider" :value="colorCount" :min="2" :max="colorMax" activeColor="#FF6B35" backgroundColor="#EDE8E1" block-size="20" @changing="onColorChanging" @change="onColorChange" />
+          <view class="sp-slider-box">
+            <slider class="sp-slider" :value="colorCount" :min="2" :max="colorMax" activeColor="#FF6B35" backgroundColor="#EDE8E1" block-size="20" @changing="onColorChanging" @change="onColorChange" />
+          </view>
           <view class="sp-hint">{{ colorHint }}</view>
         </view>
 
@@ -649,7 +653,8 @@ function drawPattern(ctx, p, cell, showCode, showBoard) {
   font-weight: 500;
 }
 .sp {
-  padding: 26rpx 0;
+  padding: 24rpx 0;
+  min-height: 168rpx;
   border-bottom: 1rpx solid var(--line);
 }
 .sp:last-of-type {
@@ -670,8 +675,14 @@ function drawPattern(ctx, p, cell, showCode, showBoard) {
   font-size: 32rpx;
   font-weight: 600;
 }
+.sp-slider-box {
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+}
 .sp-slider {
-  margin: 6rpx 0;
+  width: 100%;
+  margin: 0;
 }
 .sp-hint {
   font-size: 22rpx;
