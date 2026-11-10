@@ -3,7 +3,7 @@
  *
  * 两个目标：
  *   miniprogram/data/mard-221.js  → CommonJS，原生小程序 require
- *   apps/uni/common/mard-221.js   → ESM，uni-app import
+ *   apps/uni/src/common/mard-221.js   → ESM，uni-app import
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -26,7 +26,7 @@ fs.writeFileSync(
 );
 
 // --- uni-app（ESM）---
-const uniDir = path.resolve('apps/uni/common');
+const uniDir = path.resolve('apps/uni/src/common');
 fs.mkdirSync(uniDir, { recursive: true });
 fs.writeFileSync(
   path.join(uniDir, 'mard-221.js'),
@@ -37,4 +37,4 @@ fs.writeFileSync(
 const kb = (fs.statSync(path.join(uniDir, 'mard-221.js')).size / 1024).toFixed(1);
 console.log(`色号 ${doc.colors.length} 个，套装 ${doc.sets.length} 组`);
 console.log(`  → miniprogram/data/mard-221.js (CJS)`);
-console.log(`  → apps/uni/common/mard-221.js (ESM, ${kb} KB)`);
+console.log(`  → apps/uni/src/common/mard-221.js (ESM, ${kb} KB)`);

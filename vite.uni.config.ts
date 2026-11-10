@@ -10,7 +10,7 @@ export default defineConfig({
       formats: ['es'],
       fileName: () => 'core.js',
     },
-    outDir: 'apps/uni/common',
+    outDir: 'apps/uni/src/common',
     // 不能清空：目录里还有 mard-221.js
     emptyOutDir: false,
     minify: false,

@@ -6,14 +6,21 @@
 
 **一、小程序（uni-app，主推）**
 
-用 HBuilderX 打开 `apps/uni/` 目录，然后「运行 → 运行到小程序模拟器 → 微信开发者工具」。
+`apps/uni/` 是 CLI 结构的 uni-app 项目，源码在 `src/`：
 
-- 标准 uni-app 项目结构，**打开即用，不需要 npm install**
-- `core` 已打包成 ESM 放在 `apps/uni/common/core.js`（37KB）
-- 色卡在 `apps/uni/common/mard-221.js`
-- 首期跑微信小程序；同一套代码以后可直接出 H5 / App，`manifest.json` 里已配好 h5 段
+```bash
+pnpm install                              # 首次需要，uni-app 依赖约 300 个包
+pnpm build:mp                             # 打包 core + 色卡到 src/common
+cd apps/uni && npx uni build -p mp-weixin
+```
 
-如果 HBuilderX 提示 AppID 为空：`manifest.json` → 微信小程序配置 → 填自己的 AppID，或先用测试号（已预填 `touristappid`）。
+产物在 `apps/uni/dist/build/mp-weixin`（约 229KB），用微信开发者工具导入这个目录即可。
+
+也可以用 HBuilderX 打开 `apps/uni/` 目录，运行到小程序模拟器——它能识别 CLI 项目，会自己编译。
+
+> 为什么是 CLI 结构而不是 HBuilderX 平铺结构：CLI 方式可以在没有图形界面的环境里构建，也能接 CI。HBuilderX 对两种结构都支持。
+
+首期跑微信小程序；`manifest.json` 里 h5 段已配好，跑 `npx uni` 就能出 H5 版。
 
 **二、原生小程序（备用，不依赖 HBuilderX）**
 

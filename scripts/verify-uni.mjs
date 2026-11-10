@@ -6,7 +6,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
-const root = path.resolve('apps/uni');
+const root = path.resolve('apps/uni/src');
+const projRoot = path.resolve('apps/uni');
 let pass = 0;
 let fail = 0;
 const problems = [];
@@ -23,8 +24,11 @@ function ok(name, cond, extra = '') {
 }
 
 console.log('\n工程结构');
-for (const f of ['manifest.json', 'pages.json', 'main.js', 'App.vue', 'index.html', 'uni.scss']) {
-  ok(f, fs.existsSync(path.join(root, f)));
+for (const f of ['manifest.json', 'pages.json', 'main.js', 'App.vue', 'uni.scss']) {
+  ok('src/' + f, fs.existsSync(path.join(root, f)));
+}
+for (const f of ['package.json', 'vite.config.js', 'index.html']) {
+  ok(f, fs.existsSync(path.join(projRoot, f)));
 }
 
 // pages.json 里声明的页面，对应的 .vue 必须存在

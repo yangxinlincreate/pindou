@@ -25,3 +25,6 @@ Thumbs.db
 
 # 由 scripts/compare.mjs 生成的演示页（1.6MB，重跑脚本即可）
 docs/compare.html
+
+# uni-app CLI 构建产物（重新编译即可，不进仓库）
+apps/uni/dist/

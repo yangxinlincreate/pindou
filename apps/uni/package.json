@@ -1,0 +1,21 @@
+{
+  "name": "@pindou/uni",
+  "version": "0.1.0",
+  "private": true,
+  "description": "拼豆图纸 uni-app 端",
+  "scripts": {
+    "dev:mp-weixin": "uni -p mp-weixin",
+    "build:mp-weixin": "uni build -p mp-weixin",
+    "dev:h5": "uni",
+    "build:h5": "uni build"
+  },
+  "dependencies": {
+    "@dcloudio/uni-app": "3.0.0-alpha-5030620261106001",
+    "@dcloudio/uni-components": "3.0.0-alpha-5030620261106001",
+    "@dcloudio/uni-mp-weixin": "3.0.0-alpha-5030620261106001",
+    "vue": "3.4.21"
+  },
+  "devDependencies": {
+    "@dcloudio/vite-plugin-uni": "3.0.0-alpha-5030620261106001"
+  }
+}
