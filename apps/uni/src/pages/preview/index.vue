@@ -8,7 +8,7 @@
     </view>
 
     <view class="stage" id="stage">
-      <canvas type="2d" id="cv" class="cv"></canvas>
+      <canvas type="2d" id="cv" class="cv" :style="{ width: cvW + 'px', height: cvH + 'px' }"></canvas>
     </view>
 
     <!-- 导出专用的离屏画布 -->
@@ -52,6 +52,8 @@ export default {
       info: '',
       showCode: true,
       showBoard: false,
+      cvW: 0,
+      cvH: 0,
       denoised: false,
       empty: false,
     };
@@ -104,8 +106,9 @@ export default {
 
         canvas.width = Math.round(cw * dpr);
         canvas.height = Math.round(ch * dpr);
-        canvas.style.width = cw + 'px';
-        canvas.style.height = ch + 'px';
+        // 小程序 canvas node 没有 style 属性，显示尺寸必须走模板绑定
+        this.cvW = cw;
+        this.cvH = ch;
 
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         drawPattern(ctx, pattern, cell, this.showCode, this.showBoard);
