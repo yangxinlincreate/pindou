@@ -52,6 +52,13 @@
         </view>
       </view>
 
+      <view class="ratio-row">
+        <view class="ratio" :class="{ on: ratio === 'orig' }" data-r="orig" @tap="selectRatio">原图</view>
+        <view class="ratio" :class="{ on: ratio === '1:1' }" data-r="1:1" @tap="selectRatio">1:1</view>
+        <view class="ratio" :class="{ on: ratio === '4:3' }" data-r="4:3" @tap="selectRatio">4:3</view>
+        <view class="ratio" :class="{ on: ratio === '3:4' }" data-r="3:4" @tap="selectRatio">3:4</view>
+      </view>
+
       <view v-if="notice" class="notice" :class="noticeType">{{ notice }}</view>
 
       <view class="seg" style="margin-top: 24rpx">
@@ -118,11 +125,13 @@ const MAX_SIDE = 2048;
 let raster = null;
 let analysis = null;
 let detectedGrid = 0;
+let originalRaster = null;
 
 export default {
   data() {
     return {
       imagePath: '',
+      ratio: 'orig',
       imgW: 0,
       imgH: 0,
 
@@ -229,6 +238,7 @@ export default {
         }
 
         raster = { width: w, height: h, data: imgData.data };
+        originalRaster = raster;
 
         try {
           analysis = Core.analyzeImage(raster);
@@ -268,6 +278,40 @@ export default {
       if (this.mode !== 'auto') return this.mode;
       if (analysis && analysis.suggestMode) return analysis.suggestMode;
       return 'photo';
+    },
+
+    selectRatio(e) {
+      const r = e.currentTarget.dataset.r;
+      if (r === this.ratio) return;
+      this.ratio = r;
+      this.applyRatio();
+    },
+
+    applyRatio() {
+      if (!originalRaster) return;
+      const src = originalRaster;
+
+      let img;
+      if (this.ratio === 'orig') {
+        img = src;
+      } else {
+        const map = { '1:1': [1, 1], '4:3': [4, 3], '3:4': [3, 4] };
+        const pair = map[this.ratio] || [1, 1];
+        img = Core.cropToRatio(src, pair[0], pair[1]);
+      }
+
+      raster = img;
+      try {
+        analysis = Core.analyzeImage(raster);
+      } catch (err) {
+        analysis = { colorCount: 0, grid: null, suggestMode: 'photo', reason: '分析失败，按照片处理' };
+      }
+      detectedGrid = analysis.grid ? analysis.grid.gridSize : 0;
+
+      this.imgW = img.width;
+      this.imgH = img.height;
+      this.applyMode();
+      this.updateSizeHint();
     },
 
     applyMode() {
@@ -542,6 +586,27 @@ export default {
   font-size: 21rpx;
   padding: 8rpx 18rpx;
   border-radius: 20rpx;
+}
+
+.ratio-row {
+  display: flex;
+  gap: 12rpx;
+  margin-top: 20rpx;
+}
+.ratio {
+  flex: 1;
+  text-align: center;
+  padding: 17rpx 0;
+  border-radius: 18rpx;
+  background: #fff;
+  font-size: 25rpx;
+  color: var(--ink-2);
+  box-shadow: 0 1rpx 8rpx rgba(28, 27, 26, 0.05);
+}
+.ratio.on {
+  background: var(--brand-soft);
+  color: var(--brand-deep);
+  font-weight: 600;
 }
 
 .timing {
