@@ -6,6 +6,29 @@
  */
 
 /**
+ * 创建一个不依赖页面渲染的离屏 canvas。
+ *
+ * 为什么必须用它：微信小程序里，完全移出视口的 canvas（比如 left:-9999px）
+ * 可能根本不渲染，getImageData 会拿到空数据，整个解码流程静默卡死。
+ * 离屏 canvas 不受页面布局影响，是目前最稳的取像素方式。
+ */
+export function createOffscreenCanvas(width, height) {
+  // #ifdef MP-WEIXIN
+  if (typeof wx !== 'undefined' && wx.createOffscreenCanvas) {
+    return wx.createOffscreenCanvas({ type: '2d', width, height });
+  }
+  // 老基础库兜底：用页面内的 canvas（调用方需保证它在视口内）
+  // #endif
+
+  // #ifdef H5
+  const c = document.createElement('canvas');
+  c.width = width;
+  c.height = height;
+  return c;
+  // #endif
+}
+
+/**
  * 拿到原生 canvas 对象。
  * @param {string} selector 形如 '#work'
  * @returns {Promise<any>}

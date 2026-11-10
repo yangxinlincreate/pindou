@@ -1,8 +1,5 @@
 <template>
   <view class="page">
-    <!-- 离屏工作画布：只用于解码图片取像素，不显示 -->
-    <canvas type="2d" id="work" class="work-canvas"></canvas>
-
     <!-- 未选图 -->
     <view v-if="!imagePath" class="section">
       <view class="up" @tap="chooseImage">
@@ -103,7 +100,7 @@
 <script>
 import * as Core from '@/common/core.js';
 import store from '@/common/store.js';
-import { getCanvasNode } from '@/common/canvas.js';
+import { createOffscreenCanvas } from '@/common/canvas.js';
 
 const DEFAULT_GRID = 58;
 const DEFAULT_COLORS = 24;
@@ -185,14 +182,22 @@ export default {
     async decodeImage(path) {
       uni.showLoading({ title: '读取中', mask: true });
       try {
-        const canvas = await getCanvasNode('#work');
-        const ctx = canvas.getContext('2d');
+        const canvas = createOffscreenCanvas(1, 1);
+        if (!canvas) throw new Error('当前微信基础库不支持离屏画布，请在开发者工具里把调试基础库调到 2.16.1 以上');
 
+        const ctx = canvas.getContext('2d');
         const img = canvas.createImage ? canvas.createImage() : new Image();
 
         await new Promise((resolve, reject) => {
-          img.onload = () => resolve();
-          img.onerror = () => reject(new Error('decode failed'));
+          const timer = setTimeout(() => reject(new Error('图片解码超时（8 秒）')), 8000);
+          img.onload = () => {
+            clearTimeout(timer);
+            resolve();
+          };
+          img.onerror = () => {
+            clearTimeout(timer);
+            reject(new Error('图片解码失败，换一张试试'));
+          };
           img.src = path;
         });
 
@@ -205,7 +210,16 @@ export default {
         ctx.clearRect(0, 0, w, h);
         ctx.drawImage(img, 0, 0, w, h);
 
-        const imgData = ctx.getImageData(0, 0, w, h);
+        let imgData;
+        try {
+          imgData = ctx.getImageData(0, 0, w, h);
+        } catch (err) {
+          throw new Error('读取像素失败：' + (err && err.message ? err.message : 'getImageData 异常'));
+        }
+        if (!imgData || !imgData.data || imgData.data.length === 0) {
+          throw new Error('像素数据为空，图片可能未真正解码');
+        }
+
         raster = { width: w, height: h, data: imgData.data };
 
         try {
@@ -224,10 +238,14 @@ export default {
 
         this.applyMode();
         this.updateSizeHint();
-      } catch (e) {
-        uni.showToast({ title: '图片读取失败', icon: 'none' });
-      } finally {
         uni.hideLoading();
+      } catch (e) {
+        uni.hideLoading();
+        uni.showModal({
+          title: '读取图片失败',
+          content: (e && e.message ? e.message : String(e)) || '未知错误',
+          showCancel: false,
+        });
       }
     },
 

@@ -29,6 +29,9 @@ importers:
       '@dcloudio/uni-mp-weixin':
         specifier: 3.0.0-alpha-5030620261106001
         version: 3.0.0-alpha-5030620261106001(postcss@8.5.32)(rollup@4.68.0)(vue@3.4.21(typescript@5.9.3))
+      '@vue/runtime-dom':
+        specifier: 3.4.21
+        version: 3.4.21
       vue:
         specifier: 3.4.21
         version: 3.4.21(typescript@5.9.3)
