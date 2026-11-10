@@ -104,8 +104,6 @@ export default {
     backup = null;
     canvasReady = false;
 
-    // 非 tabBar 页面理论上不显示 tabBar，这里显式隐藏一次，避免某些基础库残留
-    try { uni.hideTabBar({ animation: false }); } catch (e) { /* 非 tabBar 页会抛错，忽略 */ }
 
     const params = store.params;
     if (params) {
@@ -131,9 +129,6 @@ export default {
     this.info = parts.join(' · ');
   },
 
-  onUnload() {
-    try { uni.showTabBar({ animation: false }); } catch (e) { /* 忽略 */ }
-  },
 
   onReady() {
     if (!pattern) return;

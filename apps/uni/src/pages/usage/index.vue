@@ -37,7 +37,7 @@
   </view>
 
   <view class="page" v-else>
-    <view class="empty">还没有生成的图纸</view>
+    <view class="empty">{{ errMsg || "还没有生成的图纸" }}</view>
   </view>
 </template>
 
@@ -54,15 +54,18 @@ export default {
       summary: '',
       restock: 0,
       empty: false,
+      errMsg: "",
     };
   },
 
   onLoad() {
-    pattern = store.pattern;
-    if (!pattern) {
-      this.empty = true;
-      return;
-    }
+    try {
+      pattern = store.pattern;
+      if (!pattern) {
+        this.empty = true;
+        this.errMsg = '没有可用的图纸，请先返回生成一张';
+        return;
+      }
 
     const s = pattern.stats;
 
@@ -77,12 +80,16 @@ export default {
     }));
     this.restock = s.restockCount;
     this.summary = pattern.width + ' × ' + pattern.height + ' 格 · ' + s.colorCount + ' 色';
-    this.statList = [
-      { k: '总颗数', v: s.total.toLocaleString(), u: '颗' },
-      { k: '用色', v: s.colorCount, u: '色' },
-      { k: '底板', v: s.boardsTotal, u: '块' },
-      { k: '成品', v: s.widthCm, u: 'cm' },
-    ];
+      this.statList = [
+        { k: '总颗数', v: s.total.toLocaleString(), u: '颗' },
+        { k: '用色', v: s.colorCount, u: '色' },
+        { k: '底板', v: s.boardsTotal, u: '块' },
+        { k: '成品', v: s.widthCm, u: 'cm' },
+      ];
+    } catch (e) {
+      this.empty = true;
+      this.errMsg = '读取图纸失败：' + (e && e.message ? e.message : e);
+    }
   },
 
   methods: {
