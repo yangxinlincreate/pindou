@@ -1,3 +1,4 @@
+import { EMPTY_CELL } from '../types';
 import type { ColorSeries, Pattern, PatternColor, RasterImage } from '../types';
 import { flattenOnColor, resampleBox, sharpen } from '../image/resample';
 import { buildWeights, kmeansLab, toLabArray } from '../quantize/kmeans';
@@ -22,6 +23,8 @@ export interface ConvertOptions {
   despeckleMaxDelta?: number;
   /** 透明区域合成到的底色，hex */
   background?: string;
+  /** 背景掩码（原图尺寸，1 = 背景），这些格子会输出为空 */
+  bgMask?: Uint8Array;
 }
 
 /**
@@ -58,6 +61,14 @@ export function convertPhoto(img: RasterImage, opts: ConvertOptions): Pattern {
 
   // 7. 分配
   const { cells } = assignPhotoCells(labs, picked);
+
+  // 8.5 背景掩码：标记为背景的格子直接变成空格，不摆豆
+  if (opts.bgMask && opts.bgMask.length === img.width * img.height) {
+    const smallMask = downscaleMask(opts.bgMask, img.width, img.height, targetWidth, targetHeight);
+    for (let i = 0; i < cells.length; i++) {
+      if (smallMask[i]) cells[i] = EMPTY_CELL;
+    }
+  }
 
   // 9. 组装调色板（去噪需要颜色信息判断「是噪点还是细节」）
   const palette: PatternColor[] = picked.map((p) => ({
@@ -208,4 +219,41 @@ function pickCatalog(series: ColorSeries, setCodes?: string[]) {
   if (!setCodes || !setCodes.length) return series.colors;
   const allowed = new Set(setCodes);
   return series.colors.filter((c) => allowed.has(c.code));
+}
+
+/**
+ * 把原图尺寸的背景掩码降采样到目标格数。
+ * 用多数投票（覆盖面积过半才算背景），避免边界锯齿。
+ */
+function downscaleMask(
+  mask: Uint8Array,
+  sw: number,
+  sh: number,
+  dw: number,
+  dh: number,
+): Uint8Array {
+  const out = new Uint8Array(dw * dh);
+  const xr = sw / dw;
+  const yr = sh / dh;
+
+  for (let dy = 0; dy < dh; dy++) {
+    const y0 = Math.floor(dy * yr);
+    const y1 = Math.max(y0 + 1, Math.min(sh, Math.ceil((dy + 1) * yr)));
+    for (let dx = 0; dx < dw; dx++) {
+      const x0 = Math.floor(dx * xr);
+      const x1 = Math.max(x0 + 1, Math.min(sw, Math.ceil((dx + 1) * xr)));
+
+      let total = 0;
+      let bg = 0;
+      for (let y = y0; y < y1; y++) {
+        for (let x = x0; x < x1; x++) {
+          total++;
+          if (mask[y * sw + x]) bg++;
+        }
+      }
+      out[dy * dw + dx] = total > 0 && bg / total > 0.5 ? 1 : 0;
+    }
+  }
+
+  return out;
 }

@@ -92,6 +92,14 @@
 
         <view class="param">
           <view class="param-head">
+            <text class="param-label">去除背景</text>
+            <switch class="sw" :checked="removeBg" color="#FF6B35" @change="onToggleBg" />
+          </view>
+          <view class="param-hint">{{ bgHint }}</view>
+        </view>
+
+        <view class="param">
+          <view class="param-head">
             <text class="param-label">套装</text>
           </view>
           <picker :range="setNames" :value="setIndex" @change="onSetChange">
@@ -126,12 +134,15 @@ let raster = null;
 let analysis = null;
 let detectedGrid = 0;
 let originalRaster = null;
+let bgMask = null;
 
 export default {
   data() {
     return {
       imagePath: '',
       ratio: 'orig',
+      removeBg: true,
+      bgHint: '',
       imgW: 0,
       imgH: 0,
 
@@ -341,6 +352,31 @@ export default {
       this.noticeType = noticeType;
       this.importLocked = locked;
       this.updateSizeHint();
+      this.computeBgMask();
+    },
+
+    computeBgMask() {
+      bgMask = null;
+      if (!this.removeBg || !raster) {
+        this.bgHint = this.removeBg ? '' : '已关闭，背景会照常生成';
+        return;
+      }
+      try {
+        const r = Core.removeBackground(raster);
+        if (r.ok) {
+          bgMask = r.mask;
+          this.bgHint = '已剔除 ' + Math.round(r.ratio * 100) + '% 的背景，这些格子不摆豆';
+        } else {
+          this.bgHint = (r.reason || '没识别出背景') + '，保留完整画面';
+        }
+      } catch (e) {
+        this.bgHint = '背景识别失败，保留完整画面';
+      }
+    },
+
+    onToggleBg(e) {
+      this.removeBg = e.detail.value;
+      this.computeBgMask();
     },
 
     // ---------- 参数 ----------

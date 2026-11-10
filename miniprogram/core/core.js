@@ -416,6 +416,123 @@ function detectAntiAlias(img) {
   }
   return rare / totalPixels > 0.12;
 }
+function removeBackground(img, opts = {}) {
+  var _a, _b, _c;
+  const tol = (_a = opts.tolerance) != null ? _a : 16;
+  const tolSq = tol * tol;
+  const maxRatio = (_b = opts.maxRatio) != null ? _b : 0.85;
+  const minRatio = (_c = opts.minRatio) != null ? _c : 0.02;
+  const { width: w, height: h, data } = img;
+  const n = w * h;
+  if (n === 0) return { mask: new Uint8Array(0), ratio: 0, ok: false, reason: "空图" };
+  const labs = new Float32Array(n * 3);
+  for (let i = 0; i < n; i++) {
+    const p = i * 4;
+    const lab = rgbToLab(data[p], data[p + 1], data[p + 2]);
+    labs[i * 3] = lab.L;
+    labs[i * 3 + 1] = lab.a;
+    labs[i * 3 + 2] = lab.b;
+  }
+  const buckets = /* @__PURE__ */ new Map();
+  const sampleEdge = (x, y) => {
+    const i = y * w + x;
+    if (data[i * 4 + 3] < 128) return;
+    const L = labs[i * 3];
+    const a = labs[i * 3 + 1];
+    const b = labs[i * 3 + 2];
+    const key = (Math.round(L / 8) & 63) * 4096 + (Math.round((a + 128) / 8) & 63) * 64 + (Math.round((b + 128) / 8) & 63);
+    const cur = buckets.get(key);
+    if (cur) {
+      cur.count++;
+      cur.L += L;
+      cur.a += a;
+      cur.b += b;
+    } else {
+      buckets.set(key, { count: 1, L, a, b });
+    }
+  };
+  const bandW = Math.max(6, Math.floor(w * 0.14));
+  const bandH = Math.max(6, Math.floor(h * 0.14));
+  const stepX = Math.max(1, Math.floor(bandW / 24));
+  const stepY = Math.max(1, Math.floor(bandH / 24));
+  for (let y = 0; y < bandH; y += stepY) {
+    for (let x = 0; x < bandW; x += stepX) {
+      sampleEdge(x, y);
+      sampleEdge(w - 1 - x, y);
+      sampleEdge(x, h - 1 - y);
+      sampleEdge(w - 1 - x, h - 1 - y);
+    }
+  }
+  if (buckets.size === 0) {
+    return { mask: new Uint8Array(n), ratio: 0, ok: false, reason: "边缘全是透明像素" };
+  }
+  const seeds = [...buckets.values()].sort((x, y) => y.count - x.count).slice(0, 2).map((c) => ({ L: c.L / c.count, a: c.a / c.count, b: c.b / c.count }));
+  const mask = new Uint8Array(n);
+  const queue = new Int32Array(n);
+  let head = 0;
+  let tail = 0;
+  const nearSeed = (i) => {
+    const L = labs[i * 3];
+    const a = labs[i * 3 + 1];
+    const b = labs[i * 3 + 2];
+    for (let s = 0; s < seeds.length; s++) {
+      const dL = L - seeds[s].L;
+      const da = a - seeds[s].a;
+      const db = b - seeds[s].b;
+      if (dL * dL + da * da + db * db <= tolSq) return true;
+    }
+    return false;
+  };
+  for (let x = 0; x < w; x++) {
+    for (const y of [0, h - 1]) {
+      const i = y * w + x;
+      if (!mask[i] && data[i * 4 + 3] >= 128 && nearSeed(i)) {
+        mask[i] = 1;
+        queue[tail++] = i;
+      }
+    }
+  }
+  for (let y = 0; y < h; y++) {
+    for (const x of [0, w - 1]) {
+      const i = y * w + x;
+      if (!mask[i] && data[i * 4 + 3] >= 128 && nearSeed(i)) {
+        mask[i] = 1;
+        queue[tail++] = i;
+      }
+    }
+  }
+  while (head < tail) {
+    const i = queue[head++];
+    const x = i % w;
+    const y = i / w | 0;
+    if (x + 1 < w && !mask[i + 1] && nearSeed(i + 1)) {
+      mask[i + 1] = 1;
+      queue[tail++] = i + 1;
+    }
+    if (x > 0 && !mask[i - 1] && nearSeed(i - 1)) {
+      mask[i - 1] = 1;
+      queue[tail++] = i - 1;
+    }
+    if (y + 1 < h && !mask[i + w] && nearSeed(i + w)) {
+      mask[i + w] = 1;
+      queue[tail++] = i + w;
+    }
+    if (y > 0 && !mask[i - w] && nearSeed(i - w)) {
+      mask[i - w] = 1;
+      queue[tail++] = i - w;
+    }
+  }
+  let bg = 0;
+  for (let i = 0; i < n; i++) bg += mask[i];
+  const ratio = bg / n;
+  if (ratio < minRatio) {
+    return { mask: new Uint8Array(n), ratio, ok: false, reason: "没找到明显背景" };
+  }
+  if (ratio > maxRatio) {
+    return { mask: new Uint8Array(n), ratio, ok: false, reason: "背景占比过高，可能是主体贴边或纯色图" };
+  }
+  return { mask, ratio, ok: true };
+}
 function makeRandom(seed) {
   let s = seed >>> 0;
   return () => {
@@ -1056,6 +1173,12 @@ function convertPhoto(img, opts) {
   const centers = kmeansLab(labs, weights, k, 24);
   const picked = mapCentroidsToCatalog(centers, catalog, 1);
   const { cells } = assignPhotoCells(labs, picked);
+  if (opts.bgMask && opts.bgMask.length === img.width * img.height) {
+    const smallMask = downscaleMask(opts.bgMask, img.width, img.height, targetWidth, targetHeight);
+    for (let i = 0; i < cells.length; i++) {
+      if (smallMask[i]) cells[i] = EMPTY_CELL;
+    }
+  }
   const palette = picked.map((p) => ({
     colorId: p.colorId,
     code: p.code,
@@ -1154,6 +1277,29 @@ function pickCatalog(series, setCodes) {
   const allowed = new Set(setCodes);
   return series.colors.filter((c) => allowed.has(c.code));
 }
+function downscaleMask(mask, sw, sh, dw, dh) {
+  const out = new Uint8Array(dw * dh);
+  const xr = sw / dw;
+  const yr = sh / dh;
+  for (let dy = 0; dy < dh; dy++) {
+    const y0 = Math.floor(dy * yr);
+    const y1 = Math.max(y0 + 1, Math.min(sh, Math.ceil((dy + 1) * yr)));
+    for (let dx = 0; dx < dw; dx++) {
+      const x0 = Math.floor(dx * xr);
+      const x1 = Math.max(x0 + 1, Math.min(sw, Math.ceil((dx + 1) * xr)));
+      let total = 0;
+      let bg = 0;
+      for (let y = y0; y < y1; y++) {
+        for (let x = x0; x < x1; x++) {
+          total++;
+          if (mask[y * sw + x]) bg++;
+        }
+      }
+      out[dy * dw + dx] = total > 0 && bg / total > 0.5 ? 1 : 0;
+    }
+  }
+  return out;
+}
 exports.BOARD_SIZE = BOARD_SIZE;
 exports.EMPTY_CELL = EMPTY_CELL;
 exports.analyzeImage = analyzeImage;
@@ -1187,6 +1333,7 @@ exports.linearToSrgb = linearToSrgb;
 exports.mapCentroidsToCatalog = mapCentroidsToCatalog;
 exports.mergeSimilar = mergeSimilar;
 exports.relativeLuminance = relativeLuminance;
+exports.removeBackground = removeBackground;
 exports.removeSpeckles = removeSpeckles;
 exports.resampleBox = resampleBox;
 exports.resampleNearest = resampleNearest;

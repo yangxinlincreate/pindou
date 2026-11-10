@@ -3,6 +3,7 @@ export * from './color/space';
 export * from './color/deltaE';
 export * from './image/resample';
 export * from './image/detect';
+export * from './image/background';
 export * from './quantize/kmeans';
 export * from './quantize/palette';
 export * from './quantize/assign';
