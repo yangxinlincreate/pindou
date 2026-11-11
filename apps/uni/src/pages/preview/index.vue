@@ -8,21 +8,21 @@
       </view>
     </view>
 
+    <view v-if="viewMode === 'board'" class="boardbar">
+      <view class="bbtn" :class="{ dis: boardIndex === 0 }" @tap="prevBoard">‹</view>
+      <text class="binfo">第 {{ boardIndex + 1 }} 块，共 {{ boardCount }} 块</text>
+      <view class="bbtn" :class="{ dis: boardIndex === boardCount - 1 }" @tap="nextBoard">›</view>
+    </view>
+
     <view class="stage" id="stage">
-      <image
-        v-if="previewSrc"
-        class="cv"
-        :src="previewSrc"
-        :style="{ width: cvW + 'px', height: cvH + 'px' }"
-        mode="scaleToFill"
-      />
+      <image v-if="previewSrc" class="cv" :src="previewSrc" :style="cvStyle" mode="scaleToFill"></image>
       <view v-else class="cv-holder">绘制中…</view>
     </view>
 
     <view class="tools">
-      <view class="tool" :class="{ on: showBoard }" @tap="toggleBoard">
+      <view class="tool" :class="{ on: viewMode === 'board' }" @tap="toggleViewMode">
         <view class="tool-ico">▦</view>
-        <text class="tool-t">分板</text>
+        <text class="tool-t">{{ viewMode === 'board' ? '整图' : '单板' }}</text>
       </view>
       <view class="tool" :class="{ on: showCode }" @tap="toggleCode">
         <view class="tool-ico">A1</view>
@@ -52,9 +52,9 @@
           <view class="sp-row">
             <text class="sp-label">格数</text>
             <view class="stepper">
-              <view class="step-btn" :class="{ dis: gridSize <= 12 }" @tap="stepGrid(-4)">−</view>
+              <view class="step-btn" :class="{ dis: gridSize === 12 }" @tap="stepGrid(-4)">−</view>
               <text class="step-val num">{{ gridSize }}</text>
-              <view class="step-btn" :class="{ dis: gridSize >= 300 }" @tap="stepGrid(4)">+</view>
+              <view class="step-btn" :class="{ dis: gridSize === 300 }" @tap="stepGrid(4)">+</view>
             </view>
           </view>
           <view class="sp-hint">{{ sizeHint }}</view>
@@ -64,9 +64,9 @@
           <view class="sp-row">
             <text class="sp-label">色数</text>
             <view class="stepper">
-              <view class="step-btn" :class="{ dis: colorCount <= 2 }" @tap="stepColor(-1)">−</view>
+              <view class="step-btn" :class="{ dis: colorCount === 2 }" @tap="stepColor(-1)">−</view>
               <text class="step-val num">{{ colorCount }}</text>
-              <view class="step-btn" :class="{ dis: colorCount >= colorMax }" @tap="stepColor(1)">+</view>
+              <view class="step-btn" :class="{ dis: colorCount === colorMax }" @tap="stepColor(1)">+</view>
             </view>
           </view>
           <view class="sp-hint">{{ colorHint }}</view>
@@ -91,6 +91,12 @@ let canvasReady = false;
 let applyTimer = null;
 
 export default {
+  computed: {
+    cvStyle() {
+      return { width: this.cvW + 'px', height: this.cvH + 'px' };
+    },
+  },
+
   data() {
     return {
       info: '',
@@ -102,6 +108,9 @@ export default {
       denoised: false,
       empty: false,
       showParams: false,
+      viewMode: 'full',
+      boardIndex: 0,
+      boardCount: 1,
       gridSize: 58,
       colorCount: 24,
       colorMax: 221,
@@ -155,17 +164,27 @@ export default {
         const pad = 16;
         const maxW = Math.max(160, box.width - pad * 2);
         const maxH = Math.max(160, box.height - pad * 2);
-        const w = pattern.width;
-        const h = pattern.height;
-        const cell = Math.max(2, Math.floor(Math.min(maxW / w, maxH / h)));
-        const cw = cell * w;
-        const ch = cell * h;
+
+        let region = null;
+        let cell;
+
+        if (this.viewMode === 'board') {
+          // 单板视图：只画一块底板（29×29），每格能分到 10px 以上，色号才写得下
+          region = this.currentBoard();
+          cell = Math.max(8, Math.floor(Math.min(maxW / region.w, maxH / region.h)));
+        } else {
+          cell = Math.max(2, Math.floor(Math.min(maxW / pattern.width, maxH / pattern.height)));
+        }
+
+        const rw = region ? region.w : pattern.width;
+        const rh = region ? region.h : pattern.height;
+        const cw = cell * rw;
+        const ch = cell * rh;
         const dpr = getPixelRatio();
 
         const pxW = Math.round(cw * dpr);
         const pxH = Math.round(ch * dpr);
 
-        // 离屏绘制再导出图片：canvas 是原生组件，层级压不住，用 image 就没这个问题
         const canvas = createOffscreenCanvas(pxW, pxH);
         if (!canvas) throw new Error('离屏画布不可用');
         canvas.width = pxW;
@@ -173,7 +192,7 @@ export default {
 
         const ctx = canvas.getContext('2d');
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        drawPattern(ctx, pattern, cell, this.showCode, this.showBoard);
+        drawPattern(ctx, pattern, cell, this.showCode, this.showBoard, region);
 
         const src = await exportCanvas(canvas, pxW, pxH);
         this.previewSrc = src;
@@ -183,6 +202,49 @@ export default {
       } catch (e) {
         console.error('render failed', e);
       }
+    },
+
+    boardCols() {
+      return Math.max(1, Math.ceil(pattern.width / 29));
+    },
+
+    boardRows() {
+      return Math.max(1, Math.ceil(pattern.height / 29));
+    },
+
+    currentBoard() {
+      const B = 29;
+      const cols = this.boardCols();
+      const total = cols * this.boardRows();
+      const idx = Math.min(this.boardIndex, total - 1);
+      const col = idx % cols;
+      const row = Math.floor(idx / cols);
+      const x = col * B;
+      const y = row * B;
+      return {
+        x,
+        y,
+        w: Math.min(B, pattern.width - x),
+        h: Math.min(B, pattern.height - y),
+      };
+    },
+
+    toggleViewMode() {
+      this.viewMode = this.viewMode === 'full' ? 'board' : 'full';
+      this.boardIndex = 0;
+      this.render();
+    },
+
+    prevBoard() {
+      if (this.boardIndex <= 0) return;
+      this.boardIndex--;
+      this.render();
+    },
+
+    nextBoard() {
+      if (this.boardIndex >= this.boardCount - 1) return;
+      this.boardIndex++;
+      this.render();
     },
 
     toggleCode() {
@@ -351,6 +413,10 @@ export default {
 
     refreshInfo() {
       const s = pattern.stats;
+      this.boardCount = Math.max(
+        1,
+        Math.ceil(pattern.width / 29) * Math.ceil(pattern.height / 29),
+      );
       this.info = [
         pattern.width + ' × ' + pattern.height,
         s.colorCount + ' 色',
@@ -461,20 +527,24 @@ function isDark(hex) {
   return 0.299 * r + 0.587 * g + 0.114 * b < 140;
 }
 
-function drawPattern(ctx, p, cell, showCode, showBoard) {
-  const w = p.width;
-  const h = p.height;
-  const cw = w * cell;
-  const ch = h * cell;
+function drawPattern(ctx, p, cell, showCode, showBoard, region) {
+  const rx = region ? region.x : 0;
+  const ry = region ? region.y : 0;
+  const rw = region ? region.w : p.width;
+  const rh = region ? region.h : p.height;
+
+  const cw = rw * cell;
+  const ch = rh * cell;
   const palette = p.palette;
   const cells = p.cells;
+  const W = p.width;
 
   ctx.fillStyle = '#FFFFFF';
   ctx.fillRect(0, 0, cw, ch);
 
-  for (let y = 0; y < h; y++) {
-    for (let x = 0; x < w; x++) {
-      const idx = cells[y * w + x];
+  for (let y = 0; y < rh; y++) {
+    for (let x = 0; x < rw; x++) {
+      const idx = cells[(ry + y) * W + (rx + x)];
       if (idx === EMPTY_CELL) continue;
       ctx.fillStyle = palette[idx].hex;
       ctx.fillRect(x * cell, y * cell, cell, cell);
@@ -485,45 +555,47 @@ function drawPattern(ctx, p, cell, showCode, showBoard) {
     ctx.strokeStyle = 'rgba(0,0,0,.07)';
     ctx.lineWidth = 0.5;
     ctx.beginPath();
-    for (let x = 0; x <= w; x++) {
+    for (let x = 0; x <= rw; x++) {
       ctx.moveTo(x * cell + 0.25, 0);
       ctx.lineTo(x * cell + 0.25, ch);
     }
-    for (let y = 0; y <= h; y++) {
+    for (let y = 0; y <= rh; y++) {
       ctx.moveTo(0, y * cell + 0.25);
       ctx.lineTo(cw, y * cell + 0.25);
     }
     ctx.stroke();
   }
 
-  if (showBoard && cell >= 3) {
-    ctx.strokeStyle = 'rgba(255,122,69,.4)';
+  // 分板线只在整图模式画：单板模式本身只显示一块，再画线没意义
+  if (showBoard && !region && cell >= 3) {
+    ctx.strokeStyle = 'rgba(255,122,69,.45)';
     ctx.lineWidth = 1;
     ctx.beginPath();
-    for (let x = 29; x < w; x += 29) {
+    for (let x = 29; x < W; x += 29) {
       ctx.moveTo(x * cell, 0);
       ctx.lineTo(x * cell, ch);
     }
-    for (let y = 29; y < h; y += 29) {
+    for (let y = 29; y < p.height; y += 29) {
       ctx.moveTo(0, y * cell);
       ctx.lineTo(cw, y * cell);
     }
     ctx.stroke();
   }
 
-  if (showCode && cell >= 14) {
+  // 阈值从 14 降到 9：单板视图下每格 10px 左右，刚好能看清
+  if (showCode && cell >= 9) {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    const fs = Math.max(7, Math.min(cell * 0.42, 11));
-    ctx.font = '500 ' + fs + 'px monospace';
+    const fs = Math.max(6, Math.min(cell * 0.46, 11));
+    ctx.font = '600 ' + fs + 'px monospace';
     const colorCache = {};
-    for (let y = 0; y < h; y++) {
-      for (let x = 0; x < w; x++) {
-        const idx = cells[y * w + x];
+    for (let y = 0; y < rh; y++) {
+      for (let x = 0; x < rw; x++) {
+        const idx = cells[(ry + y) * W + (rx + x)];
         if (idx === EMPTY_CELL) continue;
         let tc = colorCache[idx];
         if (!tc) {
-          tc = isDark(palette[idx].hex) ? 'rgba(255,255,255,.82)' : 'rgba(0,0,0,.62)';
+          tc = isDark(palette[idx].hex) ? 'rgba(255,255,255,.85)' : 'rgba(0,0,0,.68)';
           colorCache[idx] = tc;
         }
         ctx.fillStyle = tc;
@@ -648,6 +720,40 @@ function drawPattern(ctx, p, cell, showCode, showBoard) {
   color: var(--brand-deep);
   font-weight: 500;
 }
+/* ---- 板号切换 ---- */
+.boardbar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28rpx;
+  padding: 16rpx 32rpx;
+  background: #fff;
+  border-top: 1rpx solid var(--line);
+}
+.bbtn {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 18rpx;
+  background: #f4f1ec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38rpx;
+  line-height: 1;
+  color: var(--ink-2);
+}
+.bbtn.dis {
+  color: #d8d2c9;
+}
+.binfo {
+  font-size: 25rpx;
+  color: var(--ink-2);
+  min-width: 200rpx;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
 /* ---- 顶栏按钮 ---- */
 .tbtn {
   flex-shrink: 0;
