@@ -71,6 +71,9 @@
               <view class="step-btn" :class="{ dis: gridSize === 300 }" @tap="stepGrid(4)">+</view>
             </view>
           </view>
+          <view class="sp-slider-box">
+            <slider class="sp-slider" :value="gridSize" :min="12" :max="300" :step="1" activeColor="#FF6B35" backgroundColor="#EDE8E1" block-size="20" @changing="onGridSliding" @change="onGridSlideEnd" />
+          </view>
           <view class="sp-hint">{{ sizeHint }}</view>
         </view>
 
@@ -82,6 +85,9 @@
               <text class="step-val num">{{ colorCount }}</text>
               <view class="step-btn" :class="{ dis: colorCount === colorMax }" @tap="stepColor(1)">+</view>
             </view>
+          </view>
+          <view class="sp-slider-box">
+            <slider class="sp-slider" :value="colorCount" :min="2" :max="colorMax" :step="1" activeColor="#FF6B35" backgroundColor="#EDE8E1" block-size="20" @changing="onColorSliding" @change="onColorSlideEnd" />
           </view>
           <view class="sp-hint">{{ colorHint }}</view>
         </view>
@@ -310,6 +316,34 @@ export default {
       const cmH = ((h * 5) / 10).toFixed(1);
       this.sizeHint = cmW + ' × ' + cmH + ' cm · ' + this.gridSize + ' × ' + h + ' 格';
       this.colorHint = '目标 ' + this.colorCount + ' 色';
+    },
+
+    onGridSliding(e) {
+      const v = e.detail.value;
+      if (v === this.gridSize) return;
+      this.gridSize = v;
+      this.updateHints();
+      this.scheduleApply();
+    },
+
+    onGridSlideEnd(e) {
+      this.gridSize = e.detail.value;
+      this.updateHints();
+      this.scheduleApply();
+    },
+
+    onColorSliding(e) {
+      const v = e.detail.value;
+      if (v === this.colorCount) return;
+      this.colorCount = v;
+      this.updateHints();
+      this.scheduleApply();
+    },
+
+    onColorSlideEnd(e) {
+      this.colorCount = e.detail.value;
+      this.updateHints();
+      this.scheduleApply();
     },
 
     stepGrid(delta) {
@@ -907,6 +941,16 @@ function drawPattern(ctx, p, cell, showCode, showBoard, region) {
 .step-btn.dis {
   color: #d8d2c9;
   box-shadow: none;
+}
+.sp-slider-box {
+  height: 84rpx;
+  display: flex;
+  align-items: center;
+  margin-top: 4rpx;
+}
+.sp-slider {
+  width: 100%;
+  margin: 0;
 }
 .step-val {
   min-width: 104rpx;
