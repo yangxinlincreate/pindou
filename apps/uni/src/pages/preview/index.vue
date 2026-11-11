@@ -164,6 +164,13 @@ export default {
       s.boardsTotal + ' 块板',
     ];
     this.info = parts.join(' · ');
+
+    // 首次进入不会走 refreshInfo，这里必须单独算一次，
+    // 否则 boardCount 一直是默认值 1，翻页按钮点不动
+    this.boardCount = Math.max(
+      1,
+      Math.ceil(pattern.width / 29) * Math.ceil(pattern.height / 29),
+    );
   },
 
 
@@ -275,7 +282,11 @@ export default {
     },
 
     nextBoard() {
-      if (this.boardIndex >= this.boardCount - 1) return;
+      const total = Math.max(
+        1,
+        Math.ceil(pattern.width / 29) * Math.ceil(pattern.height / 29),
+      );
+      if (this.boardIndex >= total - 1) return;
       this.boardIndex++;
       this.render();
     },
