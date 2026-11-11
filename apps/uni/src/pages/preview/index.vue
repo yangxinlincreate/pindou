@@ -178,8 +178,22 @@ export default {
       try {
         const box = await getBoxSize('#stage');
         const pad = 16;
-        const maxW = Math.max(160, box.width - pad * 2);
-        const maxH = Math.max(160, box.height - pad * 2);
+
+        // 容器尺寸可能大于屏幕（H5 的 rpx 换算、movable-area 布局都可能出偏差），
+        // 用系统窗口宽高兜底，避免算出的图比屏幕还大、只能看到左上角
+        let sysW = 375;
+        let sysH = 667;
+        try {
+          const sys = uni.getSystemInfoSync();
+          sysW = sys.windowWidth || sysW;
+          sysH = sys.windowHeight || sysH;
+        } catch (e) { /* 忽略 */ }
+
+        const boxW = Math.min(box.width || sysW, sysW);
+        const boxH = Math.min(box.height || sysH, sysH);
+
+        const maxW = Math.max(120, boxW - pad * 2);
+        const maxH = Math.max(120, boxH - pad * 2);
 
         let region = null;
         let cell;
@@ -215,8 +229,8 @@ export default {
         this.cvW = cw;
         this.cvH = ch;
         // 内容比容器小就居中，比容器大就从左上角开始（可拖拽查看）
-        this.mvX = Math.max(0, Math.round((box.width - cw) / 2));
-        this.mvY = Math.max(0, Math.round((box.height - ch) / 2));
+        this.mvX = Math.max(0, Math.round((boxW - cw) / 2));
+        this.mvY = Math.max(0, Math.round((boxH - ch) / 2));
         canvasReady = true;
       } catch (e) {
         console.error('render failed', e);
