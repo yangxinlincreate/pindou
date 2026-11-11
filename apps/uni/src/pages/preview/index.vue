@@ -15,8 +15,22 @@
     </view>
 
     <view class="stage" id="stage">
-      <image v-if="previewSrc" class="cv" :src="previewSrc" :style="cvStyle" mode="scaleToFill"></image>
-      <view v-else class="cv-holder">绘制中…</view>
+      <movable-area class="ma">
+        <movable-view
+        class="mv"
+        direction="all"
+        :scale="true"
+        :scale-min="1"
+        :scale-max="4"
+        :out-of-bounds="false"
+        :x="mvX"
+        :y="mvY"
+        :style="cvStyle"
+      >
+          <image v-if="previewSrc" class="cv" :src="previewSrc" :style="cvStyle" mode="scaleToFill"></image>
+          <view v-else class="cv-holder">绘制中…</view>
+        </movable-view>
+      </movable-area>
     </view>
 
     <view class="tools">
@@ -104,6 +118,8 @@ export default {
       showBoard: false,
       previewSrc: '',
       cvW: 0,
+      mvX: 0,
+      mvY: 0,
       cvH: 0,
       denoised: false,
       empty: false,
@@ -198,6 +214,9 @@ export default {
         this.previewSrc = src;
         this.cvW = cw;
         this.cvH = ch;
+        // 内容比容器小就居中，比容器大就从左上角开始（可拖拽查看）
+        this.mvX = Math.max(0, Math.round((box.width - cw) / 2));
+        this.mvY = Math.max(0, Math.round((box.height - ch) / 2));
         canvasReady = true;
       } catch (e) {
         console.error('render failed', e);
@@ -645,13 +664,23 @@ function drawPattern(ctx, p, cell, showCode, showBoard, region) {
 .stage {
   flex: 1;
   min-height: 0;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+.ma {
+  width: 100%;
+  height: 100%;
+}
+.mv {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24rpx;
-  overflow: hidden;
 }
 .cv {
+  width: 100%;
+  height: 100%;
   border-radius: 16rpx;
   background: #fff;
   box-shadow: 0 8rpx 32rpx rgba(28, 27, 26, 0.1);
