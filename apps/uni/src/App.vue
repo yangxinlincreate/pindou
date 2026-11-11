@@ -51,6 +51,19 @@ picker {
   box-sizing: border-box;
 }
 
+/* ============ H5 端宽度约束 ============ */
+/* #ifdef H5 */
+html,
+body,
+uni-app,
+uni-page,
+uni-page-body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+/* #endif */
+
 /* ============ 布局 ============ */
 .page {
   width: 100%;
